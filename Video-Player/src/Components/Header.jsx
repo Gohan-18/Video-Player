@@ -1,7 +1,19 @@
-import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import MuiAppBar from '@mui/material/AppBar';
+
+import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+// import AppBar from '@mui/material/AppBar';
+import { Box } from "@mui/material"
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -11,6 +23,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
+
+const drawerWidth = 240;
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -19,6 +34,7 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginLeft: 0,
   width: '100%',
+
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
     width: 'auto',
@@ -44,21 +60,54 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
+    // width: '400px',
   },
 }));
 
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+
+
 export default function Header() {
+
+  const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    // necessary for content to be below app bar
+    // ...theme.mixins.toolbar,
+    height: '80px', 
+    justifyContent: 'center',
+  }));
+
+  const [open, setOpen] = useState(false);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{display: 'flex', justifyContent: 'center', height: '80px'}} >
+      <AppBar position="fixed" open={open} sx={{display: 'flex', justifyContent: 'center', height: '80px'}} >
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
+            onClick={() => setOpen(!open)}
             sx={{
-                pr: {
+                mr: {
                     xs: '20px',
                     sm: '0px'
                 }
@@ -107,6 +156,39 @@ export default function Header() {
           </Box>
         </Toolbar>
       </AppBar>
+
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader >
+            <Typography>Menu</Typography>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </Drawer>
     </Box>
   );
 }
+
