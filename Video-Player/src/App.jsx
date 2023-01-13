@@ -1,5 +1,7 @@
 import './App.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store  from './store';
 import Layout from './Components/Layout';
 import Home from './Pages/Home';
 
@@ -15,7 +17,10 @@ function App() {
   ))
 
   return (
-    <RouterProvider router={router}/>
+    <Provider store={store}>
+      <RouterProvider router={router}/>
+    </Provider>
+    
   )
 }
 
