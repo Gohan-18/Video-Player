@@ -9,26 +9,32 @@ const options = {
 	}
 };
 
-// fetch('https://youtube-v31.p.rapidapi.com/captions?part=snippet&videoId=M7FIvfx5J10', options)
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
-
 export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async (url) => {
     const data = await fetch(`${BASE_URL}/${url}`, options)
     const result = await data.json();
     console.log(result.items);
     return result.items;
-	// .then(response => response.json())
-	// .then(response => console.log(response))
-	// .catch(err => console.error(err));
 });
+
+export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async (url) => {
+
+        const data = await fetch(`${BASE_URL}/${url}`, options);
+        const result = await data.json();
+        console.log(result);
+        return result.items;
+})
+
+// fetch('https://youtube-v31.p.rapidapi.com/videos?part=contentDetails%2Csnippet%2Cstatistics&id=7ghhRHRP6t4', options)
+// 	.then(response => response.json())
+// 	.then(response => console.log(response))
+// 	.catch(err => console.error(err));
 
 
 const videoSlice = createSlice({
     name: 'videos',
     initialState: {
         homeVideos: [],
+        videoDetail: [],
         loading: false
     },
     extraReducers:(builder) => {
@@ -37,7 +43,13 @@ const videoSlice = createSlice({
         })
         builder.addCase(fetchHomeVideos.fulfilled, (state, action) => {
             state.homeVideos = action.payload;
-            // console.log(homeVideos);
+            state.loading = false;
+        })
+        builder.addCase(fetchVideoDetails.pending, (state) => {
+            state.loading = true;
+        })
+        builder.addCase(fetchVideoDetails.fulfilled, (state, action) => {
+            state.videoDetail = action.payload;
             state.loading = false;
         })
     }

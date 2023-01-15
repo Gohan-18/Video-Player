@@ -26,6 +26,25 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const drawerWidth = 240;
 
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -72,8 +91,16 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
+    // width: {
+    //   xs: `calc(100% - ${drawerWidth}px)`,
+    //   md: `calc(100% - ${drawerWidth}px)`
+    // },
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
+    // marginLeft: {
+    //   xs: `${xsDrawerWidth}px`,
+    //   md:`${drawerWidth}px`
+    // },
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -87,6 +114,9 @@ export default function Header() {
 
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
+    // visibility: 'hidden',
+    // opacity: '0',
+    // zIndex: '-20',
     alignItems: 'center',
     // necessary for content to be below app bar
     // ...theme.mixins.toolbar,
@@ -159,7 +189,7 @@ export default function Header() {
 
       <Drawer
         sx={{
-          width: drawerWidth,
+          width:drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,

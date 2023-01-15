@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import store  from './store';
 import Layout from './Components/Layout';
 import Home from './Pages/Home';
+import VideoDetail from './Components/VideoDetail';
 
 function App() {
 
@@ -11,6 +12,8 @@ function App() {
     <>
     <Route path='/' element={<Layout/>} >
       <Route index element={<Home/>} />
+      <Route path='/videodetail/:id' element={<VideoDetail/>} />
+      {/* <Route path='/product/:productid' element={<Product/>}/> */}
     </Route>
     </>
 
