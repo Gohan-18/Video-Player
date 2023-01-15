@@ -9,10 +9,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MuiAppBar from '@mui/material/AppBar';
-
 import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-// import AppBar from '@mui/material/AppBar';
 import { Box } from "@mui/material"
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -22,28 +20,29 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
 
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
+// const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+//   ({ theme, open }) => ({
+//     flexGrow: 1,
+//     padding: theme.spacing(3),
+//     transition: theme.transitions.create('margin', {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.leavingScreen,
+//     }),
+//     marginLeft: `-${drawerWidth}px`,
+//     ...(open && {
+//       transition: theme.transitions.create('margin', {
+//         easing: theme.transitions.easing.easeOut,
+//         duration: theme.transitions.duration.enteringScreen,
+//       }),
+//       marginLeft: 0,
+//     }),
+//   }),
+// );
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -112,6 +111,12 @@ const AppBar = styled(MuiAppBar, {
 
 export default function Header() {
 
+  const navigate = useNavigate();
+
+  function navigateHome() {
+    navigate('/');
+  }
+
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     // visibility: 'hidden',
@@ -162,6 +167,7 @@ export default function Header() {
                 }}>
             <YouTubeIcon 
                 fontSize='medium' 
+                onClick={navigateHome}
                 sx={{
                     fill: '#fff',
                     // '&:hover': {

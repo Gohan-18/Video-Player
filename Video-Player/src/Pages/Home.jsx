@@ -5,13 +5,13 @@ import { fetchHomeVideos } from '../features/fetchFromAPI-slice';
 import { useTheme } from '@emotion/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
-import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
+// import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const Home = () => {
 
   const dispatch = useDispatch();
-  const homeVideoList = useSelector((state) => state.home);
-  console.log(homeVideoList)
+  const homeVideoList = useSelector((state) => state.homeVideos);
+  // console.log(homeVideoList)
   const { homeVideos, loading } = homeVideoList;
   const { id } = homeVideos;
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ const Home = () => {
   //   dispatch(fetchVideoDetails(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id.videoId}`))
   // }
 
-  const now = new Date();
-  console.log(now);
+  // const now = new Date();
+  // console.log(now);
 
   return (
     <>

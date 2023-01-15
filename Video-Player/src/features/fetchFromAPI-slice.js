@@ -12,17 +12,17 @@ const options = {
 export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async (url) => {
     const data = await fetch(`${BASE_URL}/${url}`, options)
     const result = await data.json();
-    console.log(result.items);
+    // console.log(result.items);
     return result.items;
 });
 
-export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async (url) => {
+// export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async (url) => {
 
-        const data = await fetch(`${BASE_URL}/${url}`, options);
-        const result = await data.json();
-        console.log(result);
-        return result.items;
-})
+//         const data = await fetch(`${BASE_URL}/${url}`, options);
+//         const result = await data.json();
+//         console.log(result);
+//         return result;
+// })
 
 // fetch('https://youtube-v31.p.rapidapi.com/videos?part=contentDetails%2Csnippet%2Cstatistics&id=7ghhRHRP6t4', options)
 // 	.then(response => response.json())
@@ -31,10 +31,10 @@ export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async (ur
 
 
 const videoSlice = createSlice({
-    name: 'videos',
+    name: 'homeVideos',
     initialState: {
         homeVideos: [],
-        videoDetail: [],
+        // videoDetail: [],
         loading: false
     },
     extraReducers:(builder) => {
@@ -45,13 +45,13 @@ const videoSlice = createSlice({
             state.homeVideos = action.payload;
             state.loading = false;
         })
-        builder.addCase(fetchVideoDetails.pending, (state) => {
-            state.loading = true;
-        })
-        builder.addCase(fetchVideoDetails.fulfilled, (state, action) => {
-            state.videoDetail = action.payload;
-            state.loading = false;
-        })
+        // builder.addCase(fetchVideoDetails.pending, (state) => {
+        //     state.loading = true;
+        // })
+        // builder.addCase(fetchVideoDetails.fulfilled, (state, action) => {
+        //     state.videoDetail = action.payload;
+        //     state.loading = false;
+        // })
     }
 })
 
