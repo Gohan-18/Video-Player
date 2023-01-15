@@ -177,10 +177,29 @@ export default function VideoDetail() {
                                             sm: '16px',
                                             md: '18px'
                                         },
+                                        mt: '40px',
+                                        // transition: 'all 1s ease-out',
+
                                     }}
                                 />
-                                {/* <Button sx={{position: 'absolute', top: 20, right: 30}} >Open</Button> */}
-                                {/* <IconButton sx={{position: 'absolute', bottom: 20, right: 30}} >
+                                <Button 
+                                    onClick={fullDescription} 
+                                    fullWidth  
+                                    color="secondary"
+                                    sx={{
+                                        position: 'absolute', 
+                                        top: 0, 
+                                        right: 0,
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.08)'
+                                        },
+                                        '&::after': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.08)'
+                                        }
+                                    }}>
+                                    <ArrowDropDownOutlinedIcon sx={{fill: '#fff'}} />
+                                </Button>
+                                {/* <IconButton sx={{position: 'absolute', top: 0, right: 30}} >
                                     <ArrowDropDownOutlinedIcon/>
                                 </IconButton> */}
                             </Box>
@@ -189,8 +208,18 @@ export default function VideoDetail() {
                     </Box>
                     
                 </Grid>
-                <Grid item xs={12} md={3} >
-                    
+                <Grid item container xs={12} md={3} >
+
+                    <Grid item xs={12} >
+                        <Typography>Hello World</Typography>
+                        <Typography>Hello World</Typography>
+                        <Typography>Hello World</Typography>
+                        <Typography>Hello World</Typography>
+                        <Typography>Hello World</Typography>
+                        <Typography>Hello World</Typography>
+                        <Typography>Hello World</Typography>
+                    </Grid>
+
                     {/* <Typography>Hello World</Typography>
                     <Typography>Hello World</Typography>
                     <Typography>Hello World</Typography>
