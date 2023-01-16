@@ -31,7 +31,7 @@ export default function VideoDetail() {
 
     const {singleVideo, videoSuggestion ,loading} = useSelector((state) => state?.videoDetail);
     // const videoSuggestionValue = useSelector((state) => state?.videoSuggestion);
-    console.log(videoSuggestion)
+    // console.log(videoSuggestion)
 
     // if(!singleVideo?.snippet){
     //     return (
@@ -45,7 +45,7 @@ export default function VideoDetail() {
 
     // console.log(singleVideo);
     // console.log(loading);
-    console.log(!videoSuggestion.length);
+    // console.log(!videoSuggestion.length);
 
 
     const { snippet, statistics } = singleVideo;

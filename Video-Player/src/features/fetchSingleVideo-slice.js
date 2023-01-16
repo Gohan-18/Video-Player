@@ -13,7 +13,7 @@ export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async (ur
 
     const data = await fetch(`${BASE_URL}/${url}`, options);
     const result = await data.json();
-    console.log(result);
+    // console.log(result);
     return result.items[0];
 
 })
@@ -22,7 +22,7 @@ export const fetchVideoSuggestion = createAsyncThunk('fetch/videoSuggestion', as
 
     const data = await fetch(`${BASE_URL}/${url}`, options);
     const result = await data.json();
-    console.log(result);
+    // console.log(result);
     return result.items;
 
 })
