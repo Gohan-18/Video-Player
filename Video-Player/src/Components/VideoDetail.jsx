@@ -4,7 +4,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { fetchVideoDetails, fetchVideoSuggestion } from '../features/fetchSingleVideo-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
@@ -15,7 +15,14 @@ export default function VideoDetail() {
     const theme = useTheme();
     const params = useParams();
     const { id } = params;
+    // console.log(id);
+    const splitChannelVideo = id.split('&')
+    const videoId = splitChannelVideo[0];
+    const channelId = splitChannelVideo[1];
+    // console.log(videoId)
+    // console.log(channelId)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     // const count = useRef(4);
     const [rowCount, setrowCount] = useState(4);
 
@@ -25,9 +32,17 @@ export default function VideoDetail() {
     }
 
     useEffect(() => {
-        dispatch(fetchVideoDetails(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id}`));
-        dispatch(fetchVideoSuggestion(`search?part=snippet&relatedToVideoId=${id}&type=video`));
-    }, [id])
+        dispatch(fetchVideoDetails({videoId}));
+        dispatch(fetchVideoSuggestion({videoId,channelId}));
+    }, [videoId])
+    // useEffect(() => {
+    //     dispatch(fetchVideoDetails(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id}`));
+    //     dispatch(fetchVideoSuggestion(`search?part=snippet&relatedToVideoId=${id}&type=video`));
+    // }, [id])
+
+    const navigateVideo = ({contentDetails,snippet}) => {
+        navigate(`/videodetail/${contentDetails.upload.videoId}&${snippet.channelId}`)
+    }
 
     const {singleVideo, videoSuggestion ,loading} = useSelector((state) => state?.videoDetail);
     // const videoSuggestionValue = useSelector((state) => state?.videoSuggestion);
@@ -66,9 +81,10 @@ export default function VideoDetail() {
     
     // console.log(id);
 
+
   return (
     <>
-        {!singleVideo?.snippet || !videoSuggestion.length || loading ? 
+        {!singleVideo?.snippet || !videoSuggestion?.length || loading ? 
             <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
                 <CircularProgress sx={{mt:'200px'}} />
             </Container>
@@ -223,13 +239,17 @@ export default function VideoDetail() {
                 <Grid item container xs={12} md={4} >
 
                     <Grid item  container xs={12} gap={2} sx={{ height: '110vh', overflowY: 'scroll'}} >
-                        {videoSuggestion?.map(({id, snippet}) => {
+                        {videoSuggestion?.map(({contentDetails, snippet}) => {
 
                             return (
-                            <>
+                            <Box key={contentDetails.id}>
                             <CardActionArea sx={{borderRadius: '5px'}} >
                                 <Card 
-                                    key={id.videoId} 
+                                    onClick={(e) =>{ 
+                                        e.stopPropagation();
+                                        navigateVideo({contentDetails,snippet});
+                                    }}
+                                    
                                     sx={{
                                         width: '100%',
                                         borderRadius: '5px', 
@@ -325,7 +345,7 @@ export default function VideoDetail() {
                                     
                                 </Card>
                             </CardActionArea>
-                            </>
+                            </Box>
                         )})}
                         {/* <Typography>Hello World</Typography>
                         <Typography>Hello World</Typography>

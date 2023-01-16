@@ -18,12 +18,12 @@ const Home = () => {
   const navigate = useNavigate();
 
 
-  const navigateVideo = ({id}) => {
-    navigate(`/videodetail/${id.videoId}`)
+  const navigateVideo = ({id,snippet}) => {
+    navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
   }
 
   useEffect(() => {
-    dispatch(fetchHomeVideos('search?part=snippet&q=new&maxResults=48'))
+    dispatch(fetchHomeVideos())
   }, [])
   
 
@@ -71,7 +71,7 @@ const Home = () => {
                   }}
                   onClick={(e) =>{ 
                     e.stopPropagation();
-                    navigateVideo({id});
+                    navigateVideo({id,snippet});
                   }}
                   >
                   <CardMedia                 
