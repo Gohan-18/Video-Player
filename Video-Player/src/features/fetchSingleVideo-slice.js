@@ -18,11 +18,21 @@ export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async (ur
 
 })
 
+export const fetchVideoSuggestion = createAsyncThunk('fetch/videoSuggestion', async (url) => {
+
+    const data = await fetch(`${BASE_URL}/${url}`, options);
+    const result = await data.json();
+    console.log(result);
+    return result.items;
+
+})
+
 
 const singleVideoSlice = createSlice({
     name: 'videoDetail',
     initialState: {
         singleVideo: {},
+        videoSuggestion : [],
         loading: false
     },
     extraReducers:(builder) => {
@@ -31,6 +41,13 @@ const singleVideoSlice = createSlice({
         })
         builder.addCase(fetchVideoDetails.fulfilled, (state, action) => {
             state.singleVideo = action.payload;
+            state.loading = false;
+        })
+        builder.addCase(fetchVideoSuggestion.pending, (state) => {
+            state.loading = true;
+        })
+        builder.addCase(fetchVideoSuggestion.fulfilled, (state, action) => {
+            state.videoSuggestion = action.payload;
             state.loading = false;
         })
     }

@@ -10,10 +10,16 @@ const options = {
 };
 
 export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async (url) => {
-    const data = await fetch(`${BASE_URL}/${url}`, options)
-    const result = await data.json();
-    // console.log(result.items);
-    return result.items;
+    try {
+        const data = await fetch(`${BASE_URL}/${url}`, options)
+        const result = await data.json();
+        return result.items;
+    } catch (error) {
+        console.log(error)
+    }
+    // const data = await fetch(`${BASE_URL}/${url}`, options)
+    // const result = await data.json();
+    // return result.items;
 });
 
 // export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async (url) => {

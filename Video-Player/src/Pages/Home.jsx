@@ -5,6 +5,7 @@ import { fetchHomeVideos } from '../features/fetchFromAPI-slice';
 import { useTheme } from '@emotion/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const Home = () => {
@@ -13,7 +14,7 @@ const Home = () => {
   const homeVideoList = useSelector((state) => state.homeVideos);
   // console.log(homeVideoList)
   const { homeVideos, loading } = homeVideoList;
-  const { id } = homeVideos;
+  // const { id } = homeVideos;
   const navigate = useNavigate();
 
 
@@ -21,9 +22,14 @@ const Home = () => {
     navigate(`/videodetail/${id.videoId}`)
   }
 
-  if(!homeVideos?.length){
+  useEffect(() => {
     dispatch(fetchHomeVideos('search?part=snippet&q=new&maxResults=48'))
-  }
+  }, [])
+  
+
+  // if(!homeVideos?.length){
+  //   dispatch(fetchHomeVideos('search?part=snippet&q=new&maxResults=48'))
+  // }
 
   // function videoPage ({id}) {
   //   dispatch(fetchVideoDetails(`videos?part=contentDetails%2Csnippet%2Cstatistics&id=${id.videoId}`))

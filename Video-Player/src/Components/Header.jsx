@@ -151,6 +151,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <IconButton 
+            onClick={navigateHome}
             sx={{
                 mx: '10px',
                 display: {
@@ -167,7 +168,6 @@ export default function Header() {
                 }}>
             <YouTubeIcon 
                 fontSize='medium' 
-                onClick={navigateHome}
                 sx={{
                     fill: '#fff',
                     // '&:hover': {
