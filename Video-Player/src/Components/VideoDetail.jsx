@@ -242,8 +242,8 @@ export default function VideoDetail() {
                         {videoSuggestion?.map(({contentDetails, snippet}) => {
 
                             return (
-                            <Box key={contentDetails.id}>
-                            <CardActionArea sx={{borderRadius: '5px'}} >
+                            <Box key={contentDetails.id} sx={{width: '100%'}} >
+                            <CardActionArea sx={{borderRadius: '5px', width: '100%'}} >
                                 <Card 
                                     onClick={(e) =>{ 
                                         e.stopPropagation();

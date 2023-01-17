@@ -7,6 +7,7 @@ import Home from './Pages/Home';
 import VideoDetail from './Components/VideoDetail';
 import SearchedItem from './Components/SearchedItem';
 import ChannelDetail from './Components/ChannelDetail';
+import Feed from './Components/Feed';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <Route path='/videodetail/:id' element={<VideoDetail/>} />
       <Route path='/search/:keyword' element={<SearchedItem/>} />
       <Route path='/channelDetail/:channelid' element={<ChannelDetail/>} />
+      <Route path='/feed/:keyword' element={<Feed/>} />
     </Route>
     </>
 

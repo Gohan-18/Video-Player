@@ -113,11 +113,18 @@ export default function Header() {
 
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [feedSearchTerm, setFeedSearchTerm] = useState('');
   const navigate = useNavigate();
 
   function navigateSearch(e) {
     e.preventDefault();
     navigate(`/search/${searchTerm}`)
+  }
+
+  function navigateFeedSearch({inrText}) {
+    // setFeedSearchTerm(e.target.innerText);
+    console.log(inrText);
+    navigate(`/feed/${inrText}`);
   }
 
   function navigateHome() {
@@ -191,10 +198,8 @@ export default function Header() {
               inputProps={{ 'aria-label': 'search' }}
               sx={{width: '100%'}}
               value={searchTerm}
-              // defaultValue={''}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
-                // console.log(searchTerm)
               }}
             />
           </Search>
@@ -224,9 +229,14 @@ export default function Header() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Music', 'Education', 'Podcasts', 'Movies', 'Gaming', 'Live', 'Sports', 'Fashion'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton onClick={(e) => console.log(e.target.innerText)}>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  // setFeedSearchTerm(inrText);
+                  navigateFeedSearch({inrText})
+                  }}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
