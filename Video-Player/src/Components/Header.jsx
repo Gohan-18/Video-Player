@@ -21,6 +21,22 @@ import SearchIcon from '@mui/icons-material/Search';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
+import CodeIcon from '@mui/icons-material/Code';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
+import SchoolIcon from '@mui/icons-material/School';
+import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
+import GraphicEqIcon from '@mui/icons-material/GraphicEq';
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
+import { categories } from '../utils/SidebarList';
 
 
 const drawerWidth = 240;
@@ -229,6 +245,35 @@ export default function Header() {
         </DrawerHeader>
         <Divider />
         <List>
+            <ListItem disablePadding>
+              <ListItemButton 
+                // onClick={(e) => {
+                //   const inrText = e.target.innerText;
+                //   // setFeedSearchTerm(inrText);
+                //   navigateFeedSearch({inrText})
+                //   }}
+                >
+                <ListItemIcon>
+                  <HomeRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary='Home' />
+              </ListItemButton>
+            </ListItem>
+          {/* {categories.map(({name, icon}) => (
+            <ListItem key={name} disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  // setFeedSearchTerm(inrText);
+                  navigateFeedSearch({inrText})
+                  }}>
+                <ListItemIcon>
+                  {icon}
+                </ListItemIcon>
+                <ListItemText primary={name} />
+              </ListItemButton>
+            </ListItem>
+          ))} */}
           {['Music', 'Education', 'Podcasts', 'Movies', 'Gaming', 'Live', 'Sports', 'Fashion'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton 
