@@ -5,6 +5,8 @@ import store  from './store';
 import Layout from './Components/Layout';
 import Home from './Pages/Home';
 import VideoDetail from './Components/VideoDetail';
+import SearchedItem from './Components/SearchedItem';
+import ChannelDetail from './Components/ChannelDetail';
 
 function App() {
 
@@ -13,7 +15,8 @@ function App() {
     <Route path='/' element={<Layout/>} >
       <Route index element={<Home/>} />
       <Route path='/videodetail/:id' element={<VideoDetail/>} />
-      {/* <Route path='/product/:productid' element={<Product/>}/> */}
+      <Route path='/search/:keyword' element={<SearchedItem/>} />
+      <Route path='/channelDetail/:channelid' element={<ChannelDetail/>} />
     </Route>
     </>
 

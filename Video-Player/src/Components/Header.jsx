@@ -44,7 +44,7 @@ const drawerWidth = 240;
 //   }),
 // );
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('form')(({ theme }) => ({
   position: 'relative',
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
@@ -60,7 +60,7 @@ const Search = styled('div')(({ theme }) => ({
   borderRadius: '30px',
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled(IconButton)(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
@@ -111,7 +111,14 @@ const AppBar = styled(MuiAppBar, {
 
 export default function Header() {
 
+  const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+
+  function navigateSearch(e) {
+    e.preventDefault();
+    navigate(`/search/${searchTerm}`)
+  }
 
   function navigateHome() {
     navigate('/');
@@ -129,8 +136,8 @@ export default function Header() {
     justifyContent: 'center',
   }));
 
-  const [open, setOpen] = useState(false);
 
+  console.log(searchTerm)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" open={open} sx={{display: 'flex', justifyContent: 'center', height: '80px'}} >
@@ -175,14 +182,20 @@ export default function Header() {
                     // }
                 }} />
           </IconButton>
-          <Search sx={{flexGrow: 1}} >
-            <SearchIconWrapper >
+          <Search sx={{flexGrow: 1}} onSubmit={(e) => navigateSearch(e)} >
+            <SearchIconWrapper type='submit' >
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               sx={{width: '100%'}}
+              value={searchTerm}
+              // defaultValue={''}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                // console.log(searchTerm)
+              }}
             />
           </Search>
           <Box sx={{pl: '20px'}} >

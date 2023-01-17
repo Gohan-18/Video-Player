@@ -25,6 +25,18 @@ export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async () => 
     }
 
 });
+export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', async ({keyword}) => {
+    try {
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video`)
+        const result = await data.json();
+        console.log(result)
+        return result.items;
+    } catch (error) {
+        alert(error)
+    }
+
+});
+
 // export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async (url) => {
 //     try {
 //         const data = await fetch(`${BASE_URL}/${url}`, options)
@@ -58,7 +70,7 @@ const videoSlice = createSlice({
     name: 'homeVideos',
     initialState: {
         homeVideos: [],
-        // videoDetail: [],
+        searchedVideos: [],
         loading: false
     },
     extraReducers:(builder) => {
@@ -69,13 +81,13 @@ const videoSlice = createSlice({
             state.homeVideos = action.payload;
             state.loading = false;
         })
-        // builder.addCase(fetchVideoDetails.pending, (state) => {
-        //     state.loading = true;
-        // })
-        // builder.addCase(fetchVideoDetails.fulfilled, (state, action) => {
-        //     state.videoDetail = action.payload;
-        //     state.loading = false;
-        // })
+        builder.addCase(fetchSearchedVideos.pending, (state) => {
+            state.loading = true;
+        })
+        builder.addCase(fetchSearchedVideos.fulfilled, (state, action) => {
+            state.searchedVideos = action.payload;
+            state.loading = false;
+        })
     }
 })
 
