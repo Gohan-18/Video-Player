@@ -247,11 +247,7 @@ export default function Header() {
         <List>
             <ListItem disablePadding>
               <ListItemButton 
-                // onClick={(e) => {
-                //   const inrText = e.target.innerText;
-                //   // setFeedSearchTerm(inrText);
-                //   navigateFeedSearch({inrText})
-                //   }}
+                onClick={navigateHome}
                 >
                 <ListItemIcon>
                   <HomeRoundedIcon />
