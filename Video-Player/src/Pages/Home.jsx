@@ -6,6 +6,7 @@ import { useTheme } from '@emotion/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import InfiniteScroll from "react-infinite-scroll-component";
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const Home = () => {
@@ -39,14 +40,18 @@ const Home = () => {
   // console.log(now);
 
   return (
-    <>
+    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
     <CssBaseline/>
+    {/* <InfiniteScroll dataLength={homeVideos?.length} loader={<CircularProgress sx={{margin: 'auto'}} />} hasMore={true} > */}
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-      {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
-      <Grid container spacing={3}>
+    {/* <InfiniteScroll dataLength={homeVideos.length} loader={<CircularProgress sx={{mt:'10px'}} />} hasMore={true} > */}
 
+      {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
+      
+      <Grid container spacing={3}>
         {homeVideos?.map(({snippet,id}) => {
           return (
+            
             <Grid item key={id.videoId} xs={12} sm={6} md={3} >
               <Card 
                 sx={{
@@ -145,12 +150,15 @@ const Home = () => {
                 </CardActionArea>
               </Card>
             </Grid>
+            
           )
         })}
-
+      
       </Grid>}
+      {/* </InfiniteScroll> */}
     </Container>
-    </>
+    {/* </InfiniteScroll> */}
+    </Box>
   )
 }
 

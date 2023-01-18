@@ -34,6 +34,7 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
 
 const drawerWidth = 220;
+const xsDrawerWidth = 80;
 
 // const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 //   ({ theme, open }) => ({
@@ -123,6 +124,7 @@ export default function Header() {
 
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [feedTerm, setFeedTerm] = useState('');
   const navigate = useNavigate();
 
   function navigateSearch(e) {
@@ -147,6 +149,7 @@ export default function Header() {
     justifyContent: 'center',
   }));
 
+  console.log(feedTerm);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -174,22 +177,22 @@ export default function Header() {
                 display: {
                     xs: 'none',
                     sm: 'flex'
+                },
+                '&:hover': {
+                    // '&.MuiButtonBase-root': {
+                    //     fill: '#c1121f',
+                    //     color: '#c1121f',
+                    // },
+                    backgroundColor: '#fff'
                 }
-                // '&:hover': {
-                //     '&.MuiButtonBase-root': {
-                //         fill: '#c1121f',
-                //         color: '#c1121f',
-                //     },
-                //     backgroundColor: '#fff'
-                // }
                 }}>
             <YouTubeIcon 
                 fontSize='medium' 
                 sx={{
                     fill: '#fff',
-                    // '&:hover': {
-                    //     fill: '#c1121f'
-                    // }
+                    '&:hover': {
+                        fill: '#c1121f'
+                    }
                 }} />
           </IconButton>
           <Search sx={{flexGrow: 1}} onSubmit={(e) => navigateSearch(e)} >
@@ -219,7 +222,7 @@ export default function Header() {
           width:drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: drawerWidth,
+            width:drawerWidth,
             boxSizing: 'border-box',
           },
         }}
@@ -240,21 +243,22 @@ export default function Header() {
                 <ListItemIcon>
                   <HomeRoundedIcon sx={{width:'24px'}}/>
                 </ListItemIcon>
-                <ListItemText sx={{fontSize:'8px'}} primary='Home' />
+                <ListItemText  primary='Home' />
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding>
+            <ListItem disablePadding >
               <ListItemButton 
                 onClick={(e) => {
                   const inrText = e.target.innerText;
+                  setFeedTerm(inrText);
                   navigateFeedSearch({inrText})
                   }}
                 >
                 <ListItemIcon  >
                   <WhatshotOutlinedIcon sx={{width:'24px'}} />
                 </ListItemIcon>
-                <ListItemText sx={{fontSize:'16px'}} primary='Trending' />
+                <ListItemText  primary='Trending' />
               </ListItemButton>
             </ListItem>
 
@@ -268,7 +272,7 @@ export default function Header() {
                 <ListItemIcon>
                   <MusicNoteIcon sx={{width:'24px'}}/>
                 </ListItemIcon>
-                <ListItemText primary='Music' />
+                <ListItemText  primary='Music' />
               </ListItemButton>
             </ListItem>
 
@@ -296,7 +300,7 @@ export default function Header() {
                 <ListItemIcon>
                   <GraphicEqIcon sx={{width:'24px'}} />
                 </ListItemIcon>
-                <ListItemText primary='Podcasts' />
+                <ListItemText  primary='Podcasts' />
               </ListItemButton>
             </ListItem>
 
@@ -310,7 +314,7 @@ export default function Header() {
                 <ListItemIcon>
                   <OndemandVideoIcon sx={{width:'24px'}} />
                 </ListItemIcon>
-                <ListItemText primary='Movie' />
+                <ListItemText  primary='Movie' />
               </ListItemButton>
             </ListItem>
 
@@ -324,7 +328,7 @@ export default function Header() {
                 <ListItemIcon>
                   <SportsEsportsIcon sx={{width:'24px'}}/>
                 </ListItemIcon>
-                <ListItemText primary='Gaming' />
+                <ListItemText  primary='Gaming' />
               </ListItemButton>
             </ListItem>
 
@@ -352,14 +356,15 @@ export default function Header() {
                 <ListItemIcon>
                   <FitnessCenterIcon sx={{width:'24px'}}/>
                 </ListItemIcon>
-                <ListItemText primary='Sports' />
+                <ListItemText  primary='Sports' />
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding>
+            <ListItem disablePadding sx={{backgroundColor: '#c1121f', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <ListItemButton 
                 onClick={(e) => {
                   const inrText = e.target.innerText;
+
                   navigateFeedSearch({inrText})
                   }}
                 >

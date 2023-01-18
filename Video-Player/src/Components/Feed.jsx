@@ -20,7 +20,7 @@ export default function Feed() {
         dispatch(fetchSearchedVideos({keyword}));
     }, [keyword])
 
-    console.log(searchedVideos)
+    // console.log(searchedVideos)
 
     const navigateVideo = ({id,snippet}) => {
         navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
