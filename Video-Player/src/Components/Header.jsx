@@ -22,24 +22,18 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
-import CodeIcon from '@mui/icons-material/Code';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import SchoolIcon from '@mui/icons-material/School';
-import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
-import { categories } from '../utils/SidebarList';
 
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 // const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 //   ({ theme, open }) => ({
@@ -129,7 +123,6 @@ export default function Header() {
 
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [feedSearchTerm, setFeedSearchTerm] = useState('');
   const navigate = useNavigate();
 
   function navigateSearch(e) {
@@ -138,8 +131,6 @@ export default function Header() {
   }
 
   function navigateFeedSearch({inrText}) {
-    // setFeedSearchTerm(e.target.innerText);
-    console.log(inrText);
     navigate(`/feed/${inrText}`);
   }
 
@@ -147,11 +138,8 @@ export default function Header() {
     navigate('/');
   }
 
-  const DrawerHeader = styled('div')(({ theme }) => ({
+  const DrawerHeader = styled('div')(() => ({
     display: 'flex',
-    // visibility: 'hidden',
-    // opacity: '0',
-    // zIndex: '-20',
     alignItems: 'center',
     // necessary for content to be below app bar
     // ...theme.mixins.toolbar,
@@ -160,7 +148,6 @@ export default function Header() {
   }));
 
 
-  console.log(searchTerm)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" open={open} sx={{display: 'flex', justifyContent: 'center', height: '80px'}} >
@@ -245,46 +232,143 @@ export default function Header() {
         </DrawerHeader>
         <Divider />
         <List>
+          
             <ListItem disablePadding>
               <ListItemButton 
                 onClick={navigateHome}
                 >
                 <ListItemIcon>
-                  <HomeRoundedIcon />
+                  <HomeRoundedIcon sx={{width:'24px'}}/>
                 </ListItemIcon>
-                <ListItemText primary='Home' />
+                <ListItemText sx={{fontSize:'8px'}} primary='Home' />
               </ListItemButton>
             </ListItem>
-          {/* {categories.map(({name, icon}) => (
-            <ListItem key={name} disablePadding>
+
+            <ListItem disablePadding>
               <ListItemButton 
                 onClick={(e) => {
                   const inrText = e.target.innerText;
-                  // setFeedSearchTerm(inrText);
                   navigateFeedSearch({inrText})
-                  }}>
-                <ListItemIcon>
-                  {icon}
+                  }}
+                >
+                <ListItemIcon  >
+                  <WhatshotOutlinedIcon sx={{width:'24px'}} />
                 </ListItemIcon>
-                <ListItemText primary={name} />
+                <ListItemText sx={{fontSize:'16px'}} primary='Trending' />
               </ListItemButton>
             </ListItem>
-          ))} */}
-          {['Music', 'Education', 'Podcasts', 'Movies', 'Gaming', 'Live', 'Sports', 'Fashion'].map((text, index) => (
-            <ListItem key={text} disablePadding>
+
+            <ListItem disablePadding>
               <ListItemButton 
                 onClick={(e) => {
                   const inrText = e.target.innerText;
-                  // setFeedSearchTerm(inrText);
                   navigateFeedSearch({inrText})
-                  }}>
+                  }}
+                >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <MusicNoteIcon sx={{width:'24px'}}/>
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary='Music' />
               </ListItemButton>
             </ListItem>
-          ))}
+
+            <ListItem disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  navigateFeedSearch({inrText})
+                  }}
+                >
+                <ListItemIcon>
+                  < SchoolIcon sx={{width:'24px'}}/>
+                </ListItemIcon>
+                <ListItemText primary='Education' />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  navigateFeedSearch({inrText})
+                  }}
+                >
+                <ListItemIcon>
+                  <GraphicEqIcon sx={{width:'24px'}} />
+                </ListItemIcon>
+                <ListItemText primary='Podcasts' />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  navigateFeedSearch({inrText})
+                  }}
+                >
+                <ListItemIcon>
+                  <OndemandVideoIcon sx={{width:'24px'}} />
+                </ListItemIcon>
+                <ListItemText primary='Movie' />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  navigateFeedSearch({inrText})
+                  }}
+                >
+                <ListItemIcon>
+                  <SportsEsportsIcon sx={{width:'24px'}}/>
+                </ListItemIcon>
+                <ListItemText primary='Gaming' />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  navigateFeedSearch({inrText})
+                  }}
+                >
+                <ListItemIcon>
+                  <LiveTvIcon sx={{width:'24px'}}/>
+                </ListItemIcon>
+                <ListItemText primary='Live' />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  navigateFeedSearch({inrText})
+                  }}
+                >
+                <ListItemIcon>
+                  <FitnessCenterIcon sx={{width:'24px'}}/>
+                </ListItemIcon>
+                <ListItemText primary='Sports' />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <ListItemButton 
+                onClick={(e) => {
+                  const inrText = e.target.innerText;
+                  navigateFeedSearch({inrText})
+                  }}
+                >
+                <ListItemIcon>
+                  <CheckroomIcon sx={{width:'24px'}}/>
+                </ListItemIcon>
+                <ListItemText primary='Fashion' />
+              </ListItemButton>
+            </ListItem>
         </List>
         <Divider />
       </Drawer>
