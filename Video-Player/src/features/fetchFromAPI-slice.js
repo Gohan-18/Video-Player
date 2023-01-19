@@ -26,6 +26,12 @@ export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async () => 
 
 });
 
+// GET https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=[YOUR_API_KEY] HTTP/1.1
+
+// Authorization: Bearer [YOUR_ACCESS_TOKEN]
+// Accept: application/json
+
+
 export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', async ({keyword}) => {
     try {
         const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=49&q=${keyword}&key=${API_KEY}&part=snippet`)
@@ -38,11 +44,12 @@ export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', asyn
 
 });
 
-export const fetchSearchedChannel = createAsyncThunk('fetch/searchedVideos', async ({channelId}) => {
+export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', async ({channelid}) => {
+    console.log(channelid);
     try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet&id=${channelId}&key=${API_KEY}`)
+        const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelid}&key=${API_KEY}`)
         const result = await data.json();
-        console.log(result)
+        console.log(result.items[0])
         // return result.items;
     } catch (error) {
         alert(error)

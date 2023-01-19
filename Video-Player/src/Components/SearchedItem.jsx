@@ -35,11 +35,11 @@ export default function SearchedItem() {
       {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
       <Grid container spacing={3}>
 
-        {searchedVideos?.map(({snippet,id}) => {
+        {searchedVideos?.map(({snippet,id}, index) => {
           return (
             <>
             {id.channelId && 
-            <Grid item key={id.channelId} xs={12} sm={6} md={3} >
+            <Grid item key={index} xs={12} sm={6} md={3} >
             <Card 
               sx={{
                 borderRadius: '10px', 
@@ -68,16 +68,14 @@ export default function SearchedItem() {
                 >
                 <CardMedia                 
                   component='img' 
-                  image={snippet.thumbnails.high.url} 
+                  image={snippet?.thumbnails?.high?.url} 
                   alt={id.channelId}
                   sx={{
-                    alignSelf:'center', 
-                    width:'100%', 
-                    height:'100%', 
-                    maxHeight: '200px',
+                    padding: '20px',
+                    width:'200px', 
+                    height:'200px', 
                     objectFit:'contain',
-                    borderTopLeftRadius: '10px',
-                    borderTopRightRadius: '10px',
+                    borderRadius: '50%'
                   }}
                 />
                 <CardContent 
@@ -140,7 +138,7 @@ export default function SearchedItem() {
           </Grid> }
 
             {id.videoId && 
-            <Grid item key={id.videoId} xs={12} sm={6} md={3} >
+            <Grid item key={index} xs={12} sm={6} md={3} >
               <Card 
                 sx={{
                   borderRadius: '10px', 
