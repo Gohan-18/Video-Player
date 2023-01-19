@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-// import { fetchSearchedChannel } from '../features/fetchFromAPI-slice';
+import { fetchSearchedChannel } from '../features/fetchFromAPI-slice';
 
 
 export default function ChannelDetail() {
@@ -12,15 +12,15 @@ export default function ChannelDetail() {
   const dispatch = useDispatch();
   const { channelid } = params;
 
-  // useEffect(() => {
-  //   dispatch(fetchSearchedChannel({channelid}));
-  // }, [channelid])
+  useEffect(() => {
+    dispatch(fetchSearchedChannel({channelid}));
+  }, [channelid])
   
 
   return (
     <>
     <Container maxWidth='lg' sx={{pt: '110px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-       <Typography>{channelid}</Typography>
+      <Typography>{channelid}</Typography>
     </Container>
     </>
   )
