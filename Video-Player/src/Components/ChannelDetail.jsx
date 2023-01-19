@@ -1,11 +1,21 @@
 import { Container, Typography } from '@mui/material';
 import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+// import { fetchSearchedChannel } from '../features/fetchFromAPI-slice';
+
 
 export default function ChannelDetail() {
 
   const params = useParams();
+  const dispatch = useDispatch();
   const { channelid } = params;
+
+  // useEffect(() => {
+  //   dispatch(fetchSearchedChannel({channelid}));
+  // }, [channelid])
+  
 
   return (
     <>

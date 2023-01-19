@@ -25,9 +25,10 @@ export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async () => 
     }
 
 });
+
 export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', async ({keyword}) => {
     try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video`)
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=49&q=${keyword}&key=${API_KEY}&part=snippet`)
         const result = await data.json();
         console.log(result)
         return result.items;
@@ -36,6 +37,18 @@ export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', asyn
     }
 
 });
+
+// export const fetchSearchedChannel = createAsyncThunk('fetch/searchedVideos', async ({channelId}) => {
+//     try {
+//         const data = await fetch(`${YOUTUBE_BASE_URL}/channels?id=${channelId}&key=${API_KEY}&part=snippet`)
+//         const result = await data.json();
+//         console.log(result)
+//         // return result.items;
+//     } catch (error) {
+//         alert(error)
+//     }
+//     // channels?part=contentDetails&
+// });
 
 // export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async (url) => {
 //     try {

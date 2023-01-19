@@ -236,7 +236,7 @@ export default function Header() {
         <Divider />
         <List>
           
-            <ListItem disablePadding>
+            <ListItem disablePadding sx={{backgroundColor: '#c1121f', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <ListItemButton 
                 onClick={navigateHome}
                 >
@@ -360,7 +360,7 @@ export default function Header() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{backgroundColor: '#c1121f', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <ListItem disablePadding >
               <ListItemButton 
                 onClick={(e) => {
                   const inrText = e.target.innerText;

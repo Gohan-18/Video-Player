@@ -17,7 +17,7 @@ function App() {
       <Route index element={<Home/>} />
       <Route path='/videodetail/:id' element={<VideoDetail/>} />
       <Route path='/search/:keyword' element={<SearchedItem/>} />
-      <Route path='/channelDetail/:channelid' element={<ChannelDetail/>} />
+      <Route path='/channeldetail/:channelid' element={<ChannelDetail/>} />
       <Route path='/feed/:keyword' element={<Feed/>} />
     </Route>
     </>
