@@ -242,7 +242,7 @@ export default function VideoDetail() {
                         {videoSuggestion?.map(({contentDetails, snippet}) => {
 
                             return (
-                            <Box key={contentDetails.id} sx={{width: '100%'}} >
+                            <Box key={contentDetails?.upload?.videoId} sx={{width: '100%'}} >
                             <CardActionArea sx={{borderRadius: '5px', width: '100%'}} >
                                 <Card 
                                     onClick={(e) =>{ 

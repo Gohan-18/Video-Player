@@ -34,7 +34,7 @@ export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async () => 
 
 export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', async ({keyword}) => {
     try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=49&q=${keyword}&key=${API_KEY}&part=snippet`)
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet`)
         const result = await data.json();
         console.log(result)
         return result.items;
@@ -49,8 +49,8 @@ export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', as
     try {
         const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelid}&key=${API_KEY}`)
         const result = await data.json();
-        console.log(result.items[0])
-        // return result.items;
+        // console.log(result.items[0])
+        return result.items[0];
     } catch (error) {
         alert(error)
     }
@@ -91,6 +91,7 @@ const videoSlice = createSlice({
     initialState: {
         homeVideos: [],
         searchedVideos: [],
+        searchedChannel: {},
         loading: false
     },
     extraReducers:(builder) => {
@@ -106,6 +107,13 @@ const videoSlice = createSlice({
         })
         builder.addCase(fetchSearchedVideos.fulfilled, (state, action) => {
             state.searchedVideos = action.payload;
+            state.loading = false;
+        })
+        builder.addCase(fetchSearchedChannel.pending, (state) => {
+            state.loading = true;
+        })
+        builder.addCase(fetchSearchedChannel.fulfilled, (state, action) => {
+            state.searchedChannel = action.payload;
             state.loading = false;
         })
     }

@@ -35,13 +35,16 @@ export default function SearchedItem() {
       {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
       <Grid container spacing={3}>
 
-        {searchedVideos?.map(({snippet,id}, index) => {
+        {searchedVideos?.map(({snippet,id}) => {
           return (
-            <>
+            <Grid item container key={id?.videoId ? id?.videoId : id?.channelId}  xs={12} sm={6} md={3} >
             {id.channelId && 
-            <Grid item key={index} xs={12} sm={6} md={3} >
+            <Box sx={{width: '100%', height: '100%'}} >
             <Card 
               sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 borderRadius: '10px', 
                 background: 'none', 
                 margine: '10px',
@@ -71,18 +74,19 @@ export default function SearchedItem() {
                   image={snippet?.thumbnails?.high?.url} 
                   alt={id.channelId}
                   sx={{
-                    padding: '20px',
+                    padding: '10px',
                     width:'200px', 
                     height:'200px', 
                     objectFit:'contain',
-                    borderRadius: '50%'
+                    borderRadius: '50%',
+                    mb: '8px'
                   }}
                 />
                 <CardContent 
                   sx={{
                     display: 'flex', 
                     flexDirection: 'column', 
-                    alignItems: 'flex-start', 
+                    alignItems: 'center', 
                     justifyContent: 'center', 
                     width: '100%'
                   }} >
@@ -101,7 +105,7 @@ export default function SearchedItem() {
                   }}>
                   {snippet.title}
                   </Typography>
-                  <Typography  
+                  {/* <Typography  
                     gutterBottom 
                     paragraph
                     color='text.secondary'
@@ -115,7 +119,7 @@ export default function SearchedItem() {
                       fontWeight: '500'
                   }}>
                     {snippet.channelTitle}
-                  </Typography>
+                  </Typography> */}
                   <Typography  
                     gutterBottom 
                     paragraph
@@ -129,16 +133,16 @@ export default function SearchedItem() {
                       fontSize: '10px', 
                       fontWeight: '500'
                   }}>
-                    Published at: {snippet.publishedAt.slice(0,10)}
+                    Created at: {snippet.publishedAt.slice(0,10)}
                   </Typography>
                 </CardContent>
 
               </CardActionArea>
             </Card>
-          </Grid> }
+          </Box> }
 
-            {id.videoId && 
-            <Grid item key={index} xs={12} sm={6} md={3} >
+            {id?.videoId && 
+            <Box sx={{width: '100%'}} >
               <Card 
                 sx={{
                   borderRadius: '10px', 
@@ -235,8 +239,8 @@ export default function SearchedItem() {
 
                 </CardActionArea>
               </Card>
-            </Grid>}
-            </>
+            </Box>}
+            </Grid>
           )
         })}
 
