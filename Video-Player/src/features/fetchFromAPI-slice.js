@@ -34,7 +34,7 @@ export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async () => 
 
 export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', async ({keyword}) => {
     try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video`)
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video,channel`)
         const result = await data.json();
         console.log(result)
         return result.items;

@@ -23,13 +23,13 @@ export default function SearchedItem() {
 
     console.log(searchedVideos)
 
-    const navigateVideo = ({id,snippet}) => {
-      navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
-    }
+    // const navigateVideo = ({id,snippet}) => {
+    //   navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
+    // }
 
-    const navigateChannel = ({id}) => {
-      navigate(`/channeldetail/${id.channelId}`)
-    }
+    // const navigateChannel = ({id}) => {
+    //   navigate(`/channeldetail/${id.channelId}`)
+    // }
 
   return (
     <>
@@ -37,9 +37,11 @@ export default function SearchedItem() {
       {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
       <Grid container spacing={3}>
 
-        {searchedVideos?.map((item, idx) => {
+        {searchedVideos?.map((item) => {
+          let key = item?.id?.kind === 'youtube#channel' ? item?.id.channelId : item?.id?.videoId;
+          console.log(key);
           return (
-            <Grid item container key={idx}  xs={12} sm={6} md={3} >
+            <Grid item key={key}  xs={12} sm={6} md={3}  >
             {item?.id.channelId && <ChannelCard channelDetail={item} /> }
             {item?.id?.videoId && <VideoCard videos={item} />}
             </Grid>

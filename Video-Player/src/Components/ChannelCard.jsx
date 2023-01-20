@@ -1,9 +1,18 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
+import { useNavigate } from 'react-router-dom'
+
 
 
 export default function ChannelCard({channelDetail}) {
 
+    const navigate = useNavigate();
+
+    const navigateChannel = ({id}) => {
+        navigate(`/channeldetail/${id.channelId}`)
+    }
+
     const { snippet, id } = channelDetail;
+
 
   return (
     <Box key={id?.channelId} sx={{width: '100%', height: '100%'}} >
@@ -30,6 +39,7 @@ export default function ChannelCard({channelDetail}) {
                 display:'flex', 
                 flexDirection:'column', 
                 position: 'relative',
+                padding:'10px'
             }}
             onClick={(e) =>{ 
                 e.stopPropagation();
@@ -41,7 +51,7 @@ export default function ChannelCard({channelDetail}) {
                 image={snippet?.thumbnails?.high?.url} 
                 alt={id.channelId}
                 sx={{
-                padding: '10px',
+                padding: '20px',
                 width:'200px', 
                 height:'200px', 
                 objectFit:'contain',
