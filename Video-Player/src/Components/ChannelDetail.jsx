@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchSearchedChannel } from '../features/fetchFromAPI-slice';
+import CircularProgress from '@mui/material/CircularProgress';
 import VideoCard from './VideoCard';
 
 
@@ -12,19 +13,28 @@ export default function ChannelDetail() {
 
   const params = useParams();
   const dispatch = useDispatch();
-  const {searchedChannel} = useSelector((state) => state?.homeVideos);
-  console.log(searchedChannel);
-  const { contentDetails, id, snippet, statistics: {subscriberCount, hiddenSubscriberCount, videoCount, viewCount} } = searchedChannel;
   const { channelid } = params;
+  const {searchedChannel, loading} = useSelector((state) => state?.homeVideos);
+  console.log(loading);
+  console.log(searchedChannel);
+  const { contentDetails, id, snippet, statistics } = searchedChannel;
+  // const playlistId = contentDetails?.relatedPlaylists?.uploads;
+  // console.log(playlistId)
 
-
-  // useEffect(() => {
-  //   dispatch(fetchSearchedChannel({channelid}));
-  // }, [channelid])
+  useEffect(() => {
+    dispatch(fetchSearchedChannel({channelid}));
+    // dispatch(fetchSearchedChannelPlaylist());
+  }, [channelid])
   
 
   return (
     <>
+    <Box>
+    {loading ? 
+            <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
+                <CircularProgress sx={{mt:'200px'}} />
+            </Container>
+             : 
     <Box sx={{pt: '80px', pb: '60px', display: 'flex', justifyContent: 'center',alignItems: 'center', flexDirection: 'column'}} >
       <Box 
         sx={{
@@ -113,11 +123,12 @@ export default function ChannelDetail() {
               fontSize: '14px', 
               fontWeight: '500',
               color: '#7f7f7f'}}>
-              {parseInt(subscriberCount).toLocaleString()} Subscribers
+              {parseInt(statistics?.subscriberCount).toLocaleString()} Subscribers
           </Typography>
         </CardContent>
         {/* <VideoCard/> */}
       </Box>
+    </Box>}
     </Box>
     </>
   )

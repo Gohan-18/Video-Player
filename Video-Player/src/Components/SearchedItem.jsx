@@ -21,7 +21,7 @@ export default function SearchedItem() {
         dispatch(fetchSearchedVideos({keyword}));
     }, [keyword])
 
-    console.log(searchedVideos)
+    // console.log(searchedVideos)
 
     // const navigateVideo = ({id,snippet}) => {
     //   navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
@@ -39,7 +39,7 @@ export default function SearchedItem() {
 
         {searchedVideos?.map((item) => {
           let key = item?.id?.kind === 'youtube#channel' ? item?.id.channelId : item?.id?.videoId;
-          console.log(key);
+          // console.log(key);
           return (
             <Grid item key={key}  xs={12} sm={6} md={3}  >
             {item?.id.channelId && <ChannelCard channelDetail={item} /> }
