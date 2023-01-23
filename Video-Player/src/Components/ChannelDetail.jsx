@@ -3,28 +3,53 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchSearchedChannel, fetchSearchedChannelPlaylist } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import VideoCard from './VideoCard';
+import { useState } from 'react';
 
 
 export default function ChannelDetail() {
 
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate= useNavigate();
   const { channelid } = params;
   const {searchedChannel, loading} = useSelector((state) => state?.homeVideos);
-  const {searchedChannelPlaylist} = useSelector((state) => state?.homeVideos);
+  const {searchedChannelPlaylist, searchedChannelPlaylistLoader} = useSelector((state) => state?.homeVideos);
   console.log(searchedChannelPlaylist);
-  // console.log(searchedChannel);
+    // console.log(searchedChannel);
   const { contentDetails, id, snippet, statistics } = searchedChannel;
-  const playlistId = contentDetails?.relatedPlaylists?.uploads;
+  const playlistId = getPlaylistId();
+  // const playlistId = contentDetails?.relatedPlaylists?.uploads;
+
+  const navigateVideo = ({item}) => {
+      navigate(`/videodetail/${item?.snippet?.resourceId?.videoId}&${item?.snippet?.channelId}`)
+  }
   // console.log(playlistId)
 
   // useEffect(() => {
-  //   dispatch(fetchSearchedChannel({channelid}));
-  // }, [channelid])
+    
+  // }, [loading])
+
+  useEffect(() => {
+    dispatch(fetchSearchedChannel({channelid}));
+    // let playlistId = contentDetails?.relatedPlaylists?.uploads;
+    // dispatch(fetchSearchedChannelPlaylist({channelid}));
+      setTimeout(() => {
+        dispatch(fetchSearchedChannelPlaylist(playlistId));
+      }, 4000)
+  }, [channelid])
+
+  function getPlaylistId () {
+    return contentDetails?.relatedPlaylists?.uploads;
+  }
+
+
+
+
+  
 
   // if(contentDetails?.relatedPlaylists?.uploads) {
   //   dispatch(fetchSearchedChannelPlaylist(playlistId));
@@ -69,14 +94,15 @@ export default function ChannelDetail() {
           image={snippet?.thumbnails?.high?.url} 
           alt={id}
           sx={{
-            position: 'fixed',
+            position: 'absolute',
             alignSelf:'center', 
             width:'150px', 
             height:'150px', 
             objectFit:'contain',
             borderRadius: '50%',
             padding: '20px',
-            top: {xs:'110px', sm:'160px'}
+            // top: {xs:'110px', sm:'160px'}
+            top: '-70px'
             // position: 'absolute',
             // left: '43%',
             // bottom: '-50px'
@@ -140,7 +166,9 @@ export default function ChannelDetail() {
           </Typography>
         </CardContent>
         {/* <VideoCard videos={searchedChannelPlaylist} /> */}
-        <Grid Container spacing={2} >
+        <Container maxWidth='lg' sx={{pt:'10px'}} >
+          {/* {searchedChannelPlaylistLoader ? <CircularProgress /> :  */}
+        <Grid container spacing={2} >
         {searchedChannelPlaylist?.map((item) => (
           <Grid item key={item?.snippet?.resourceId?.videoId} xs={12} sm={6} md={3}  >
           <Card 
@@ -166,7 +194,7 @@ export default function ChannelDetail() {
               }}
               onClick={(e) =>{ 
               e.stopPropagation();
-              // navigateVideo({id,snippet});
+              navigateVideo({item});
               }}
               >
               <CardMedia                 
@@ -241,6 +269,7 @@ export default function ChannelDetail() {
           </Grid>
         ))}
         </Grid>
+        </Container>
       </Box>
     </Box>}
     </Box>

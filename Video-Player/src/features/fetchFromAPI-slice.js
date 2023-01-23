@@ -45,30 +45,42 @@ export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', asyn
 });
 
 export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', async ({channelid}) => {
-    console.log(channelid);
+    // console.log(channelid);
     try {
         const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelid}&key=${API_KEY}`)
         const result = await data.json();
         // console.log(result.items[0])
         return result.items[0];
     } catch (error) {
-        alert(error)
+        console.log(error)
     }
     // channels?part=contentDetails&
 });
 
-// export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async (playlistId) => {
+// export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async ({channelid}) => {
 //     // console.log(playlistId);
 //     try {
-//         const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}`)
+//         const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&id=${channelid}&key=${API_KEY}`)
 //         const result = await data.json();
 //         // console.log(result)
 //         return result.items;
 //     } catch (error) {
-//         alert(error)
+//         console.log(error)
 //     }
 //     // channels?part=contentDetails&
 // });
+export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async (playlistId) => {
+    console.log(playlistId);
+    try {
+        const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}`)
+        const result = await data.json();
+        // console.log(result)
+        return result.items;
+    } catch (error) {
+        console.log(error)
+    }
+    // channels?part=contentDetails&
+});
 
 // export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async (url) => {
 //     try {
@@ -106,6 +118,7 @@ const videoSlice = createSlice({
         searchedVideos: [],
         searchedChannel: {},
         searchedChannelPlaylist: [],
+        searchedChannelPlaylistLoader: false,
         loading: false
     },
     extraReducers:(builder) => {
@@ -131,11 +144,11 @@ const videoSlice = createSlice({
             state.loading = false;
         })
         builder.addCase(fetchSearchedChannelPlaylist.pending, (state) => {
-            state.loading = true;
+            state.searchedChannelPlaylistLoader = true;
         })
         builder.addCase(fetchSearchedChannelPlaylist.fulfilled, (state, action) => {
             state.searchedChannelPlaylist = action.payload;
-            state.loading = false;
+            state.searchedChannelPlaylistLoader = false;
         })
     }
 })
