@@ -38,11 +38,11 @@ export default function SearchedItem() {
       <Grid container spacing={3}>
 
         {searchedVideos?.map((item) => {
-          let key = item?.id?.kind === 'youtube#channel' ? item?.id.channelId : item?.id?.videoId;
+          let key = item?.id?.kind === 'youtube#channel' ? item?.id?.channelId : item?.id?.videoId;
           // console.log(key);
           return (
             <Grid item key={key}  xs={12} sm={6} md={3}  >
-            {item?.id.channelId && <ChannelCard channelDetail={item} /> }
+            {item?.id?.channelId && <ChannelCard channelDetail={item} /> }
             {item?.id?.videoId && <VideoCard videos={item} />}
             </Grid>
           )

@@ -149,7 +149,7 @@ export default function Header() {
     justifyContent: 'center',
   }));
 
-  console.log(feedTerm);
+  // console.log(feedTerm);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

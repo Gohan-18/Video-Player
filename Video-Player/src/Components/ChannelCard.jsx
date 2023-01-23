@@ -49,7 +49,7 @@ export default function ChannelCard({channelDetail}) {
             <CardMedia                 
                 component='img' 
                 image={snippet?.thumbnails?.high?.url} 
-                alt={id.channelId}
+                alt={id?.channelId}
                 sx={{
                 padding: '20px',
                 width:'200px', 
@@ -80,7 +80,7 @@ export default function ChannelCard({channelDetail}) {
                     fontSize: '14px', 
                     fontWeight: '500'
                 }}>
-                {snippet.title}
+                {snippet?.title}
                 </Typography>
                 {/* <Typography  
                 gutterBottom 

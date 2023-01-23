@@ -1,10 +1,10 @@
-import { CardContent, CardMedia, Container, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchSearchedChannel } from '../features/fetchFromAPI-slice';
+import { fetchSearchedChannel, fetchSearchedChannelPlaylist } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import VideoCard from './VideoCard';
 
@@ -15,16 +15,29 @@ export default function ChannelDetail() {
   const dispatch = useDispatch();
   const { channelid } = params;
   const {searchedChannel, loading} = useSelector((state) => state?.homeVideos);
-  console.log(loading);
-  console.log(searchedChannel);
+  const {searchedChannelPlaylist} = useSelector((state) => state?.homeVideos);
+  console.log(searchedChannelPlaylist);
+  // console.log(searchedChannel);
   const { contentDetails, id, snippet, statistics } = searchedChannel;
-  // const playlistId = contentDetails?.relatedPlaylists?.uploads;
+  const playlistId = contentDetails?.relatedPlaylists?.uploads;
   // console.log(playlistId)
 
-  useEffect(() => {
-    dispatch(fetchSearchedChannel({channelid}));
-    // dispatch(fetchSearchedChannelPlaylist());
-  }, [channelid])
+  // useEffect(() => {
+  //   dispatch(fetchSearchedChannel({channelid}));
+  // }, [channelid])
+
+  // if(contentDetails?.relatedPlaylists?.uploads) {
+  //   dispatch(fetchSearchedChannelPlaylist(playlistId));
+  // }
+
+  // useEffect(() => {
+  //   dispatch(fetchSearchedChannelPlaylist(playlistId));
+  // }, [channelid])
+
+
+  // setTimeout(() => {
+  //   dispatch(fetchSearchedChannelPlaylist(playlistId));
+  // }, 5000)
   
 
   return (
@@ -126,7 +139,108 @@ export default function ChannelDetail() {
               {parseInt(statistics?.subscriberCount).toLocaleString()} Subscribers
           </Typography>
         </CardContent>
-        {/* <VideoCard/> */}
+        {/* <VideoCard videos={searchedChannelPlaylist} /> */}
+        <Grid Container spacing={2} >
+        {searchedChannelPlaylist?.map((item) => (
+          <Grid item key={item?.snippet?.resourceId?.videoId} xs={12} sm={6} md={3}  >
+          <Card 
+          sx={{
+              borderRadius: '10px', 
+              background: 'none', 
+              margine: '10px',
+              transition: '0.5s',
+              '&:hover': {
+              transform: {
+                  xs: 'scale(1.05,1.05)',
+                  md:'scale(1.1,1.1)'
+              },
+              backgroundColor: '#333533',
+              }
+              }} >
+          <CardActionArea
+              sx={{
+              height:'100%', 
+              display:'flex', 
+              flexDirection:'column', 
+              position: 'relative',
+              }}
+              onClick={(e) =>{ 
+              e.stopPropagation();
+              // navigateVideo({id,snippet});
+              }}
+              >
+              <CardMedia                 
+              component='img' 
+              image={item?.snippet?.thumbnails?.high?.url} 
+              alt={item?.snippet?.resourceId?.videoId}
+              sx={{
+                  alignSelf:'center', 
+                  width:'100%', 
+                  height:'100%', 
+                  objectFit:'contain',
+                  borderTopLeftRadius: '10px',
+                  borderTopRightRadius: '10px',
+              }}
+              />
+              <CardContent 
+              sx={{
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'flex-start', 
+                  justifyContent: 'center', 
+                  width: '100%'
+              }} >
+              <Typography 
+                  variant='h5' 
+                  component='h2' 
+                  gutterBottom 
+                  sx={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: '2',
+                  WebkitBoxOrient: 'vertical',
+                  fontSize: '14px', 
+                  fontWeight: '500'
+              }}>
+              {item?.snippet?.title}
+              </Typography>
+              <Typography  
+                  gutterBottom 
+                  paragraph
+                  color='text.secondary'
+                  sx={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: '2',
+                  WebkitBoxOrient: 'vertical',
+                  fontSize: '12px', 
+                  fontWeight: '500'
+              }}>
+                  {item?.snippet.channelTitle}
+              </Typography>
+              {/* <Typography  
+                  gutterBottom 
+                  paragraph
+                  color='text.secondary'
+                  sx={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: '2',
+                  WebkitBoxOrient: 'vertical',
+                  fontSize: '10px', 
+                  fontWeight: '500'
+              }}>
+                  Published at: {searchedChannelPlaylist?.snippet.publishedAt.slice(0,10)}
+              </Typography> */}
+              </CardContent>
+          </CardActionArea>
+          </Card>
+          </Grid>
+        ))}
+        </Grid>
       </Box>
     </Box>}
     </Box>

@@ -57,13 +57,13 @@ export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', as
     // channels?part=contentDetails&
 });
 
-// export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async () => {
+// export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async (playlistId) => {
 //     // console.log(playlistId);
 //     try {
-//         const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?part=snippet&id=UUm1hOHNgH6x8MF22676CmZA&key=${API_KEY}`)
+//         const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}`)
 //         const result = await data.json();
-//         console.log(result)
-//         return result.items[0];
+//         // console.log(result)
+//         return result.items;
 //     } catch (error) {
 //         alert(error)
 //     }
@@ -130,13 +130,13 @@ const videoSlice = createSlice({
             state.searchedChannel = action.payload;
             state.loading = false;
         })
-        // builder.addCase(fetchSearchedChannelPlaylist.pending, (state) => {
-        //     state.loading = true;
-        // })
-        // builder.addCase(fetchSearchedChannelPlaylist.fulfilled, (state, action) => {
-        //     state.searchedChannelPlaylist = action.payload;
-        //     state.loading = false;
-        // })
+        builder.addCase(fetchSearchedChannelPlaylist.pending, (state) => {
+            state.loading = true;
+        })
+        builder.addCase(fetchSearchedChannelPlaylist.fulfilled, (state, action) => {
+            state.searchedChannelPlaylist = action.payload;
+            state.loading = false;
+        })
     }
 })
 
