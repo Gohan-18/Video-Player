@@ -26,6 +26,10 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchHomeVideos())
   }, [])
+
+  function fetchData () {
+    console.log('hello world')
+  }
   
 
   // if(!homeVideos?.length){
@@ -42,7 +46,13 @@ const Home = () => {
   return (
     <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
     <CssBaseline/>
-    {/* <InfiniteScroll dataLength={homeVideos?.length} loader={<CircularProgress sx={{margin: 'auto'}} />} hasMore={true} > */}
+    <InfiniteScroll
+      dataLength={homeVideos?.length} 
+      loader={<CircularProgress sx={{margin: 'auto'}} />} 
+      hasMore={true} 
+      next={fetchData}
+      style={{width: '100%'}}
+    >
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
     {/* <InfiniteScroll dataLength={homeVideos.length} loader={<CircularProgress sx={{mt:'10px'}} />} hasMore={true} > */}
 
@@ -157,7 +167,7 @@ const Home = () => {
       </Grid>}
       {/* </InfiniteScroll> */}
     </Container>
-    {/* </InfiniteScroll> */}
+    </InfiniteScroll>
     </Box>
   )
 }

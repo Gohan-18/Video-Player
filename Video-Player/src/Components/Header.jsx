@@ -6,8 +6,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import MuiAppBar from '@mui/material/AppBar';
 import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
@@ -31,6 +29,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+// import { categories } from '../utils/constants';
 
 
 const drawerWidth = 220;
@@ -234,146 +233,177 @@ export default function Header() {
             <Typography>Menu</Typography>
         </DrawerHeader>
         <Divider />
+
+        {/* {categories.map((category) => (
+      <button
+        className="category-btn"
+        onClick={() => setSelectedCategory(category.name)}
+        style={{
+          background: category.name === selectedCategory && "#FC1503",
+          color: "white",
+        }}
+        key={category.name}
+      >
+        <span style={{ color: category.name === selectedCategory ? "white" : "red", marginRight: "15px" }}>
+          {category.icon}
+        </span>
+        <span style={{ opacity: category.name === selectedCategory ? "1" : "0.8" }}>
+          {category.name}
+        </span>
+      </button>
+    ))} */}
+        {/* <List>
+          {categories.map((category) => (
+            <ListItem key={category.name} disablePadding sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} >
+              <ListItemButton>
+                <ListItemIcon>
+                  {category.icon}
+                </ListItemIcon>
+                <ListItemText primary={category.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List> */}
+
         <List>
-          
-            <ListItem disablePadding sx={{backgroundColor: '#c1121f', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <ListItemButton 
-                onClick={navigateHome}
-                >
-                <ListItemIcon>
-                  <HomeRoundedIcon sx={{width:'24px'}}/>
-                </ListItemIcon>
-                <ListItemText  primary='Home' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding sx={{backgroundColor: '#c1121f', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <ListItemButton 
+              onClick={navigateHome}
+              >
+              <ListItemIcon>
+                <HomeRoundedIcon sx={{width:'24px'}}/>
+              </ListItemIcon>
+              <ListItemText  primary='Home' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding >
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  setFeedTerm(inrText);
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon  >
-                  <WhatshotOutlinedIcon sx={{width:'24px'}} />
-                </ListItemIcon>
-                <ListItemText  primary='Trending' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding >
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                setFeedTerm(inrText);
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon  >
+                <WhatshotOutlinedIcon sx={{width:'24px'}} />
+              </ListItemIcon>
+              <ListItemText  primary='Trending' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  <MusicNoteIcon sx={{width:'24px'}}/>
-                </ListItemIcon>
-                <ListItemText  primary='Music' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                <MusicNoteIcon sx={{width:'24px'}}/>
+              </ListItemIcon>
+              <ListItemText  primary='Music' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  < SchoolIcon sx={{width:'24px'}}/>
-                </ListItemIcon>
-                <ListItemText primary='Education' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                < SchoolIcon sx={{width:'24px'}}/>
+              </ListItemIcon>
+              <ListItemText primary='Education' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  <GraphicEqIcon sx={{width:'24px'}} />
-                </ListItemIcon>
-                <ListItemText  primary='Podcasts' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                <GraphicEqIcon sx={{width:'24px'}} />
+              </ListItemIcon>
+              <ListItemText  primary='Podcasts' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  <OndemandVideoIcon sx={{width:'24px'}} />
-                </ListItemIcon>
-                <ListItemText  primary='Movie' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                <OndemandVideoIcon sx={{width:'24px'}} />
+              </ListItemIcon>
+              <ListItemText  primary='Movie' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  <SportsEsportsIcon sx={{width:'24px'}}/>
-                </ListItemIcon>
-                <ListItemText  primary='Gaming' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                <SportsEsportsIcon sx={{width:'24px'}}/>
+              </ListItemIcon>
+              <ListItemText  primary='Gaming' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  <LiveTvIcon sx={{width:'24px'}}/>
-                </ListItemIcon>
-                <ListItemText primary='Live' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                <LiveTvIcon sx={{width:'24px'}}/>
+              </ListItemIcon>
+              <ListItemText primary='Live' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  <FitnessCenterIcon sx={{width:'24px'}}/>
-                </ListItemIcon>
-                <ListItemText  primary='Sports' />
-              </ListItemButton>
-            </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                <FitnessCenterIcon sx={{width:'24px'}}/>
+              </ListItemIcon>
+              <ListItemText  primary='Sports' />
+            </ListItemButton>
+          </ListItem>
 
-            <ListItem disablePadding >
-              <ListItemButton 
-                onClick={(e) => {
-                  const inrText = e.target.innerText;
+          <ListItem disablePadding >
+            <ListItemButton 
+              onClick={(e) => {
+                const inrText = e.target.innerText;
 
-                  navigateFeedSearch({inrText})
-                  }}
-                >
-                <ListItemIcon>
-                  <CheckroomIcon sx={{width:'24px'}}/>
-                </ListItemIcon>
-                <ListItemText primary='Fashion' />
-              </ListItemButton>
-            </ListItem>
+                navigateFeedSearch({inrText})
+                }}
+              >
+              <ListItemIcon>
+                <CheckroomIcon sx={{width:'24px'}}/>
+              </ListItemIcon>
+              <ListItemText primary='Fashion' />
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
       </Drawer>
