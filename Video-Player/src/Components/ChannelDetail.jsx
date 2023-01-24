@@ -16,7 +16,7 @@ export default function ChannelDetail() {
   const dispatch = useDispatch();
   const navigate= useNavigate();
   const { channelid } = params;
-  const {searchedChannel, loading} = useSelector((state) => state?.homeVideos);
+  const {searchedChannel, loading, playlistId} = useSelector((state) => state?.homeVideos);
   const {searchedChannelPlaylist, searchedChannelPlaylistLoader} = useSelector((state) => state?.homeVideos);
   console.log(searchedChannelPlaylist);
     // console.log(searchedChannel);
@@ -34,7 +34,7 @@ export default function ChannelDetail() {
 
   useEffect(() => {
     dispatch(fetchSearchedChannel({channelid}));
-    dispatch(fetchSearchedChannelPlaylist(contentDetails?.relatedPlaylists?.uploads));
+    dispatch(fetchSearchedChannelPlaylist(playlistId));
   }, [channelid])
 
   // if(contentDetails?.relatedPlaylists?.uploads) {
