@@ -21,7 +21,6 @@ export default function ChannelDetail() {
   console.log(searchedChannelPlaylist);
     // console.log(searchedChannel);
   const { contentDetails, id, snippet, statistics } = searchedChannel;
-  const playlistId = getPlaylistId();
   // const playlistId = contentDetails?.relatedPlaylists?.uploads;
 
   const navigateVideo = ({item}) => {
@@ -35,21 +34,8 @@ export default function ChannelDetail() {
 
   useEffect(() => {
     dispatch(fetchSearchedChannel({channelid}));
-    // let playlistId = contentDetails?.relatedPlaylists?.uploads;
-    // dispatch(fetchSearchedChannelPlaylist({channelid}));
-      setTimeout(() => {
-        dispatch(fetchSearchedChannelPlaylist(playlistId));
-      }, 4000)
+    dispatch(fetchSearchedChannelPlaylist(contentDetails?.relatedPlaylists?.uploads));
   }, [channelid])
-
-  function getPlaylistId () {
-    return contentDetails?.relatedPlaylists?.uploads;
-  }
-
-
-
-
-  
 
   // if(contentDetails?.relatedPlaylists?.uploads) {
   //   dispatch(fetchSearchedChannelPlaylist(playlistId));
@@ -167,7 +153,7 @@ export default function ChannelDetail() {
         </CardContent>
         {/* <VideoCard videos={searchedChannelPlaylist} /> */}
         <Container maxWidth='lg' sx={{pt:'10px'}} >
-          {/* {searchedChannelPlaylistLoader ? <CircularProgress /> :  */}
+          {searchedChannelPlaylistLoader ? <CircularProgress /> : 
         <Grid container spacing={2} >
         {searchedChannelPlaylist?.map((item) => (
           <Grid item key={item?.snippet?.resourceId?.videoId} xs={12} sm={6} md={3}  >
@@ -268,7 +254,7 @@ export default function ChannelDetail() {
           </Card>
           </Grid>
         ))}
-        </Grid>
+        </Grid>}
         </Container>
       </Box>
     </Box>}

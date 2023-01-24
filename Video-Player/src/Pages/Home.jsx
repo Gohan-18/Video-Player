@@ -1,7 +1,7 @@
 import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Box, Typography, CssBaseline } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Components/Footer';
-import { fetchHomeVideos } from '../features/fetchFromAPI-slice';
+import { fetchHomeVideos, fetchMoreHomeVideos } from '../features/fetchFromAPI-slice';
 import { useTheme } from '@emotion/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
   // console.log(homeVideoList)
-  const { homeVideos, loading } = homeVideoList;
+  const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
 
@@ -29,6 +29,7 @@ const Home = () => {
 
   function fetchData () {
     console.log('hello world')
+    dispatch(fetchMoreHomeVideos())
   }
   
 
@@ -44,15 +45,15 @@ const Home = () => {
   // console.log(now);
 
   return (
-    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} >
     <CssBaseline/>
     <InfiniteScroll
       dataLength={homeVideos?.length} 
-      loader={<CircularProgress sx={{margin: 'auto'}} />} 
+      loader={<CircularProgress  />} 
       hasMore={true} 
       next={fetchData}
-      style={{width: '100%'}}
-    >
+      style={{width: '100%',}}
+    >{
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
     {/* <InfiniteScroll dataLength={homeVideos.length} loader={<CircularProgress sx={{mt:'10px'}} />} hasMore={true} > */}
 
@@ -166,7 +167,7 @@ const Home = () => {
       
       </Grid>}
       {/* </InfiniteScroll> */}
-    </Container>
+    </Container>}
     </InfiniteScroll>
     </Box>
   )

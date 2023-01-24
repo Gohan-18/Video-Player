@@ -16,6 +16,7 @@ export default function SearchedItem() {
     const navigate= useNavigate();
     const searchedVideoList = useSelector((state) => state?.homeVideos);
     const { searchedVideos, loading } = searchedVideoList;
+    console.log(searchedVideos);
 
     useEffect(() => {
         dispatch(fetchSearchedVideos({keyword}));

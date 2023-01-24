@@ -19,7 +19,18 @@ export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async () => 
         const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q='new videos'&key=${API_KEY}&part=snippet&type=video`)
         const result = await data.json();
         // console.log(result)
-        return result.items;
+        return result;
+    } catch (error) {
+        alert(error)
+    }
+
+});
+export const fetchMoreHomeVideos = createAsyncThunk('fetch/moreHomeVideos', async () => {
+    try {
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q='new videos'&key=${API_KEY}&part=snippet&type=video`)
+        const result = await data.json();
+        // console.log(result)
+        return result;
     } catch (error) {
         alert(error)
     }
@@ -47,7 +58,7 @@ export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', asyn
 export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', async ({channelid}) => {
     // console.log(channelid);
     try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelid}&key=${API_KEY}`)
+        const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet,contentDetails,statistics&id=${channelid}&key=${API_KEY}`)
         const result = await data.json();
         // console.log(result.items[0])
         return result.items[0];
@@ -115,6 +126,7 @@ const videoSlice = createSlice({
     name: 'homeVideos',
     initialState: {
         homeVideos: [],
+        nextPageToken : '',
         searchedVideos: [],
         searchedChannel: {},
         searchedChannelPlaylist: [],
@@ -126,8 +138,17 @@ const videoSlice = createSlice({
             state.loading = true;
         })
         builder.addCase(fetchHomeVideos.fulfilled, (state, action) => {
-            state.homeVideos = action.payload;
+            state.homeVideos = action.payload.items;
+            // console.log(state.homeVideos)
+            state.nextPageToken = action.payload.nextPageToken;
+            // console.log(state.nextPageToken);
             state.loading = false;
+        })
+        builder.addCase(fetchMoreHomeVideos.fulfilled, (state, action) => {
+            state.homeVideos = [...state.homeVideos, ...action.payload.items];
+            console.log(state.homeVideos)
+            state.nextPageToken = action.payload.nextPageToken;
+            console.log(state.nextPageToken);
         })
         builder.addCase(fetchSearchedVideos.pending, (state) => {
             state.loading = true;
