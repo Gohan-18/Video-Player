@@ -35,7 +35,7 @@ export default function ChannelDetail() {
   useEffect(() => {
     dispatch(fetchSearchedChannel({channelid}));
     // setTimeout(() => {
-    //   dispatch(fetchSearchedChannelPlaylist(playlistId));
+    dispatch(fetchSearchedChannelPlaylist(playlistId));
     // }, 1000)
   }, [channelid])
 

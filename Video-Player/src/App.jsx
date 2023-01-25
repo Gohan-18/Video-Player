@@ -26,11 +26,13 @@ function App() {
   ))
 
   return (
-    // <AuthProvider>
-      <Provider store={store}>
-        <RouterProvider router={router}/>
-      </Provider>
-    // </AuthProvider>
+    
+    <Provider store={store}>
+      {/* <AuthProvider> */}
+      <RouterProvider router={router}/>
+      {/* </AuthProvider> */}
+    </Provider>
+    
     
   )
 }

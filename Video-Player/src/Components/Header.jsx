@@ -132,6 +132,7 @@ export default function Header() {
   }
 
   function navigateFeedSearch({inrText}) {
+    setFeedTerm(inrText);
     navigate(`/feed/${inrText}`);
   }
 

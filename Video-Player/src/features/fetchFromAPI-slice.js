@@ -69,18 +69,6 @@ export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', as
     // channels?part=contentDetails&
 });
 
-// export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async ({channelid}) => {
-//     // console.log(playlistId);
-//     try {
-//         const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&id=${channelid}&key=${API_KEY}`)
-//         const result = await data.json();
-//         // console.log(result)
-//         return result.items;
-//     } catch (error) {
-//         console.log(error)
-//     }
-//     // channels?part=contentDetails&
-// });
 export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async (playlistId) => {
     console.log(playlistId);
     try {
@@ -94,6 +82,18 @@ export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChan
     // channels?part=contentDetails&
 });
 
+// export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async ({channelid}) => {
+//     // console.log(playlistId);
+//     try {
+//         const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&id=${channelid}&key=${API_KEY}`)
+//         const result = await data.json();
+//         // console.log(result)
+//         return result.items;
+//     } catch (error) {
+//         console.log(error)
+//     }
+//     // channels?part=contentDetails&
+// });
 // export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async (url) => {
 //     try {
 //         const data = await fetch(`${BASE_URL}/${url}`, options)
@@ -165,7 +165,7 @@ const videoSlice = createSlice({
         builder.addCase(fetchSearchedChannel.fulfilled, (state, action) => {
             state.searchedChannel = action.payload;
             state.playlistId = action.payload.contentDetails.relatedPlaylists.uploads;
-            state.loading = false;
+            // state.loading = false;
         })
         builder.addCase(fetchSearchedChannelPlaylist.pending, (state) => {
             state.searchedChannelPlaylistLoader = true;
