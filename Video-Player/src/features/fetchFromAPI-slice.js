@@ -25,11 +25,12 @@ export const fetchHomeVideos = createAsyncThunk('fetch/homeVideos', async () => 
     }
 
 });
-export const fetchMoreHomeVideos = createAsyncThunk('fetch/moreHomeVideos', async () => {
+export const fetchMoreHomeVideos = createAsyncThunk('fetch/moreHomeVideos', async (nextPageToken) => {
+    console.log(nextPageToken)
     try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q='new videos'&key=${API_KEY}&part=snippet&type=video`)
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q='new videos'&key=${API_KEY}&part=snippet&type=video&pageToken=${nextPageToken}`)
         const result = await data.json();
-        // console.log(result)
+        console.log(result)
         return result;
     } catch (error) {
         alert(error)
@@ -147,7 +148,7 @@ const videoSlice = createSlice({
         })
         builder.addCase(fetchMoreHomeVideos.fulfilled, (state, action) => {
             state.homeVideos = [...state.homeVideos, ...action.payload.items];
-            console.log(state.homeVideos)
+            // console.log(state.homeVideos)
             state.nextPageToken = action.payload.nextPageToken;
             console.log(state.nextPageToken);
         })

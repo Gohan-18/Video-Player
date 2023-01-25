@@ -17,6 +17,7 @@ const Home = () => {
   const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
+  // console.log(nextPageToken);
 
 
   const navigateVideo = ({id,snippet}) => {
@@ -29,7 +30,7 @@ const Home = () => {
 
   function fetchData () {
     console.log('hello world')
-    dispatch(fetchMoreHomeVideos())
+    dispatch(fetchMoreHomeVideos(nextPageToken))
   }
   
 
@@ -63,7 +64,7 @@ const Home = () => {
         {homeVideos?.map(({snippet,id}) => {
           return (
             
-            <Grid item key={id.videoId} xs={12} sm={6} md={3} >
+            <Grid item key={`${id.videoId}/dd${Math.floor((Math.random() * 100) + 1)}`} xs={12} sm={6} md={3} >
               <Card 
                 sx={{
                   borderRadius: '10px', 
