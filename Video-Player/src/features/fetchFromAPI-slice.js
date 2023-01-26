@@ -62,25 +62,31 @@ export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', as
         const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet,contentDetails,statistics&id=${channelid}&key=${API_KEY}`)
         const result = await data.json();
         // console.log(result.items[0])
-        return result.items[0];
+        const playlistId = result?.contentDetails?.relatedPlaylists?.uploads;
+        const channelPlaylistData = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}`)
+        const finalChannelPlaylistData = await channelPlaylistData.json();
+
+        const finalResult = {result, finalChannelPlaylistData};
+        return finalResult;
+        // return result.items[0];
     } catch (error) {
         console.log(error)
     }
     // channels?part=contentDetails&
 });
 
-export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async (playlistId) => {
-    console.log(playlistId);
-    try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}`)
-        const result = await data.json();
-        // console.log(result)
-        return result.items;
-    } catch (error) {
-        console.log(error)
-    }
-    // channels?part=contentDetails&
-});
+// export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async (playlistId) => {
+//     console.log(playlistId);
+//     try {
+//         const data = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}`)
+//         const result = await data.json();
+//         // console.log(result)
+//         return result.items;
+//     } catch (error) {
+//         console.log(error)
+//     }
+//     // channels?part=contentDetails&
+// });
 
 // export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async ({channelid}) => {
 //     // console.log(playlistId);
@@ -163,17 +169,18 @@ const videoSlice = createSlice({
             state.loading = true;
         })
         builder.addCase(fetchSearchedChannel.fulfilled, (state, action) => {
-            state.searchedChannel = action.payload;
-            state.playlistId = action.payload.contentDetails.relatedPlaylists.uploads;
+            state.searchedChannel = action.payload?.result?.items;
+            state.searchedChannelPlaylist = action.payload.finalChannelPlaylistData.items;
+            // state.playlistId = action.payload.contentDetails.relatedPlaylists.uploads;
             // state.loading = false;
         })
-        builder.addCase(fetchSearchedChannelPlaylist.pending, (state) => {
-            state.searchedChannelPlaylistLoader = true;
-        })
-        builder.addCase(fetchSearchedChannelPlaylist.fulfilled, (state, action) => {
-            state.searchedChannelPlaylist = action.payload;
-            state.searchedChannelPlaylistLoader = false;
-        })
+        // builder.addCase(fetchSearchedChannelPlaylist.pending, (state) => {
+        //     state.searchedChannelPlaylistLoader = true;
+        // })
+        // builder.addCase(fetchSearchedChannelPlaylist.fulfilled, (state, action) => {
+        //     state.searchedChannelPlaylist = action.payload;
+        //     state.searchedChannelPlaylistLoader = false;
+        // })
     }
 })
 
