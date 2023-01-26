@@ -46,7 +46,7 @@ export const fetchMoreHomeVideos = createAsyncThunk('fetch/moreHomeVideos', asyn
 
 export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', async ({keyword}) => {
     try {
-        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video`)
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video,channel`)
         const result = await data.json();
         console.log(result)
         return result.items;
@@ -62,11 +62,16 @@ export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', as
         const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet,contentDetails,statistics&id=${channelid}&key=${API_KEY}`)
         const result = await data.json();
         // console.log(result.items[0])
-        const playlistId = result?.contentDetails?.relatedPlaylists?.uploads;
+        const playlistId = result?.items[0]?.contentDetails?.relatedPlaylists?.uploads;
+        console.log(result)
+        console.log(playlistId)
         const channelPlaylistData = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}`)
         const finalChannelPlaylistData = await channelPlaylistData.json();
 
+        // console.log(result);
+        // console.log(finalChannelPlaylistData);
         const finalResult = {result, finalChannelPlaylistData};
+        console.log(finalResult)
         return finalResult;
         // return result.items[0];
     } catch (error) {
@@ -169,10 +174,10 @@ const videoSlice = createSlice({
             state.loading = true;
         })
         builder.addCase(fetchSearchedChannel.fulfilled, (state, action) => {
-            state.searchedChannel = action.payload?.result?.items;
+            state.searchedChannel = action.payload?.result?.items[0];
             state.searchedChannelPlaylist = action.payload.finalChannelPlaylistData.items;
             // state.playlistId = action.payload.contentDetails.relatedPlaylists.uploads;
-            // state.loading = false;
+            state.loading = false;
         })
         // builder.addCase(fetchSearchedChannelPlaylist.pending, (state) => {
         //     state.searchedChannelPlaylistLoader = true;

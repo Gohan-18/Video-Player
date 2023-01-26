@@ -4,7 +4,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchSearchedChannel, fetchSearchedChannelPlaylist } from '../features/fetchFromAPI-slice';
+import { fetchSearchedChannel } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import VideoCard from './VideoCard';
 import { useState } from 'react';
