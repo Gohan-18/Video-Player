@@ -163,14 +163,14 @@ export default function Header() {
             onClick={() => setOpen(!open)}
             sx={{
                 mr: {
-                    xs: '20px',
+                    xs: '15px',
                     sm: '0px'
                 }
             }}
           >
             <MenuIcon />
           </IconButton>
-          <IconButton 
+          {/* <IconButton 
             onClick={navigateHome}
             sx={{
                 mx: '10px',
@@ -185,16 +185,30 @@ export default function Header() {
                     // },
                     backgroundColor: '#fff'
                 }
-                }}>
+                }}> */}
             <YouTubeIcon 
+                onClick={navigateHome}
                 fontSize='medium' 
                 sx={{
+                    display: {
+                      xs: 'none',
+                      sm: 'flex'
+                    },
+                    padding: '10px',
+                    width: '50px',
+                    height: '50px',
+                    // border: '2px solid red',
+                    borderRadius: '50%',
                     fill: '#fff',
+                    cursor: 'pointer',
+                    transition: 'all 0.4s',
+                    mx: '5px',
                     '&:hover': {
-                        fill: '#c1121f'
+                        fill: '#c1121f',
+                        backgroundColor: '#fff'
                     }
                 }} />
-          </IconButton>
+          {/* </IconButton> */}
           <Search sx={{flexGrow: 1}} onSubmit={(e) => navigateSearch(e)} >
             <SearchIconWrapper type='submit' >
               <SearchIcon />
@@ -210,7 +224,13 @@ export default function Header() {
             />
           </Search>
           <Box sx={{pl: '20px'}} >
-          <IconButton>
+          <IconButton 
+            sx={{
+              display: {
+                xs: 'none',
+                sm: 'flex'
+              },
+            }} >
             <AccountCircle/>
           </IconButton>
           </Box>
