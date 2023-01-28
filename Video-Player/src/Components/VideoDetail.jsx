@@ -86,7 +86,7 @@ export default function VideoDetail() {
     <>
         {!singleVideo?.snippet || !videoSuggestion?.length || loading ? 
             <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-                <CircularProgress sx={{mt:'200px'}} />
+                <CircularProgress color="error" sx={{mt:'200px'}} />
             </Container>
              : 
             <Grid container spacing={3} sx={{ pb: '50px' , pt: {xs: '90px', sm:'110px'}, px: {xs: '10px', sm: '30px', md: '60px'}}}>
@@ -239,10 +239,9 @@ export default function VideoDetail() {
                 <Grid item container xs={12} md={4} >
 
                     <Grid item  container xs={12} gap={2} sx={{ height: '110vh', overflowY: 'scroll'}} >
-                        {videoSuggestion?.map(({contentDetails, snippet}) => {
-
+                        {videoSuggestion?.map(({contentDetails, snippet, id}) => {
                             return (
-                            <Box key={contentDetails?.upload?.videoId} sx={{width: '100%'}} >
+                            <Box key={`${id}/dd${Math.floor((Math.random() * 100) + 1)}`} sx={{width: '100%'}} >
                             <CardActionArea sx={{borderRadius: '5px', width: '100%'}} >
                                 <Card 
                                     onClick={(e) =>{ 

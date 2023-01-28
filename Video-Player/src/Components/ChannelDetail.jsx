@@ -58,7 +58,7 @@ export default function ChannelDetail() {
     <Box>
     {loading ? 
             <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-                <CircularProgress sx={{mt:'200px'}} />
+                <CircularProgress color="error" sx={{mt:'200px'}} />
             </Container>
              : 
     <Box sx={{pt: '80px', pb: '60px', display: 'flex', justifyContent: 'center',alignItems: 'center', flexDirection: 'column'}} >
@@ -156,7 +156,7 @@ export default function ChannelDetail() {
         {/* <VideoCard videos={searchedChannelPlaylist} /> */}
         <Container maxWidth='lg' sx={{pt:'10px'}} >
           {searchedChannelPlaylistLoader ? <CircularProgress /> : 
-        <Grid container spacing={2} >
+        <Grid container spacing={3} >
         {searchedChannelPlaylist?.map((item) => (
           <Grid item key={item?.snippet?.resourceId?.videoId} xs={12} sm={6} md={3}  >
           <Card 

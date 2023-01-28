@@ -50,7 +50,7 @@ const Home = () => {
     <CssBaseline/>
     <InfiniteScroll
       dataLength={homeVideos?.length} 
-      loader={<CircularProgress  />} 
+      loader={<CircularProgress color="error" />} 
       hasMore={true} 
       next={fetchData}
       style={{width: '100%',}}
@@ -58,7 +58,7 @@ const Home = () => {
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
     {/* <InfiniteScroll dataLength={homeVideos.length} loader={<CircularProgress sx={{mt:'10px'}} />} hasMore={true} > */}
 
-      {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
+      {loading ? <CircularProgress color="error" sx={{mt:'200px'}} /> : 
       
       <Grid container spacing={3}>
         {homeVideos?.map(({snippet,id}) => {

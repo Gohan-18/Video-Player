@@ -35,7 +35,7 @@ export default function SearchedItem() {
   return (
     <>
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-      {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
+      {loading ? <CircularProgress color="error" sx={{mt:'200px'}} /> : 
       <Grid container spacing={3}>
 
         {searchedVideos?.map((item) => {
