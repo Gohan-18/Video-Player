@@ -49,9 +49,22 @@ export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', asyn
         const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video,channel`)
         const result = await data.json();
         console.log(result)
-        return result.items;
+        return result;
     } catch (error) {
-        alert(error)
+        console.log(error)
+    }
+
+});
+
+export const fetchMoreSearchedVideos = createAsyncThunk('fetch/moreSearchedVideos', async ({keyword},nextPageToken) => {
+    console.log(nextPageToken)
+    try {
+        const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video,channel&pageToken=${nextPageToken}`)
+        const result = await data.json();
+        console.log(result)
+        return result;
+    } catch (error) {
+        console.log(error)
     }
 
 });
@@ -167,8 +180,17 @@ const videoSlice = createSlice({
             state.loading = true;
         })
         builder.addCase(fetchSearchedVideos.fulfilled, (state, action) => {
-            state.searchedVideos = action.payload;
+            state.searchedVideos = [];
+            state.searchedVideos = [...state.searchedVideos, ...action.payload.items];
+            state.nextPageToken = action.payload.nextPageToken;
+            // console.log(state.nextPageToken);
             state.loading = false;
+        })
+        builder.addCase(fetchMoreSearchedVideos.fulfilled, (state, action) => {
+            state.searchedVideos = [...state.searchedVideos, ...action.payload.items];
+            state.nextPageToken = action.payload.nextPageToken;
+            console.log(state.nextPageToken);
+            // state.loading = false;
         })
         builder.addCase(fetchSearchedChannel.pending, (state) => {
             state.loading = true;

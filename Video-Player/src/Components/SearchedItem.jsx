@@ -2,7 +2,7 @@ import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Gr
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchSearchedVideos } from '../features/fetchFromAPI-slice';
+import { fetchMoreSearchedVideos, fetchSearchedVideos } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChannelCard from './ChannelCard';
 import VideoCard from './VideoCard';
@@ -16,7 +16,7 @@ export default function SearchedItem() {
     const dispatch = useDispatch();
     const navigate= useNavigate();
     const searchedVideoList = useSelector((state) => state?.homeVideos);
-    const { searchedVideos, loading } = searchedVideoList;
+    const { searchedVideos, loading, nextPageToken } = searchedVideoList;
     console.log(searchedVideos);
 
     useEffect(() => {
@@ -24,6 +24,8 @@ export default function SearchedItem() {
     }, [keyword])
 
     function fetchData () {
+      dispatch(fetchMoreSearchedVideos({keyword},nextPageToken));
+      // fetchMoreSearchedVideos
       console.log('helloworld')
     }
 
