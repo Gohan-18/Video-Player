@@ -78,7 +78,8 @@ export default function ChannelCard({channelDetail}) {
                     WebkitLineClamp: '2',
                     WebkitBoxOrient: 'vertical',
                     fontSize: '14px', 
-                    fontWeight: '500'
+                    fontWeight: '500',
+                    textAlign: 'center'
                 }}>
                 {snippet?.title}
                 </Typography>

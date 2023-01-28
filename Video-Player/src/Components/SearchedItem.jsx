@@ -6,6 +6,7 @@ import { fetchSearchedVideos } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChannelCard from './ChannelCard';
 import VideoCard from './VideoCard';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 export default function SearchedItem() {
@@ -22,6 +23,10 @@ export default function SearchedItem() {
         dispatch(fetchSearchedVideos({keyword}));
     }, [keyword])
 
+    function fetchData () {
+      console.log('helloworld')
+    }
+
     // console.log(searchedVideos)
 
     // const navigateVideo = ({id,snippet}) => {
@@ -33,7 +38,14 @@ export default function SearchedItem() {
     // }
 
   return (
-    <>
+    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <InfiniteScroll
+      dataLength={searchedVideos?.length} 
+      loader={<CircularProgress color="error" sx={{width: '100%', mx: 'auto'}} />} 
+      hasMore={true} 
+      next={fetchData}
+      style={{width: '100%',mx: 'auto'}}
+    >{
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
       {loading ? <CircularProgress color="error" sx={{mt:'200px'}} /> : 
       <Grid container spacing={3}>
@@ -50,8 +62,9 @@ export default function SearchedItem() {
         })}
 
       </Grid>}
-    </Container>
-    </>
+    </Container>}
+    </InfiniteScroll>
+    </Box>
   )
 }
 
