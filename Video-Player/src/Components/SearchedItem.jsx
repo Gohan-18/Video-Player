@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ChannelCard from './ChannelCard';
 import VideoCard from './VideoCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import SkeletonComponent from './Skeleton';
 
 
 export default function SearchedItem() {
@@ -17,14 +18,14 @@ export default function SearchedItem() {
     const navigate= useNavigate();
     const searchedVideoList = useSelector((state) => state?.homeVideos);
     const { searchedVideos, loading, nextPageToken } = searchedVideoList;
-    console.log(searchedVideos);
+    console.log(nextPageToken);
 
     useEffect(() => {
         dispatch(fetchSearchedVideos({keyword}));
     }, [keyword])
 
     function fetchData () {
-      dispatch(fetchMoreSearchedVideos({keyword},nextPageToken));
+      dispatch(fetchMoreSearchedVideos({keyword,nextPageToken}));
       // fetchMoreSearchedVideos
       console.log('helloworld')
     }
@@ -49,11 +50,11 @@ export default function SearchedItem() {
       style={{width: '100%',mx: 'auto'}}
     >{
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-      {loading ? <CircularProgress color="error" sx={{mt:'200px'}} /> : 
+      {loading ? <SkeletonComponent /> : 
       <Grid container spacing={3}>
 
         {searchedVideos?.map((item) => {
-          let key = item?.id?.kind === 'youtube#channel' ? item?.id?.channelId : item?.id?.videoId;
+          let key = item?.id?.kind === 'youtube#channel' ? `${item?.id?.channelId}/dd${Math.floor((Math.random() * 1000000) + 1)}` : `${item?.id?.videoId}/dd${Math.floor((Math.random() * 10000000) + 1)}`;
           // console.log(key);
           return (
             <Grid item key={key}  xs={12} sm={6} md={3}  >

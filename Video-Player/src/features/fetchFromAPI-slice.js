@@ -56,7 +56,7 @@ export const fetchSearchedVideos = createAsyncThunk('fetch/searchedVideos', asyn
 
 });
 
-export const fetchMoreSearchedVideos = createAsyncThunk('fetch/moreSearchedVideos', async ({keyword},nextPageToken) => {
+export const fetchMoreSearchedVideos = createAsyncThunk('fetch/moreSearchedVideos', async ({keyword,nextPageToken}) => {
     console.log(nextPageToken)
     try {
         const data = await fetch(`${YOUTUBE_BASE_URL}/search?maxResults=48&q=${keyword}&key=${API_KEY}&part=snippet&type=video,channel&pageToken=${nextPageToken}`)

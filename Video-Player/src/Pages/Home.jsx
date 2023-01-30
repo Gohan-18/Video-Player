@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
+import SkeletonComponent from '../Components/Skeleton';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const Home = () => {
@@ -50,15 +51,16 @@ const Home = () => {
     <CssBaseline/>
     <InfiniteScroll
       dataLength={homeVideos?.length} 
+      // loader={<SkeletonComponent />} 
       loader={<CircularProgress color="error" />} 
       hasMore={true} 
       next={fetchData}
-      style={{width: '100%',}}
+      style={{width: '100%'}}
     >{
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
     {/* <InfiniteScroll dataLength={homeVideos.length} loader={<CircularProgress sx={{mt:'10px'}} />} hasMore={true} > */}
 
-      {loading ? <CircularProgress color="error" sx={{mt:'200px'}} /> : 
+      {loading ? <SkeletonComponent /> : 
       
       <Grid container spacing={3}>
         {homeVideos?.map(({snippet,id}) => {

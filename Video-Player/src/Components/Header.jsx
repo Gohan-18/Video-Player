@@ -162,10 +162,10 @@ export default function Header() {
             aria-label="open drawer"
             onClick={() => setOpen(!open)}
             sx={{
-                mr: {
-                    xs: '15px',
-                    sm: '0px'
-                }
+              mr: {
+                xs: '15px',
+                sm: '0px'
+              },
             }}
           >
             <MenuIcon />

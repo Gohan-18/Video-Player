@@ -25,6 +25,10 @@ a {
   height: 200px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+  background-color: #c1121f;
+}
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
