@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MuiAppBar from '@mui/material/AppBar';
 import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { Box } from "@mui/material"
+import { Avatar, Box, Button } from "@mui/material"
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -29,6 +29,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import { signInWithGoogle, useAuth } from '../firebase/Auth';
 // import { categories } from '../utils/constants';
 
 
@@ -121,6 +122,7 @@ const AppBar = styled(MuiAppBar, {
 
 export default function Header() {
 
+  const { user, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [feedTerm, setFeedTerm] = useState('');
@@ -129,6 +131,10 @@ export default function Header() {
   function navigateSearch(e) {
     e.preventDefault();
     navigate(`/search/${searchTerm}`)
+  }
+
+  async function logOut () {
+    await signOut();
   }
 
   function navigateFeedSearch({inrText}) {
@@ -224,15 +230,17 @@ export default function Header() {
             />
           </Search>
           <Box sx={{pl: '20px'}} >
-          <IconButton 
+            {!user ? <Button onClick={signInWithGoogle} >Login</Button> :
+            <IconButton 
+            onClick={logOut}
             sx={{
               display: {
                 xs: 'none',
                 sm: 'flex'
               },
             }} >
-            <AccountCircle/>
-          </IconButton>
+            <Avatar alt={user.displayName || user.email} src={user.photoURL} />
+          </IconButton> }
           </Box>
         </Toolbar>
       </AppBar>

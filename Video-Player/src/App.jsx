@@ -8,7 +8,7 @@ import VideoDetail from './Components/VideoDetail';
 import SearchedItem from './Components/SearchedItem';
 import ChannelDetail from './Components/ChannelDetail';
 import Feed from './Components/Feed';
-// import AuthProvider from './firebase/Auth';
+import AuthProvider from './firebase/Auth';
 
 function App() {
 
@@ -28,9 +28,9 @@ function App() {
   return (
     
     <Provider store={store}>
-      {/* <AuthProvider> */}
+      <AuthProvider>
       <RouterProvider router={router}/>
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </Provider>
     
     

@@ -25,13 +25,13 @@ const Home = () => {
     navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
   }
 
-  useEffect(() => {
-    dispatch(fetchHomeVideos())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchHomeVideos())
+  // }, [])
 
   function fetchData () {
     console.log('hello world')
-    dispatch(fetchMoreHomeVideos(nextPageToken))
+    // dispatch(fetchMoreHomeVideos(nextPageToken))
   }
   
 
