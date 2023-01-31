@@ -230,7 +230,7 @@ export default function Header() {
             />
           </Search>
           <Box sx={{pl: '20px'}} >
-            {!user ? <Button onClick={signInWithGoogle} >Login</Button> :
+            {!user ? <Button onClick={signInWithGoogle} size='small' sx={{ borderRadius: '5px', color: '#a5a5a5', fontWeight: '500' , '&:hover' : {color: '#fff', backgroundColor: '#595959'}}} >Login</Button> :
             <IconButton 
             onClick={logOut}
             sx={{
