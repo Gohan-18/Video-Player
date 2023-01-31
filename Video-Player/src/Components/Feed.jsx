@@ -1,9 +1,10 @@
-import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline } from '@mui/material';
+import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
-import { fetchSearchedVideos } from '../features/fetchFromAPI-slice';
+import { fetchMoreSearchedVideos, fetchSearchedVideos } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 export default function Feed() {
@@ -14,13 +15,19 @@ export default function Feed() {
     const dispatch = useDispatch();
     const navigate= useNavigate();
     const searchedVideoList = useSelector((state) => state?.homeVideos);
-    const { searchedVideos, loading } = searchedVideoList;
+    const { searchedVideos, loading, nextPageToken } = searchedVideoList;
 
     useEffect(() => {
         dispatch(fetchSearchedVideos({keyword}));
     }, [keyword])
 
     // console.log(searchedVideos)
+
+    function fetchData () {
+      dispatch(fetchMoreSearchedVideos({keyword,nextPageToken}));
+      // fetchMoreSearchedVideos
+      console.log('helloworld')
+    }
 
     const navigateVideo = ({id,snippet}) => {
         navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
@@ -30,7 +37,14 @@ export default function Feed() {
     // <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
     //     <Typography>Hello {keyword}</Typography>
     // </Container>
-    <>
+    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <InfiniteScroll
+      dataLength={searchedVideos?.length} 
+      loader={<LinearProgress color="error" sx={{width: '100%', height: '5px', borderRadius: '5px'}} />} 
+      hasMore={true} 
+      next={fetchData}
+      style={{width: '100%',mx: 'auto'}}
+    >{
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
       {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
       <Grid container spacing={3}>
@@ -140,7 +154,8 @@ export default function Feed() {
         })}
 
       </Grid>}
-    </Container>
-    </>
+    </Container>}
+    </InfiniteScroll>
+    </Box>
   )
 }

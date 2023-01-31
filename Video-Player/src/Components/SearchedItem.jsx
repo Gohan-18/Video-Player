@@ -1,4 +1,4 @@
-import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline } from '@mui/material';
+import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
@@ -44,7 +44,7 @@ export default function SearchedItem() {
     <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <InfiniteScroll
       dataLength={searchedVideos?.length} 
-      loader={<CircularProgress color="error" sx={{width: '100%', mx: 'auto'}} />} 
+      loader={<LinearProgress color="error" sx={{width: '100%', height: '5px', borderRadius: '5px'}} />} 
       hasMore={true} 
       next={fetchData}
       style={{width: '100%',mx: 'auto'}}

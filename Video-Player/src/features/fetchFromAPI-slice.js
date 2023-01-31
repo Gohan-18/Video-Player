@@ -92,6 +92,30 @@ export const fetchSearchedChannel = createAsyncThunk('fetch/searchedChannel', as
     }
     // channels?part=contentDetails&
 });
+export const fetchMoreSearchedChannel = createAsyncThunk('fetch/moreSearchedChannel', async ({channelid,nextPageToken}) => {
+    // console.log(channelid);
+    try {
+        const data = await fetch(`${YOUTUBE_BASE_URL}/channels?part=snippet,contentDetails,statistics&id=${channelid}&key=${API_KEY}`)
+        const result = await data.json();
+        // console.log(result.items[0])
+        const playlistId = result?.items[0]?.contentDetails?.relatedPlaylists?.uploads;
+        // console.log(result)
+        // console.log(playlistId)
+        const channelPlaylistData = await fetch(`${YOUTUBE_BASE_URL}/playlistItems?maxResults=48&part=snippet&playlistId=${playlistId}&key=${API_KEY}&pageToken=${nextPageToken}`)
+        const finalChannelPlaylistData = await channelPlaylistData.json();
+
+        // console.log(result);
+        // console.log(finalChannelPlaylistData);
+        return finalChannelPlaylistData;
+        // const finalResult = {finalChannelPlaylistData};
+        // console.log(finalResult)
+        // return finalResult;
+        // return result.items[0];
+    } catch (error) {
+        console.log(error)
+    }
+    // channels?part=contentDetails&
+});
 
 // export const fetchSearchedChannelPlaylist = createAsyncThunk('fetch/searchedChannelPlaylist', async (playlistId) => {
 //     console.log(playlistId);
@@ -198,6 +222,15 @@ const videoSlice = createSlice({
         builder.addCase(fetchSearchedChannel.fulfilled, (state, action) => {
             state.searchedChannel = action.payload?.result?.items[0];
             state.searchedChannelPlaylist = action.payload.finalChannelPlaylistData.items;
+            state.nextPageToken = action.payload.finalChannelPlaylistData.nextPageToken;
+            console.log(state.nextPageToken)
+            // state.playlistId = action.payload.contentDetails.relatedPlaylists.uploads;
+            state.loading = false;
+        })
+        builder.addCase(fetchMoreSearchedChannel.fulfilled, (state, action) => {
+            state.searchedChannelPlaylist = [...state.searchedChannelPlaylist ,...action.payload.items];
+            state.nextPageToken = action.payload.nextPageToken;
+            console.log(state.nextPageToken)
             // state.playlistId = action.payload.contentDetails.relatedPlaylists.uploads;
             state.loading = false;
         })

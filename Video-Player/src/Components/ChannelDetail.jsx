@@ -1,13 +1,14 @@
-import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, LinearProgress, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchSearchedChannel } from '../features/fetchFromAPI-slice';
+import { fetchMoreSearchedChannel, fetchSearchedChannel } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import VideoCard from './VideoCard';
 import { useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 export default function ChannelDetail() {
@@ -17,7 +18,7 @@ export default function ChannelDetail() {
   const navigate= useNavigate();
   const { channelid } = params;
   const {searchedChannel, loading, playlistId} = useSelector((state) => state?.homeVideos);
-  const {searchedChannelPlaylist, searchedChannelPlaylistLoader} = useSelector((state) => state?.homeVideos);
+  const {searchedChannelPlaylist, searchedChannelPlaylistLoader, nextPageToken} = useSelector((state) => state?.homeVideos);
   console.log(searchedChannelPlaylist);
     // console.log(searchedChannel);
   const { contentDetails, id, snippet, statistics } = searchedChannel;
@@ -39,6 +40,11 @@ export default function ChannelDetail() {
     // }, 1000)
   }, [channelid])
 
+  function fetchMoreData() {
+    console.log('hello world')
+    dispatch(fetchMoreSearchedChannel({channelid, nextPageToken}))
+  }
+
   // if(contentDetails?.relatedPlaylists?.uploads) {
   //   dispatch(fetchSearchedChannelPlaylist(playlistId));
   // }
@@ -54,7 +60,15 @@ export default function ChannelDetail() {
   
 
   return (
-    <>
+    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <InfiniteScroll
+      dataLength={searchedChannelPlaylist?.length} 
+      // loader={<Typography>Loading...</Typography>} 
+      loader={<LinearProgress color="error" sx={{width: '100%', height: '5px', borderRadius: '5px'}} />} 
+      hasMore={true} 
+      next={fetchMoreData}
+      style={{width: '99.5vw',margin: '0 auto'}}
+    >{
     <Box>
     {loading ? 
             <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
@@ -260,7 +274,8 @@ export default function ChannelDetail() {
         </Container>
       </Box>
     </Box>}
+    </Box>}
+    </InfiniteScroll>
     </Box>
-    </>
   )
 }

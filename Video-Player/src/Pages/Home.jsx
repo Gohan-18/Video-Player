@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Box, Typography, CssBaseline } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Box, Typography, CssBaseline, LinearProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Components/Footer';
 import { fetchHomeVideos, fetchMoreHomeVideos } from '../features/fetchFromAPI-slice';
@@ -52,7 +52,7 @@ const Home = () => {
     <InfiniteScroll
       dataLength={homeVideos?.length} 
       // loader={<SkeletonComponent />} 
-      loader={<CircularProgress color="error" />} 
+      loader={<LinearProgress color="error" sx={{width: '100%', height: '5px', borderRadius: '5px'}} />} 
       hasMore={true} 
       next={fetchData}
       style={{width: '100%'}}
