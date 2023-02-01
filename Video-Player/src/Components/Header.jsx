@@ -154,6 +154,7 @@ export default function Header() {
 
   function navigateHome() {
     navigate('/');
+    setSearchTerm('');
   }
 
   function menuAction({inrText}) {
@@ -364,7 +365,7 @@ export default function Header() {
         </List> */}
 
         <List>
-          <ListItem disablePadding sx={{backgroundColor: '#c1121f', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <ListItem disablePadding sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <ListItemButton 
               onClick={navigateHome}
               >

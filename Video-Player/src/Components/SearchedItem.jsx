@@ -43,30 +43,29 @@ export default function SearchedItem() {
   return (
     <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <InfiniteScroll
-      dataLength={searchedVideos?.length} 
-      loader={<LinearProgress color="error" sx={{width: '100%', height: '5px', borderRadius: '5px'}} />} 
-      hasMore={true} 
-      next={fetchData}
-      style={{width: '100%',mx: 'auto'}}
-    >{
-    <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-      {loading ? <SkeletonComponent /> : 
-      <Grid container spacing={3}>
+        dataLength={searchedVideos?.length} 
+        loader={<LinearProgress color="error" sx={{width: '100%', height: '5px', borderRadius: '5px'}} />} 
+        hasMore={true} 
+        next={fetchData}
+        style={{width: '100%',mx: 'auto'}}
+      >{
+      <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
+        {loading ? <SkeletonComponent /> : 
+        <Grid container spacing={3}>
 
-        {searchedVideos?.map((item) => {
-          let key = item?.id?.kind === 'youtube#channel' ? `${item?.id?.channelId}/dd${Math.floor((Math.random() * 1000000) + 1)}` : `${item?.id?.videoId}/dd${Math.floor((Math.random() * 10000000) + 1)}`;
-          // console.log(key);
-          return (
-            <Grid item key={key}  xs={12} sm={6} md={3}  >
-            {item?.id?.channelId && <ChannelCard channelDetail={item} /> }
-            {item?.id?.videoId && <VideoCard videos={item} />}
-            </Grid>
-          )
-        })}
-
-      </Grid>}
-    </Container>}
-    </InfiniteScroll>
+          {searchedVideos?.map((item) => {
+            let key = item?.id?.kind === 'youtube#channel' ? `${item?.id?.channelId}/dd${Math.floor((Math.random() * 1000000) + 1)}` : `${item?.id?.videoId}/dd${Math.floor((Math.random() * 10000000) + 1)}`;
+            // console.log(key);
+            return (
+              <Grid item key={key}  xs={12} sm={6} md={3}  >
+              {item?.id?.channelId && <ChannelCard channelDetail={item} /> }
+              {item?.id?.videoId && <VideoCard videos={item} />}
+              </Grid>
+            )
+          })}
+        </Grid>}
+      </Container>}
+      </InfiniteScroll>
     </Box>
   )
 }

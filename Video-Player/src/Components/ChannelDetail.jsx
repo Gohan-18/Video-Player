@@ -61,6 +61,20 @@ export default function ChannelDetail() {
 
   return (
     <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    {/* <InfiniteScroll
+      dataLength={searchedChannelPlaylist?.length} 
+      // loader={<Typography>Loading...</Typography>} 
+      loader={<LinearProgress color="error" sx={{width: '100%', height: '5px', borderRadius: '5px'}} />} 
+      hasMore={true} 
+      next={fetchMoreData}
+      style={{width: '99.5vw',margin: '0 auto'}}
+    >{ */}
+    <Box>
+    {loading ? 
+            <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
+                <CircularProgress color="error" sx={{mt:'200px'}} />
+            </Container>
+             : 
     <InfiniteScroll
       dataLength={searchedChannelPlaylist?.length} 
       // loader={<Typography>Loading...</Typography>} 
@@ -69,12 +83,6 @@ export default function ChannelDetail() {
       next={fetchMoreData}
       style={{width: '99.5vw',margin: '0 auto'}}
     >{
-    <Box>
-    {loading ? 
-            <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-                <CircularProgress color="error" sx={{mt:'200px'}} />
-            </Container>
-             : 
     <Box sx={{pt: '80px', pb: '60px', display: 'flex', justifyContent: 'center',alignItems: 'center', flexDirection: 'column'}} >
       <Box 
         sx={{
@@ -273,9 +281,10 @@ export default function ChannelDetail() {
         </Grid>}
         </Container>
       </Box>
-    </Box>}
-    </Box>}
-    </InfiniteScroll>
+    </Box>}</InfiniteScroll>}
+
+    </Box>
+
     </Box>
   )
 }
