@@ -9,6 +9,8 @@ import SearchedItem from './Components/SearchedItem';
 import ChannelDetail from './Components/ChannelDetail';
 import Feed from './Components/Feed';
 import AuthProvider from './firebase/Auth';
+import Watchlist from './Components/Watchlist';
+import Profile from './Components/Profile';
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
       <Route path='/search/:keyword' element={<SearchedItem/>} />
       <Route path='/channeldetail/:channelid' element={<ChannelDetail/>} />
       <Route path='/feed/:keyword' element={<Feed/>} />
+      <Route path='/watchlist' element={<Watchlist/>} />
+      <Route path='/profile' element={<Profile/>} />
     </Route>
     </>
 

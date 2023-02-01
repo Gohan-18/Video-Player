@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MuiAppBar from '@mui/material/AppBar';
 import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { Avatar, Box, Button } from "@mui/material"
+import { Avatar, Box, Button, Menu, MenuItem, Tooltip } from "@mui/material"
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -118,6 +118,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const settings = ['Profile', 'Watchlist', 'Logout'];
 
 
 export default function Header() {
@@ -126,7 +127,16 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [feedTerm, setFeedTerm] = useState('');
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   function navigateSearch(e) {
     e.preventDefault();
@@ -144,6 +154,28 @@ export default function Header() {
 
   function navigateHome() {
     navigate('/');
+  }
+
+  function menuAction({inrText}) {
+    // console.log(inrText);
+    if(inrText === 'Logout') {
+      handleCloseUserMenu()
+      logOut();
+      navigateHome();
+    }
+
+    if(inrText === 'Profile') {
+      console.log('Profilleeee')
+      handleCloseUserMenu()
+      navigate('/profile')
+    }
+
+    if(inrText === 'Watchlist') {
+      console.log('Watchlisteee')
+      handleCloseUserMenu()
+      navigate('/watchlist')
+    }
+
   }
 
   const DrawerHeader = styled('div')(() => ({
@@ -231,16 +263,53 @@ export default function Header() {
           </Search>
           <Box sx={{pl: '20px'}} >
             {!user ? <Button onClick={signInWithGoogle} size='small' sx={{ borderRadius: '5px', color: '#a5a5a5', fontWeight: '500' , '&:hover' : {color: '#fff', backgroundColor: '#595959'}}} >Login</Button> :
-            <IconButton 
-            onClick={logOut}
-            sx={{
-              display: {
-                xs: 'none',
-                sm: 'flex'
-              },
-            }} >
-            <Avatar alt={user.displayName || user.email} src={user.photoURL} />
-          </IconButton> }
+            
+            <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt={user.displayName || user.email} src={user.photoURL} />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={(e) => {
+                  // console.log(e.target.innerText)
+                  const inrText = e.target.innerText;
+                  menuAction({inrText})
+                  // handleCloseUserMenu()
+                } }>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          //   <IconButton 
+          //   onClick={logOut}
+          //   sx={{
+          //     display: {
+          //       xs: 'none',
+          //       sm: 'flex'
+          //     },
+          //   }} >
+          //   <Avatar alt={user.displayName || user.email} src={user.photoURL} />
+          // </IconButton>
+           }
           </Box>
         </Toolbar>
       </AppBar>
