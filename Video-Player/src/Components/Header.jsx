@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
@@ -123,6 +123,7 @@ const settings = ['Profile', 'Watchlist', 'Logout'];
 
 export default function Header() {
 
+  const theme = useTheme();
   const { user, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -179,16 +180,17 @@ export default function Header() {
 
   }
 
-  const DrawerHeader = styled('div')(() => ({
+  const DrawerHeader = styled('div')(({theme}) => ({
     display: 'flex',
     alignItems: 'center',
     // necessary for content to be below app bar
     // ...theme.mixins.toolbar,
-    height: '80px', 
+    minHeight: '80px', 
     justifyContent: 'center',
   }));
 
-  // console.log(feedTerm);
+
+  // console.log(theme.mixins);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -323,13 +325,15 @@ export default function Header() {
             width:drawerWidth,
             boxSizing: 'border-box',
           },
+          overflow: 'scroll'
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader >
-            <Typography>Menu</Typography>
+        <DrawerHeader sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }} >
+          <YouTubeIcon/>
+          <Typography>YouTube</Typography>
         </DrawerHeader>
         <Divider />
 
@@ -503,8 +507,15 @@ export default function Header() {
               <ListItemText primary='Fashion' />
             </ListItemButton>
           </ListItem>
+          
+          <Divider />
+
+          <Box sx={{display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', width: '100%', padding: '10px', flexWrap: 'wrap'}} >
+          <Typography variant='h6' sx={{fontSize: '12px'}} ><a href='https://prabhat-portfolio-18.netlify.app/index.html' target="_blank"> Prabhat's Portfolio </a> </Typography>
+          <Typography variant='h6' sx={{fontSize: '12px', ml: '3px'}}>• <a href="mailto:pkjha187@gmail.com">Contact</a></Typography>
+          <Typography variant='h6' sx={{fontSize: '12px'}} >© 2023 Prabhat</Typography>
+        </Box>
         </List>
-        <Divider />
       </Drawer>
     </Box>
   );

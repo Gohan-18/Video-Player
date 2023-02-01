@@ -1,10 +1,11 @@
-import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress } from '@mui/material';
+import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress, Skeleton } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchMoreSearchedVideos, fetchSearchedVideos } from '../features/fetchFromAPI-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import SkeletonComponent from './Skeleton';
 
 
 export default function Feed() {
@@ -46,7 +47,7 @@ export default function Feed() {
       style={{width: '100%',mx: 'auto'}}
     >{
     <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-      {loading ? <CircularProgress sx={{mt:'200px'}} /> : 
+      {loading ? <SkeletonComponent /> : 
       <Grid container spacing={3}>
 
         {searchedVideos?.map(({snippet,id}) => {

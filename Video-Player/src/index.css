@@ -5,8 +5,13 @@
   scroll-behavior: smooth;
 }
 
-a {
+a, a:visited {
   text-decoration: none;
+  color: #fff;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 .react-player {
