@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Box, Typography, CssBaseline, LinearProgress } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Box, Typography, CssBaseline, LinearProgress, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../Components/Footer';
 import { fetchHomeVideos, fetchMoreHomeVideos } from '../features/fetchFromAPI-slice';
@@ -8,7 +8,19 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 import SkeletonComponent from '../Components/Skeleton';
+import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
+import styled from '@emotion/styled';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    fontSize: 10,
+  },
+}));
+
 
 const Home = () => {
 
@@ -20,9 +32,13 @@ const Home = () => {
   const navigate = useNavigate();
   // console.log(nextPageToken);
 
-
   const navigateVideo = ({id,snippet}) => {
     navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
+  }
+
+  function addToWatchlist(e) {
+    e.stopPropagation();
+    console.log('i am clicked!!!');
   }
 
   // useEffect(() => {
@@ -73,6 +89,7 @@ const Home = () => {
                   background: 'none', 
                   margine: '10px',
                   transition: '0.5s',
+                  position: 'relative',
                   '&:hover': {
                     transform: {
                       xs: 'scale(1.05,1.05)',
@@ -81,6 +98,23 @@ const Home = () => {
                     backgroundColor: '#333533',
                   }
                   }} >
+                    <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
+                    <IconButton
+                      onClick={(e) => addToWatchlist(e)}
+                      sx={{
+                        position:'absolute', 
+                        top: '10px', 
+                        right: '10px', 
+                        zIndex: '50', 
+                        backgroundColor: '#393d3faf', 
+                        transition: '0.5s' , 
+                        '&:hover':{ 
+                          backgroundColor: '#393d3f' 
+                        }
+                      }} >
+                      <QueueOutlinedIcon sx={{fill: '#fff',width: '20px', height: '20px',}} />
+                    </IconButton>
+                    </LightTooltip>
                 <CardActionArea
                   sx={{
                     height:'100%', 
@@ -93,6 +127,21 @@ const Home = () => {
                     navigateVideo({id,snippet});
                   }}
                   >
+                    {/* <IconButton
+                      onClick={(e) => addToWatchlist(e)}
+                      sx={{
+                        position:'absolute', 
+                        top: '10px', 
+                        right: '10px', 
+                        zIndex: '50', 
+                        backgroundColor: '#393d3faf', 
+                        transition: '0.5s' , 
+                        '&:hover':{ 
+                          backgroundColor: '#393d3f' 
+                        }
+                      }} >
+                      <QueueOutlinedIcon sx={{fill: '#fff',width: '20px', height: '20px',}} />
+                    </IconButton> */}
                   <CardMedia                 
                     component='img' 
                     image={snippet.thumbnails.high.url} 
@@ -144,6 +193,7 @@ const Home = () => {
                     }}>
                       {snippet.channelTitle}
                     </Typography>
+
                     <Typography  
                       gutterBottom 
                       paragraph

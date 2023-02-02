@@ -1,6 +1,5 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
-import { useNavigate } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function ChannelCard({channelDetail}) {

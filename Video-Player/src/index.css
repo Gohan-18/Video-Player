@@ -19,6 +19,10 @@ a:hover {
   width: 100% !important;
 }
 
+/* p {
+  color: #393d3faf
+} */
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 5px;

@@ -1,4 +1,4 @@
-import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress, Skeleton } from '@mui/material';
+import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress, Skeleton, IconButton } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
@@ -6,6 +6,17 @@ import { fetchMoreSearchedVideos, fetchSearchedVideos } from '../features/fetchF
 import CircularProgress from '@mui/material/CircularProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SkeletonComponent from './Skeleton';
+import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
+import styled from '@emotion/styled';
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    fontSize: 10,
+  },
+}));
 
 
 export default function Feed() {
@@ -59,6 +70,7 @@ export default function Feed() {
                   background: 'none', 
                   margine: '10px',
                   transition: '0.5s',
+                  position: 'relative',
                   '&:hover': {
                     transform: {
                       xs: 'scale(1.05,1.05)',
@@ -67,6 +79,23 @@ export default function Feed() {
                     backgroundColor: '#333533',
                   }
                   }} >
+                  <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
+                  <IconButton
+                      onClick={(e) => addToWatchlist(e)}
+                      sx={{
+                      position:'absolute', 
+                      top: '10px', 
+                      right: '10px', 
+                      zIndex: '50', 
+                      backgroundColor: '#393d3faf', 
+                      transition: '0.5s' , 
+                      '&:hover':{ 
+                          backgroundColor: '#393d3f' 
+                      }
+                      }} >
+                      <QueueOutlinedIcon sx={{fill: '#fff',width: '20px', height: '20px',}} />
+                  </IconButton>
+                  </LightTooltip>
                 <CardActionArea
                   sx={{
                     height:'100%', 

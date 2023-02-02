@@ -31,3 +31,4 @@
 //   { name: 'Gym', icon: <FitnessCenterIcon />, },
 //   { name: 'Crypto', icon: <DeveloperModeIcon />, },
 // ];
+
