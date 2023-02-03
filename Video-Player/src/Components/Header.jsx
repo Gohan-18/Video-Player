@@ -383,7 +383,8 @@ export default function Header() {
           <ListItem disablePadding >
             <ListItemButton 
                 onClick={(e) => {
-                  setOpen(!open)
+                  setOpen(!open);
+                  setSearchTerm('');
                   const inrText = e.target.innerText;
                   setFeedTerm(inrText);
                   navigateFeedSearch({inrText})
@@ -400,6 +401,7 @@ export default function Header() {
             <ListItemButton 
               onClick={(e) => {
                 setOpen(!open)
+                setSearchTerm('')
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}
@@ -415,6 +417,7 @@ export default function Header() {
             <ListItemButton 
               onClick={(e) => {
                 setOpen(!open)
+                setSearchTerm('');
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}
@@ -429,7 +432,8 @@ export default function Header() {
           <ListItem disablePadding>
             <ListItemButton 
               onClick={(e) => {
-                setOpen(!open)
+                setSearchTerm('');
+                setOpen(!open);
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}
@@ -444,7 +448,8 @@ export default function Header() {
           <ListItem disablePadding>
             <ListItemButton 
               onClick={(e) => {
-                setOpen(!open)
+                setOpen(!open);
+                setSearchTerm('');
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}
@@ -459,7 +464,8 @@ export default function Header() {
           <ListItem disablePadding>
             <ListItemButton 
               onClick={(e) => {
-                setOpen(!open)
+                setOpen(!open);
+                setSearchTerm('');
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}
@@ -474,7 +480,8 @@ export default function Header() {
           <ListItem disablePadding>
             <ListItemButton 
               onClick={(e) => {
-                setOpen(!open)
+                setOpen(!open);
+                setSearchTerm('');
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}
@@ -489,7 +496,8 @@ export default function Header() {
           <ListItem disablePadding>
             <ListItemButton 
               onClick={(e) => {
-                setOpen(!open)
+                setOpen(!open);
+                setSearchTerm('');
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}
@@ -504,7 +512,8 @@ export default function Header() {
           <ListItem disablePadding >
             <ListItemButton 
               onClick={(e) => {
-                setOpen(!open)
+                setOpen(!open);
+                setSearchTerm('');
                 const inrText = e.target.innerText;
                 navigateFeedSearch({inrText})
                 }}

@@ -11,6 +11,10 @@ import SkeletonComponent from '../Components/Skeleton';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styled from '@emotion/styled';
+import { doc, setDoc } from 'firebase/firestore';
+import { db, useAuth } from '../firebase/Auth';
+import { useState } from 'react';
+import { addWatchlist } from '../features/watchlist-slice';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -24,26 +28,39 @@ const LightTooltip = styled(({ className, ...props }) => (
 
 const Home = () => {
 
+  const { user } = useAuth();
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
   // console.log(homeVideoList)
   const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
+  const [watchlist, setWatchlist] = useState([]);
+  console.log(watchlist)
   // console.log(nextPageToken);
 
   const navigateVideo = ({id,snippet}) => {
     navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
   }
 
-  function addToWatchlist(e) {
+  async function addToWatchlist(e, {id}) {
     e.stopPropagation();
     console.log('i am clicked!!!');
+    const watchlistRef = doc(db, 'watchlist', user.uid);
+
+    try {
+      await setDoc(watchlistRef, {
+        videos: dispatch(addWatchlist({id}))
+      }, { merge: true })
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
-  // useEffect(() => {
-  //   dispatch(fetchHomeVideos())
-  // }, [])
+  useEffect(() => {
+    dispatch(fetchHomeVideos())
+  }, [])
 
   function fetchData () {
     console.log('hello world')
@@ -100,7 +117,7 @@ const Home = () => {
                   }} >
                     <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
                     <IconButton
-                      onClick={(e) => addToWatchlist(e)}
+                      onClick={(e) => addToWatchlist(e,{id})}
                       sx={{
                         position:'absolute', 
                         top: '10px', 
