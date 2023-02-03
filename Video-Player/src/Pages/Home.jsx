@@ -31,12 +31,13 @@ const Home = () => {
   const { user } = useAuth();
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
+  const {watchlist} = useSelector((state) => state?.watchlistSl);
   // console.log(homeVideoList)
   const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
-  const [watchlist, setWatchlist] = useState([]);
-  console.log(watchlist)
+  // const [watchlist, setWatchlist] = useState([]);
+  // console.log(watchlist)
   // console.log(nextPageToken);
 
   const navigateVideo = ({id,snippet}) => {
@@ -47,14 +48,15 @@ const Home = () => {
     e.stopPropagation();
     console.log('i am clicked!!!');
     const watchlistRef = doc(db, 'watchlist', user.uid);
-
+    
     try {
+      dispatch(addWatchlist({id}))
       await setDoc(watchlistRef, {
-        videos: dispatch(addWatchlist({id}))
+        videos: watchlist
       }, { merge: true })
     } catch (error) {
       console.log(error)
-    }
+    } 
 
   }
 

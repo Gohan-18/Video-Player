@@ -7,7 +7,7 @@ const store = configureStore({
     reducer: {
         homeVideos: homeReducer,
         videoDetail: singleVideoReducer,
-        watchlist : watchlistReducer
+        watchlistSl : watchlistReducer
     }
 })
 

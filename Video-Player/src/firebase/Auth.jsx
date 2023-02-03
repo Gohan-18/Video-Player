@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from '@firebase/auth'
@@ -62,6 +62,21 @@ function useProvideAuth () {
   
     return () => unsubscribe()
   })
+
+  useEffect(() => {
+    if(user) {
+      const watchlistRef = doc(db, 'watchlist', user.uid);
+
+      const unsubscribe = onSnapshot(watchlistRef, (videos) => {
+        console.log(videos.data())
+      });
+
+      return () => {
+        unsubscribe();
+      }
+    }
+  }, [user])
+  
 
   return {
     signOut: signOutUser,

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const watchlistSLice = createSlice({
-    name: 'watchlist',
+    name: 'watchlistSl',
     initialState: {
         watchlist: []
     },
