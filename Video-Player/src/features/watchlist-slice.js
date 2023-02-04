@@ -7,9 +7,18 @@ const watchlistSLice = createSlice({
     },
     reducers: {
         addWatchlist(state, action) {
-            const { id } = action.payload;
-            console.log(id);
-            state.watchlist = state.watchlist ? [...state.watchlist, id.videoId ] : [id.videoId];
+            const { videoInfo } = action.payload;
+            console.log(videoInfo);
+            // state.watchlist.push(videoInfo);
+            // state.watchlist = [videoInfo];
+            // state.watchlist = state.watchlist ? [...state.watchlist, {id.videoId} ] : [id.videoId];
+            const existingItem = state.watchlist?.find(({ id}) => id.videoId === videoInfo.id.videoId);
+            if(existingItem) {
+                return;
+            }
+            else{
+                state.watchlist.push(videoInfo);
+            }
         }
     }
 })

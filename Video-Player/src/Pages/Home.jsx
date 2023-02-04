@@ -44,25 +44,25 @@ const Home = () => {
     navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
   }
 
-  async function addToWatchlist(e, {id}) {
+  async function addToWatchlist(e, videoInfo ) {
     e.stopPropagation();
+    dispatch(addWatchlist({videoInfo}))
     console.log('i am clicked!!!');
     const watchlistRef = doc(db, 'watchlist', user.uid);
     
-    try {
-      dispatch(addWatchlist({id}))
-      await setDoc(watchlistRef, {
-        videos: watchlist
-      }, { merge: true })
-    } catch (error) {
-      console.log(error)
-    } 
+    // try {
+    //   await setDoc(watchlistRef, {
+    //     videos: watchlist
+    //   }, { merge: true })
+    // } catch (error) {
+    //   console.log(error)
+    // } 
 
   }
 
-  useEffect(() => {
-    dispatch(fetchHomeVideos())
-  }, [])
+    useEffect(() => {
+      dispatch(fetchHomeVideos())
+    }, [])
 
   function fetchData () {
     console.log('hello world')
@@ -119,7 +119,9 @@ const Home = () => {
                   }} >
                     <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
                     <IconButton
-                      onClick={(e) => addToWatchlist(e,{id})}
+                      onClick={(e) => {
+                        addToWatchlist(e, {id, snippet})
+                      }}
                       sx={{
                         position:'absolute', 
                         top: '10px', 
