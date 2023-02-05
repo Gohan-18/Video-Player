@@ -11,10 +11,10 @@ import SkeletonComponent from '../Components/Skeleton';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styled from '@emotion/styled';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db, useAuth } from '../firebase/Auth';
 import { useState } from 'react';
-import { addWatchlist } from '../features/watchlist-slice';
+import { addWatchlist, addWatchlistFromFirestore } from '../features/watchlist-slice';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -29,6 +29,7 @@ const LightTooltip = styled(({ className, ...props }) => (
 const Home = () => {
 
   const { user } = useAuth();
+  console.log(user);
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
   const {watchlist} = useSelector((state) => state?.watchlistSl);
@@ -50,19 +51,36 @@ const Home = () => {
     console.log('i am clicked!!!');
     const watchlistRef = doc(db, 'watchlist', user.uid);
     
-    // try {
-    //   await setDoc(watchlistRef, {
-    //     videos: watchlist
-    //   }, { merge: true })
-    // } catch (error) {
-    //   console.log(error)
-    // } 
+    try {
+      await setDoc(watchlistRef, {
+        videos: watchlist 
+      }, { merge: true })
+    } catch (error) {
+      console.log(error)
+    } 
 
   }
 
+  async function getFirestoreData () {
+    console.log(user?.uid)
+    const watchlistRef = doc(db, 'watchlist', user?.uid);
+    const docSnap = await getDoc(watchlistRef);
+    const {videos} = docSnap.data();
+    console.log(videos);
+    dispatch(addWatchlistFromFirestore({videos}))
+  }
+
     useEffect(() => {
-      dispatch(fetchHomeVideos())
+      dispatch(fetchHomeVideos());
     }, [])
+
+    if(user) {
+      getFirestoreData()
+    }
+
+    // if(!loading) {
+    //   getFirestoreData()
+    // }
 
   function fetchData () {
     console.log('hello world')
@@ -120,7 +138,7 @@ const Home = () => {
                     <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
                     <IconButton
                       onClick={(e) => {
-                        addToWatchlist(e, {id, snippet})
+                        user ? addToWatchlist(e, {id, snippet}) : console.log('Please log in...');
                       }}
                       sx={{
                         position:'absolute', 
