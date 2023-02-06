@@ -3,6 +3,8 @@ import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from '@firebase/auth'
+import { addWatchlistFromFirestore } from "../features/watchlist-slice";
+import { useDispatch } from "react-redux";
 
 
 const firebaseConfig = {
@@ -64,11 +66,17 @@ function useProvideAuth () {
   })
 
   // useEffect(() => {
+
   //   if(user) {
   //     const watchlistRef = doc(db, 'watchlist', user.uid);
 
   //     const unsubscribe = onSnapshot(watchlistRef, (videos) => {
-  //       // console.log(videos.data())
+  //       const dispatch = useDispatch();
+  //       console.log(videos.data());
+  //       if(videos.exists()) {
+  //         // const videos = videos.data();
+  //         dispatch(addWatchlistFromFirestore(videos.data().videos))
+  //       }
   //     });
 
   //     return () => {

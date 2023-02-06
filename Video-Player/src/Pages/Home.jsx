@@ -91,7 +91,7 @@ const Home = () => {
   }
 
     useEffect(() => {
-      dispatch(fetchHomeVideos());
+      // dispatch(fetchHomeVideos());
     }, [])
 
     if(user) {
