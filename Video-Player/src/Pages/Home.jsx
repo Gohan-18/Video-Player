@@ -29,11 +29,11 @@ const LightTooltip = styled(({ className, ...props }) => (
 const Home = () => {
 
   const { user } = useAuth();
-  console.log(user);
+  // console.log(user);
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
   const {watchlist} = useSelector((state) => state?.watchlistSl);
-  // console.log(homeVideoList)
+  console.log(watchlist)
   const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
@@ -61,12 +61,31 @@ const Home = () => {
 
   }
 
+  async function watchlistSetFirestore () {
+    if(user) {
+      const watchlistRef = doc(db, 'watchlist', user.uid);
+    
+      try {
+        await setDoc(watchlistRef, {
+          videos: watchlist 
+        }, { merge: true })
+      } catch (error) {
+        console.log(error)
+      } 
+    }
+
+  }
+
+  useEffect(() => {
+    watchlistSetFirestore();
+  }, [watchlist])
+
   async function getFirestoreData () {
-    console.log(user?.uid)
+    // console.log(user?.uid)
     const watchlistRef = doc(db, 'watchlist', user?.uid);
     const docSnap = await getDoc(watchlistRef);
     const {videos} = docSnap.data();
-    console.log(videos);
+    // console.log(videos);
     dispatch(addWatchlistFromFirestore({videos}))
   }
 

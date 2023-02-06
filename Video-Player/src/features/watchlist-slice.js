@@ -24,7 +24,7 @@ const watchlistSLice = createSlice({
             const { videos } = action.payload;
             if(videos){
                 for(let video of videos) {
-                    console.log(video);
+                    // console.log(video);
                     const existingItem = state.watchlist?.find(({id}) => id.videoId === video.id.videoId);
                     if(existingItem) {
                         return;

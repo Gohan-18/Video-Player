@@ -63,19 +63,19 @@ function useProvideAuth () {
     return () => unsubscribe()
   })
 
-  useEffect(() => {
-    if(user) {
-      const watchlistRef = doc(db, 'watchlist', user.uid);
+  // useEffect(() => {
+  //   if(user) {
+  //     const watchlistRef = doc(db, 'watchlist', user.uid);
 
-      const unsubscribe = onSnapshot(watchlistRef, (videos) => {
-        console.log(videos.data())
-      });
+  //     const unsubscribe = onSnapshot(watchlistRef, (videos) => {
+  //       // console.log(videos.data())
+  //     });
 
-      return () => {
-        unsubscribe();
-      }
-    }
-  }, [user])
+  //     return () => {
+  //       unsubscribe();
+  //     }
+  //   }
+  // }, [user])
   
 
   return {
