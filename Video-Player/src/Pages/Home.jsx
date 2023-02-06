@@ -32,8 +32,8 @@ const Home = () => {
   // console.log(user);
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
-  const {watchlist} = useSelector((state) => state?.watchlistSl);
-  console.log(watchlist)
+  const { watchlist, watcher } = useSelector((state) => state?.watchlistSl);
+  console.log(watcher)
   const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
@@ -49,6 +49,7 @@ const Home = () => {
     e.stopPropagation();
     dispatch(addWatchlist({videoInfo}))
     console.log('i am clicked!!!');
+    watchlistSetFirestore();
     const watchlistRef = doc(db, 'watchlist', user.uid);
     
     try {
@@ -58,16 +59,15 @@ const Home = () => {
     } catch (error) {
       console.log(error)
     } 
-
   }
 
   async function watchlistSetFirestore () {
-    if(user) {
+    if(user && watchlist.length) {
       const watchlistRef = doc(db, 'watchlist', user.uid);
     
       try {
         await setDoc(watchlistRef, {
-          videos: watchlist 
+          videos: watchlist
         }, { merge: true })
       } catch (error) {
         console.log(error)
@@ -77,8 +77,9 @@ const Home = () => {
   }
 
   useEffect(() => {
+    console.log('watcher useeffect');
     watchlistSetFirestore();
-  }, [watchlist])
+  }, [watcher])
 
   async function getFirestoreData () {
     // console.log(user?.uid)

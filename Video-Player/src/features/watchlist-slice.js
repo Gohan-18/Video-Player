@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const watchlistSLice = createSlice({
     name: 'watchlistSl',
     initialState: {
-        watchlist: []
+        watchlist: [],
+        watcher: false
     },
     reducers: {
         addWatchlist(state, action) {
@@ -19,6 +20,7 @@ const watchlistSLice = createSlice({
             else{
                 state.watchlist.push(videoInfo);
             }
+            state.watcher = !state.watcher;
         },
         addWatchlistFromFirestore(state, action) {
             const { videos } = action.payload;
