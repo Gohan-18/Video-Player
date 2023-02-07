@@ -62,7 +62,7 @@ const Home = () => {
   }
 
   async function watchlistSetFirestore () {
-    if(user && watchlist.length) {
+    if(user) {
       const watchlistRef = doc(db, 'watchlist', user.uid);
     
       try {
@@ -91,12 +91,12 @@ const Home = () => {
   }
 
     useEffect(() => {
-      // dispatch(fetchHomeVideos());
+      dispatch(fetchHomeVideos());
     }, [])
 
-    if(user) {
-      getFirestoreData()
-    }
+    // if(user) {
+    //   getFirestoreData()
+    // }
 
     // if(!loading) {
     //   getFirestoreData()

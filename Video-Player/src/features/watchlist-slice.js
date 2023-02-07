@@ -24,6 +24,7 @@ const watchlistSLice = createSlice({
         },
         addWatchlistFromFirestore(state, action) {
             const { videos } = action.payload;
+            console.log(action.payload);
             if(videos){
                 for(let video of videos) {
                     // console.log(video);

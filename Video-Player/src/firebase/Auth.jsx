@@ -7,13 +7,22 @@ import { addWatchlistFromFirestore } from "../features/watchlist-slice";
 import { useDispatch } from "react-redux";
 
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCOEGGnZEyUmQOK6MCTmKS3RqoUYTcZpVs",
+//   authDomain: "clone-c029e.firebaseapp.com",
+//   projectId: "clone-c029e",
+//   storageBucket: "clone-c029e.appspot.com",
+//   messagingSenderId: "758773996535",
+//   appId: "1:758773996535:web:949429175327a6e9ab2cf2"
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCOEGGnZEyUmQOK6MCTmKS3RqoUYTcZpVs",
-  authDomain: "clone-c029e.firebaseapp.com",
-  projectId: "clone-c029e",
-  storageBucket: "clone-c029e.appspot.com",
-  messagingSenderId: "758773996535",
-  appId: "1:758773996535:web:949429175327a6e9ab2cf2"
+  apiKey: "AIzaSyCxmovnfmjVwrsJh8RSItG95L5My60XCkQ",
+  authDomain: "video-player-c5df7.firebaseapp.com",
+  projectId: "video-player-c5df7",
+  storageBucket: "video-player-c5df7.appspot.com",
+  messagingSenderId: "1086194225908",
+  appId: "1:1086194225908:web:00440e50117f41602804a1"
 };
 
 // Initialize Firebase
@@ -24,6 +33,10 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
+
+googleProvider.setCustomParameters({
+  prompt: "select_account"
+})
 
 export const signInWithGoogle = () => {
   signInWithPopup(auth, googleProvider).then(res => {
@@ -43,6 +56,7 @@ export const useAuth = () => useContext(AuthContext);
 function useProvideAuth () {
 
   const [user, setUser] = useState();
+  const dispatch = useDispatch();
 
   // const signUp = ( email, password, displayName) => createUserWithEmailAndPassword(auth, email, password).then(({ user }) => {
   //     updateProfile(user, { displayName});
@@ -65,25 +79,24 @@ function useProvideAuth () {
     return () => unsubscribe()
   })
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if(user) {
-  //     const watchlistRef = doc(db, 'watchlist', user.uid);
+    if(user) {
+      const watchlistRef = doc(db, 'watchlist', user.uid);
 
-  //     const unsubscribe = onSnapshot(watchlistRef, (videos) => {
-  //       const dispatch = useDispatch();
-  //       console.log(videos.data());
-  //       if(videos.exists()) {
-  //         // const videos = videos.data();
-  //         dispatch(addWatchlistFromFirestore(videos.data().videos))
-  //       }
-  //     });
+      const unsubscribe = onSnapshot(watchlistRef, (videos) => {
+        console.log(videos.data());
+        if(videos.exists()) {
+          // const videos = videos.data();
+          dispatch(addWatchlistFromFirestore(videos.data().videos))
+        }
+      });
 
-  //     return () => {
-  //       unsubscribe();
-  //     }
-  //   }
-  // }, [user])
+      return () => {
+        unsubscribe();
+      }
+    }
+  }, [user])
   
 
   return {
