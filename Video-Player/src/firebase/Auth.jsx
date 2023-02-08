@@ -79,24 +79,26 @@ function useProvideAuth () {
     return () => unsubscribe()
   })
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if(user) {
-      const watchlistRef = doc(db, 'watchlist', user.uid);
+  //   if(user) {
+  //     const watchlistRef = doc(db, 'watchlist', user.uid);
 
-      const unsubscribe = onSnapshot(watchlistRef, (videos) => {
-        console.log(videos.data());
-        if(videos.exists()) {
-          // const videos = videos.data();
-          dispatch(addWatchlistFromFirestore(videos.data().videos))
-        }
-      });
+  //     var unsubscribe = onSnapshot(watchlistRef, (videos) => {
+  //       console.log('Firestore setter called');
+  //       if(videos.exists()) {
+  //         // const videos = videos.data();
+  //         dispatch(addWatchlistFromFirestore(videos.data().videos))
+  //       }
+  //     });
 
-      return () => {
-        unsubscribe();
-      }
-    }
-  }, [user])
+  //     // return unsubscribe();
+
+  //     return () => {
+  //       unsubscribe();
+  //     }
+  //   }
+  // }, [user])
   
 
   return {

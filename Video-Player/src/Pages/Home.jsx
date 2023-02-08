@@ -33,7 +33,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
   const { watchlist, watcher } = useSelector((state) => state?.watchlistSl);
-  console.log(watcher)
+  console.log(watchlist)
   const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
@@ -47,48 +47,49 @@ const Home = () => {
 
   async function addToWatchlist(e, videoInfo ) {
     e.stopPropagation();
-    dispatch(addWatchlist({videoInfo}))
-    console.log('i am clicked!!!');
-    watchlistSetFirestore();
+    // dispatch(addWatchlist({videoInfo}))
+    // console.log('i am clicked!!!');
     const watchlistRef = doc(db, 'watchlist', user.uid);
     
     try {
+      console.log('addtoFirestore called on click')
       await setDoc(watchlistRef, {
-        videos: watchlist 
+        videos: watchlist ? [...watchlist, videoInfo] : [videoInfo]
       }, { merge: true })
     } catch (error) {
       console.log(error)
     } 
+    dispatch(addWatchlist({videoInfo}))
   }
 
-  async function watchlistSetFirestore () {
-    if(user) {
-      const watchlistRef = doc(db, 'watchlist', user.uid);
+  // async function watchlistSetFirestore () {
+  //   if(user) {
+  //     const watchlistRef = doc(db, 'watchlist', user.uid);
     
-      try {
-        await setDoc(watchlistRef, {
-          videos: watchlist
-        }, { merge: true })
-      } catch (error) {
-        console.log(error)
-      } 
-    }
+  //     try {
+  //       await setDoc(watchlistRef, {
+  //         videos: watchlist
+  //       }, { merge: true })
+  //     } catch (error) {
+  //       console.log(error)
+  //     } 
+  //   }
 
-  }
+  // }
 
-  useEffect(() => {
-    console.log('watcher useeffect');
-    watchlistSetFirestore();
-  }, [watcher])
+  // useEffect(() => {
+  //   console.log('watcher useeffect');
+  //   watchlistSetFirestore();
+  // }, [watcher])
 
-  async function getFirestoreData () {
-    // console.log(user?.uid)
-    const watchlistRef = doc(db, 'watchlist', user?.uid);
-    const docSnap = await getDoc(watchlistRef);
-    const {videos} = docSnap.data();
-    // console.log(videos);
-    dispatch(addWatchlistFromFirestore({videos}))
-  }
+  // async function getFirestoreData () {
+  //   // console.log(user?.uid)
+  //   const watchlistRef = doc(db, 'watchlist', user?.uid);
+  //   const docSnap = await getDoc(watchlistRef);
+  //   const {videos} = docSnap.data();
+  //   // console.log(videos);
+  //   dispatch(addWatchlistFromFirestore({videos}))
+  // }
 
     useEffect(() => {
       dispatch(fetchHomeVideos());

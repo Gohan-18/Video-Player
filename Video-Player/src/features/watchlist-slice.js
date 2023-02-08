@@ -19,33 +19,36 @@ const watchlistSLice = createSlice({
             }
             else{
                 state.watchlist.push(videoInfo);
+                // state.watchlist = [...state.watchlist, videoInfo]
             }
             state.watcher = !state.watcher;
         },
         addWatchlistFromFirestore(state, action) {
-            const { videos } = action.payload;
+            const  videos  = action.payload;
             console.log(action.payload);
-            if(videos){
-                for(let video of videos) {
-                    // console.log(video);
-                    const existingItem = state.watchlist?.find(({id}) => id.videoId === video.id.videoId);
-                    if(existingItem) {
-                        return;
-                    }
-                    else{
-                        state.watchlist.push(video);
-                    }
+            state.watchlist = [...state.watchlist, ...videos] ;
 
-                }
-                // const existingItem = state.watchlist?.find(({id}) => id.videoId === videos.id.videoId);
-                // if(existingItem) {
-                //     return;
-                // }
-                // else{
-                //     state.watchlist = [...state.watchlist, ...videos] ;
-                //     // state.watchlist.push(...videos);
-                // }
-            }
+            // if(videos){
+            //     for(let video of videos) {
+            //         // console.log(video);
+            //         const existingItem = state.watchlist?.find(({id}) => id.videoId === video.id.videoId);
+            //         if(existingItem) {
+            //             return;
+            //         }
+            //         else{
+            //             state.watchlist.push(video);
+            //         }
+
+            //     }
+            //     // const existingItem = state.watchlist?.find(({id}) => id.videoId === videos.id.videoId);
+            //     // if(existingItem) {
+            //     //     return;
+            //     // }
+            //     // else{
+            //     //     state.watchlist = [...state.watchlist, ...videos] ;
+            //     //     // state.watchlist.push(...videos);
+            //     // }
+            // }
         }
     }
 })
