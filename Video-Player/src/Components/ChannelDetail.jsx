@@ -10,7 +10,7 @@ import VideoCard from './VideoCard';
 import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
-import { addToWatchlist } from '../utils/WishlistUpdateFunction';
+import { addToWatchlist, channelDetailWatchlist } from '../utils/WishlistUpdateFunction';
 import { useAuth } from '../firebase/Auth';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 
@@ -47,7 +47,7 @@ export default function ChannelDetail() {
   // }, [loading])
 
   useEffect(() => {
-    dispatch(fetchSearchedChannel({channelid}));
+    // dispatch(fetchSearchedChannel({channelid}));
     // setTimeout(() => {
     // dispatch(fetchSearchedChannelPlaylist(playlistId));
     // }, 1000)
@@ -60,8 +60,8 @@ export default function ChannelDetail() {
 
   function referAddToWatchlist (e, item, user) {
     const { id, snippet } = item;
-    console.log({id, snippet})
-    addToWatchlist(e, {id, snippet}, user)
+    console.log({snippet})
+    channelDetailWatchlist({snippet}, user)
   }
 
   // if(contentDetails?.relatedPlaylists?.uploads) {
