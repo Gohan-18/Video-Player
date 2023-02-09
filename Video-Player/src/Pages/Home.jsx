@@ -15,6 +15,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db, useAuth } from '../firebase/Auth';
 import { useState } from 'react';
 import { addWatchlist, addWatchlistFromFirestore } from '../features/watchlist-slice';
+import { addToWatchlist } from '../utils/WishlistUpdateFunction';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -45,54 +46,54 @@ const Home = () => {
     navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
   }
 
-  async function addToWatchlist(e, videoInfo ) {
-    e.stopPropagation();
-    // dispatch(addWatchlist({videoInfo}))
-    // console.log('i am clicked!!!');
-    const watchlistRef = doc(db, 'watchlist', user.uid);
-    const docSnap = await getDoc(watchlistRef);
-    const videos = docSnap.data().videos;
+  // async function addToWatchlist(e, videoInfo ) {
+  //   e.stopPropagation();
+  //   // dispatch(addWatchlist({videoInfo}))
+  //   // console.log('i am clicked!!!');
+  //   const watchlistRef = doc(db, 'watchlist', user.uid);
+  //   const docSnap = await getDoc(watchlistRef);
+  //   const videos = docSnap.data().videos;
 
-    if(videos.length) {
-      const existingItem = videos.find(({id}) => id.videoId === videoInfo.id.videoId);
+  //   if(videos.length) {
+  //     const existingItem = videos.find(({id}) => id.videoId === videoInfo.id.videoId);
 
-      if(existingItem) {
-        console.log('Already in the wishlist...')
-      }
-      else{
-        // state.watchlist = [...state.watchlist, videoInfo]
-        try {
-          console.log('addtoFirestore called on click')
-          await setDoc(watchlistRef, {
-            videos: [...videos, videoInfo]
-          }, { merge: true })
-        } catch (error) {
-          console.log(error)
-        } 
-      }
-    }
-    else{
-      console.log('No video in the firestore');
-      try {
-        console.log('addtoFirestore called on click(no data in firestore)')
-        await setDoc(watchlistRef, {
-          videos: [videoInfo]
-        }, { merge: true })
-      } catch (error) {
-        console.log(error)
-      } 
-    }
+  //     if(existingItem) {
+  //       console.log('Already in the wishlist...')
+  //     }
+  //     else{
+  //       // state.watchlist = [...state.watchlist, videoInfo]
+  //       try {
+  //         console.log('addtoFirestore called on click')
+  //         await setDoc(watchlistRef, {
+  //           videos: [...videos, videoInfo]
+  //         }, { merge: true })
+  //       } catch (error) {
+  //         console.log(error)
+  //       } 
+  //     }
+  //   }
+  //   else{
+  //     console.log('No video in the firestore');
+  //     try {
+  //       console.log('addtoFirestore called on click(no data in firestore)')
+  //       await setDoc(watchlistRef, {
+  //         videos: [videoInfo]
+  //       }, { merge: true })
+  //     } catch (error) {
+  //       console.log(error)
+  //     } 
+  //   }
     
-    // try {
-    //   console.log('addtoFirestore called on click')
-    //   await setDoc(watchlistRef, {
-    //     videos: watchlist ? [...watchlist, videoInfo] : [videoInfo]
-    //   }, { merge: true })
-    // } catch (error) {
-    //   console.log(error)
-    // } 
-    // dispatch(addWatchlist({videoInfo}))
-  }
+  //   // try {
+  //   //   console.log('addtoFirestore called on click')
+  //   //   await setDoc(watchlistRef, {
+  //   //     videos: watchlist ? [...watchlist, videoInfo] : [videoInfo]
+  //   //   }, { merge: true })
+  //   // } catch (error) {
+  //   //   console.log(error)
+  //   // } 
+  //   // dispatch(addWatchlist({videoInfo}))
+  // }
 
   // async function watchlistSetFirestore () {
   //   if(user) {
@@ -191,7 +192,7 @@ const Home = () => {
                     <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
                     <IconButton
                       onClick={(e) => {
-                        user ? addToWatchlist(e, {id, snippet}) : console.log('Please log in...');
+                        user ? addToWatchlist(e, {id, snippet}, user) : console.log('Please log in...');
                       }}
                       sx={{
                         position:'absolute', 

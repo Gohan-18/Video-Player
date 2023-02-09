@@ -9,6 +9,9 @@ import SkeletonComponent from './Skeleton';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styled from '@emotion/styled';
+import { db, useAuth } from '../firebase/Auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { addToWatchlist } from '../utils/WishlistUpdateFunction';
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -21,6 +24,7 @@ const LightTooltip = styled(({ className, ...props }) => (
 
 export default function Feed() {
 
+    const { user } = useAuth();
     const params = useParams();
     const { keyword } = params;
     console.log(keyword)
@@ -34,6 +38,45 @@ export default function Feed() {
     }, [keyword])
 
     // console.log(searchedVideos)
+
+    // async function addToWatchlist(e, videoInfo ) {
+    //   e.stopPropagation();
+    //   // dispatch(addWatchlist({videoInfo}))
+    //   // console.log('i am clicked!!!');
+    //   const watchlistRef = doc(db, 'watchlist', user.uid);
+    //   const docSnap = await getDoc(watchlistRef);
+    //   const videos = docSnap.data().videos;
+  
+    //   if(videos.length) {
+    //     const existingItem = videos.find(({id}) => id.videoId === videoInfo.id.videoId);
+  
+    //     if(existingItem) {
+    //       console.log('Already in the wishlist...')
+    //     }
+    //     else{
+    //       // state.watchlist = [...state.watchlist, videoInfo]
+    //       try {
+    //         console.log('addtoFirestore called on click')
+    //         await setDoc(watchlistRef, {
+    //           videos: [...videos, videoInfo]
+    //         }, { merge: true })
+    //       } catch (error) {
+    //         console.log(error)
+    //       } 
+    //     }
+    //   }
+    //   else{
+    //     console.log('No video in the firestore');
+    //     try {
+    //       console.log('addtoFirestore called on click(no data in firestore)')
+    //       await setDoc(watchlistRef, {
+    //         videos: [videoInfo]
+    //       }, { merge: true })
+    //     } catch (error) {
+    //       console.log(error)
+    //     } 
+    //   }
+    // }
 
     function fetchData () {
       dispatch(fetchMoreSearchedVideos({keyword,nextPageToken}));
@@ -81,7 +124,9 @@ export default function Feed() {
                   }} >
                   <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
                   <IconButton
-                      onClick={(e) => addToWatchlist(e)}
+                      onClick={(e) => {
+                        user ? addToWatchlist(e, {id, snippet}, user) : console.log('Please log in...');
+                      }}
                       sx={{
                       position:'absolute', 
                       top: '10px', 

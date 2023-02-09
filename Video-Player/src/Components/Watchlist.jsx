@@ -1,10 +1,22 @@
-import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress, Skeleton, IconButton, CircularProgress } from '@mui/material';
+import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress, Skeleton, IconButton, CircularProgress, styled } from '@mui/material';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { fetchAddWatchlist } from '../features/watchlist-slice';
 import { db, useAuth } from '../firebase/Auth';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
+import PlaylistRemoveOutlinedIcon from '@mui/icons-material/PlaylistRemoveOutlined';
+
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    fontSize: 10,
+  },
+}));
 
 export default function Watchlist() {
 
@@ -62,6 +74,25 @@ export default function Watchlist() {
                       backgroundColor: '#333533',
                     }
                     }} >
+                  <LightTooltip title="Remove from Watchlist" placement="bottom-end" arrow>
+                    <IconButton
+                      onClick={(e) => {
+                        console.log('Please log in...');
+                      }}
+                      sx={{
+                        position:'absolute', 
+                        top: '10px', 
+                        right: '10px', 
+                        zIndex: '50', 
+                        backgroundColor: '#393d3faf', 
+                        transition: '0.5s' , 
+                        '&:hover':{ 
+                          backgroundColor: '#e5383b' 
+                        }
+                      }} >
+                      <PlaylistRemoveOutlinedIcon sx={{fill: '#fff',width: '20px', height: '20px',}} />
+                    </IconButton>
+                  </LightTooltip>
                   <CardActionArea
                     sx={{
                       height:'100%', 

@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, LinearProgress, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, IconButton, LinearProgress, styled, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useEffect } from 'react';
@@ -9,10 +9,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 import VideoCard from './VideoCard';
 import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
+import { addToWatchlist } from '../utils/WishlistUpdateFunction';
+import { useAuth } from '../firebase/Auth';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    fontSize: 10,
+  },
+}));
 
 export default function ChannelDetail() {
 
+  const { user } = useAuth();
   const params = useParams();
   const dispatch = useDispatch();
   const navigate= useNavigate();
@@ -42,7 +55,13 @@ export default function ChannelDetail() {
 
   function fetchMoreData() {
     console.log('hello world')
-    dispatch(fetchMoreSearchedChannel({channelid, nextPageToken}))
+    // dispatch(fetchMoreSearchedChannel({channelid, nextPageToken}))
+  }
+
+  function referAddToWatchlist (e, item, user) {
+    const { id, snippet } = item;
+    console.log({id, snippet})
+    addToWatchlist(e, {id, snippet}, user)
   }
 
   // if(contentDetails?.relatedPlaylists?.uploads) {
@@ -112,11 +131,11 @@ export default function ChannelDetail() {
             borderRadius: '50%',
             padding: '20px',
             // top: {xs:'110px', sm:'160px'}
-            top: '-70px'
+            top: '-70px',
             // position: 'absolute',
             // left: '43%',
             // bottom: '-50px'
-
+            backgroundColor: '#fff'
           }}
         />
         <CardContent 
@@ -195,6 +214,26 @@ export default function ChannelDetail() {
               backgroundColor: '#333533',
               }
               }} >
+            <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow sx={{zIndex: '55',}} >
+              <IconButton
+                  onClick={(e) => {
+                      e.stopPropagation();
+                      user ? referAddToWatchlist(e, item, user) : console.log('Please log in...');
+                  }}
+                  sx={{
+                  position:'absolute', 
+                  top: '10px', 
+                  right: '10px', 
+                  zIndex: '50', 
+                  backgroundColor: '#393d3faf', 
+                  transition: '0.5s' , 
+                  '&:hover':{ 
+                      backgroundColor: '#393d3f' 
+                  }
+                  }} >
+                  <QueueOutlinedIcon sx={{fill: '#fff',width: '20px', height: '20px',}} />
+              </IconButton>
+          </LightTooltip>
           <CardActionArea
               sx={{
               height:'100%', 
