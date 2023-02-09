@@ -51,15 +51,15 @@ const Home = () => {
     // console.log('i am clicked!!!');
     const watchlistRef = doc(db, 'watchlist', user.uid);
     
-    try {
-      console.log('addtoFirestore called on click')
-      await setDoc(watchlistRef, {
-        videos: watchlist ? [...watchlist, videoInfo] : [videoInfo]
-      }, { merge: true })
-    } catch (error) {
-      console.log(error)
-    } 
-    dispatch(addWatchlist({videoInfo}))
+    // try {
+    //   console.log('addtoFirestore called on click')
+    //   await setDoc(watchlistRef, {
+    //     videos: watchlist ? [...watchlist, videoInfo] : [videoInfo]
+    //   }, { merge: true })
+    // } catch (error) {
+    //   console.log(error)
+    // } 
+    // dispatch(addWatchlist({videoInfo}))
   }
 
   // async function watchlistSetFirestore () {
