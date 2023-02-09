@@ -135,7 +135,6 @@ export default function ChannelDetail() {
             // position: 'absolute',
             // left: '43%',
             // bottom: '-50px'
-            backgroundColor: '#fff'
           }}
         />
         <CardContent 
@@ -202,6 +201,7 @@ export default function ChannelDetail() {
           <Grid item key={item?.snippet?.resourceId?.videoId} xs={12} sm={6} md={3}  >
           <Card 
           sx={{
+              position: 'relative',
               borderRadius: '10px', 
               background: 'none', 
               margine: '10px',
