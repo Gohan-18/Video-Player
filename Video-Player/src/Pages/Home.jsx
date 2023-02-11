@@ -200,7 +200,12 @@ const Home = () => {
                     <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
                     <IconButton
                       onClick={(e) => {
-                        user ? addToWatchlist(e, {id, snippet}, user) : console.log('Please log in...');
+                        user ? addToWatchlist(e, {id, snippet}, user, dispatch) : 
+                        dispatch(loginMessage({
+                          open: true,
+                          message: `Please LogIn First!!`,
+                          type: 'error'
+                        }));
                       }}
                       sx={{
                         position:'absolute', 

@@ -13,6 +13,7 @@ import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
 import { addToWatchlist, channelDetailWatchlist } from '../utils/WishlistUpdateFunction';
 import { useAuth } from '../firebase/Auth';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
+import { loginMessage } from '../features/watchlist-slice';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -47,7 +48,7 @@ export default function ChannelDetail() {
   // }, [loading])
 
   useEffect(() => {
-    // dispatch(fetchSearchedChannel({channelid}));
+    dispatch(fetchSearchedChannel({channelid}));
     // setTimeout(() => {
     // dispatch(fetchSearchedChannelPlaylist(playlistId));
     // }, 1000)
@@ -58,10 +59,10 @@ export default function ChannelDetail() {
     // dispatch(fetchMoreSearchedChannel({channelid, nextPageToken}))
   }
 
-  function referAddToWatchlist (e, item, user) {
+  function referAddToWatchlist (e, item, user, dispatch) {
     const { id, snippet } = item;
     console.log({snippet})
-    channelDetailWatchlist({snippet}, user)
+    channelDetailWatchlist({snippet}, user, dispatch)
   }
 
   // if(contentDetails?.relatedPlaylists?.uploads) {
@@ -218,7 +219,12 @@ export default function ChannelDetail() {
               <IconButton
                   onClick={(e) => {
                       e.stopPropagation();
-                      user ? referAddToWatchlist(e, item, user) : console.log('Please log in...');
+                      user ? referAddToWatchlist(e, item, user, dispatch) : 
+                      dispatch(loginMessage({
+                        open: true,
+                        message: `Please LogIn First!!`,
+                        type: 'error'
+                      }));
                   }}
                   sx={{
                   position:'absolute', 

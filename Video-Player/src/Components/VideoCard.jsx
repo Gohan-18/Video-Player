@@ -5,6 +5,8 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styled from '@emotion/styled';
 import { addToWatchlist } from "../utils/WishlistUpdateFunction";
 import { useAuth } from "../firebase/Auth";
+import { loginMessage } from "../features/watchlist-slice";
+import { useDispatch } from "react-redux";
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -18,6 +20,7 @@ const LightTooltip = styled(({ className, ...props }) => (
 export default function VideoCard({videos}) {
 
     const navigate= useNavigate();
+    const dispatch = useDispatch();
     const { user } = useAuth();
 
     const navigateVideo = ({id,snippet}) => {
@@ -51,7 +54,12 @@ export default function VideoCard({videos}) {
         <LightTooltip title="Add to Watchlist" placement="bottom-end" arrow>
             <IconButton
                 onClick={(e) => {
-                    user ? addToWatchlist(e, {id, snippet}, user) : console.log('Please log in...');
+                    user ? addToWatchlist(e, {id, snippet}, user, dispatch) : 
+                    dispatch(loginMessage({
+                        open: true,
+                        message: `Please LogIn First!!`,
+                        type: 'error'
+                    }))
                 }}
                 sx={{
                 position:'absolute', 

@@ -3,7 +3,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { fetchAddWatchlist, removeFromWatchlist } from '../features/watchlist-slice';
+import { fetchAddWatchlist, loginMessage, removeFromWatchlist } from '../features/watchlist-slice';
 import { db, useAuth } from '../firebase/Auth';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
@@ -43,10 +43,20 @@ export default function Watchlist() {
         videos: rmvVideo
       }, { merge: true })
     } catch (error) {
-      console.log(error)
+      dispatch(loginMessage({
+        open: true,
+        message: error.message,
+        type: 'error'
+      }))
     } 
 
     dispatch(removeFromWatchlist({id}))
+
+    dispatch(loginMessage({
+      open: true,
+      message: `Removed From The Watchlist!!`,
+      type: 'error'
+    }))
 }
 
   useEffect(() => {

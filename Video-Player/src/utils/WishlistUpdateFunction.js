@@ -1,12 +1,11 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { loginMessage } from "../features/watchlist-slice";
 import { db } from "../firebase/Auth";
 
-export async function addToWatchlist(e, videoInfo, user ) {
+export async function addToWatchlist(e, videoInfo, user, dispatch ) {
     e.stopPropagation();
     console.log(user.uid)
     console.log(videoInfo)
-    // dispatch(addWatchlist({videoInfo}))
-    // console.log('i am clicked!!!');
     const watchlistRef = doc(db, 'watchlist', user.uid);
     const docSnap = await getDoc(watchlistRef);
     const videos = docSnap.data().videos;
@@ -15,7 +14,11 @@ export async function addToWatchlist(e, videoInfo, user ) {
       const existingItem = videos.find(({id}) => id.videoId === videoInfo.id.videoId);
 
       if(existingItem) {
-        console.log('Already in the wishlist...')
+        dispatch(loginMessage({
+          open: true,
+          message: `Added To The Watchlist!!`,
+          type: 'success'
+        }))
       }
       else{
         // state.watchlist = [...state.watchlist, videoInfo]
@@ -25,8 +28,18 @@ export async function addToWatchlist(e, videoInfo, user ) {
             videos: [...videos, videoInfo]
           }, { merge: true })
         } catch (error) {
-          console.log(error)
-        } 
+          dispatch(loginMessage({
+            open: true,
+            message: error.message,
+            type: 'error'
+          }))
+        }
+        
+        dispatch(loginMessage({
+          open: true,
+          message: `Added To The watchlist!!`,
+          type: 'success'
+        }))
       }
     }
     else{
@@ -37,12 +50,23 @@ export async function addToWatchlist(e, videoInfo, user ) {
           videos: [videoInfo]
         }, { merge: true })
       } catch (error) {
-        console.log(error)
+        dispatch(loginMessage({
+          open: true,
+          message: error.message,
+          type: 'error'
+        }))
       } 
+
+      dispatch(loginMessage({
+        open: true,
+        message: `Added To The Watchlist!!`,
+        type: 'success'
+      }))
     }
 }
 
-export async function channelDetailWatchlist({snippet}, user ) {
+export async function channelDetailWatchlist({snippet}, user, dispatch ) {
+  // const dispatch = useDispatch();
   console.log(user.uid)
   console.log(snippet)
   // dispatch(addWatchlist({videoInfo}))
@@ -55,7 +79,11 @@ export async function channelDetailWatchlist({snippet}, user ) {
     const existingItem = videos.find(({id}) => id.videoId === snippet.resourceId.videoId);
 
     if(existingItem) {
-      console.log('Already in the wishlist...')
+      dispatch(loginMessage({
+        open: true,
+        message: `Added To The Watchlist!!`,
+        type: 'success'
+      }))
     }
     else{
       // state.watchlist = [...state.watchlist, videoInfo]
@@ -69,8 +97,18 @@ export async function channelDetailWatchlist({snippet}, user ) {
              }]
         }, { merge: true })
       } catch (error) {
-        console.log(error)
+        dispatch(loginMessage({
+          open: true,
+          message: error.message,
+          type: 'error'
+        }))
       } 
+
+      dispatch(loginMessage({
+        open: true,
+        message: `Added To The Watchlist!!`,
+        type: 'success'
+      }))
     }
   }
   else{
@@ -81,7 +119,17 @@ export async function channelDetailWatchlist({snippet}, user ) {
         videos: [videoInfo]
       }, { merge: true })
     } catch (error) {
-      console.log(error)
+      dispatch(loginMessage({
+        open: true,
+        message: error.message,
+        type: 'error'
+      }))
     } 
+
+    dispatch(loginMessage({
+      open: true,
+      message: `Added To The Watchlist!!`,
+      type: 'success'
+    }))
   }
 }
