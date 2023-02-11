@@ -3,8 +3,8 @@ import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from '@firebase/auth'
-import { addWatchlistFromFirestore } from "../features/watchlist-slice";
-import { useDispatch } from "react-redux";
+import { addWatchlistFromFirestore, loginMessage } from "../features/watchlist-slice";
+import { useDispatch, useSelector } from "react-redux";
 
 
 // const firebaseConfig = {
@@ -38,10 +38,26 @@ googleProvider.setCustomParameters({
   prompt: "select_account"
 })
 
-export const signInWithGoogle = () => {
-  signInWithPopup(auth, googleProvider).then(res => {
+export const signInWithGoogle = (dispatch) => {
+
+  try{
+    signInWithPopup(auth, googleProvider).then(res => {
       console.log(res.user.email)
-  })
+      dispatch(loginMessage({
+        open: true,
+        message: `Welcome ${res.user.displayName}`,
+        type: 'success'
+      }))
+    })
+  }
+  catch(e){
+    dispatch(loginMessage({
+      open: true,
+      message: e.message,
+      type: 'error'
+    }))
+  }
+
 }
 
 const AuthContext = createContext(null);
@@ -56,7 +72,7 @@ export const useAuth = () => useContext(AuthContext);
 function useProvideAuth () {
 
   const [user, setUser] = useState();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // const signUp = ( email, password, displayName) => createUserWithEmailAndPassword(auth, email, password).then(({ user }) => {
   //     updateProfile(user, { displayName});
@@ -69,7 +85,15 @@ function useProvideAuth () {
   //     return user;
   // }); 
 
-  const signOutUser = () => signOut(auth).then(() => setUser(null));
+  const signOutUser = () => signOut(auth)
+  .then(() => {
+    setUser(null);
+    dispatch(loginMessage({
+      open: true,
+      message: `Logged out successfully!!`,
+      type: 'success'
+    }))
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, ( user ) => {

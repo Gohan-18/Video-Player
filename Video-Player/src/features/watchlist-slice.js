@@ -16,7 +16,12 @@ const watchlistSLice = createSlice({
     initialState: {
         watchlist: [],
         watcher: false,
-        loading: false
+        loading: false,
+        alert: {
+            open: false,
+            message: "Added to the watchlist!!!",
+            type: "success",
+        }
     },
     reducers: {
         removeFromWatchlist(state, action) {
@@ -64,6 +69,12 @@ const watchlistSLice = createSlice({
             //     //     // state.watchlist.push(...videos);
             //     // }
             // }
+        },
+        removeAlert(state) {
+            state.alert.open = false
+        },
+        loginMessage(state, action) {
+            state.alert = action.payload;
         }
     },
     extraReducers:(builder) => {
@@ -84,5 +95,5 @@ const watchlistSLice = createSlice({
     }
 })
 
-export const { addWatchlist, addWatchlistFromFirestore, removeFromWatchlist } = watchlistSLice.actions;
+export const { addWatchlist, addWatchlistFromFirestore, removeFromWatchlist, removeAlert, loginMessage } = watchlistSLice.actions;
 export default watchlistSLice.reducer;

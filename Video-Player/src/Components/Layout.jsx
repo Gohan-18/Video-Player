@@ -1,5 +1,6 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import Alert from "./Alert";
 import Header from "./Header";
 
 
@@ -19,6 +20,7 @@ const Layout = () => {
         <CssBaseline/>
         <Outlet/>
     </main>
+    <Alert/>
     </ThemeProvider>
     </>
   )

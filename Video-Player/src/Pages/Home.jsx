@@ -14,7 +14,7 @@ import styled from '@emotion/styled';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db, useAuth } from '../firebase/Auth';
 import { useState } from 'react';
-import { addWatchlist, addWatchlistFromFirestore } from '../features/watchlist-slice';
+import { addWatchlist, addWatchlistFromFirestore, loginMessage } from '../features/watchlist-slice';
 import { addToWatchlist } from '../utils/WishlistUpdateFunction';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
@@ -125,7 +125,7 @@ const Home = () => {
   // }
 
     useEffect(() => {
-      dispatch(fetchHomeVideos());
+      // dispatch(fetchHomeVideos());
     }, [])
 
     // if(user) {
@@ -140,6 +140,14 @@ const Home = () => {
     console.log('hello world')
     // dispatch(fetchMoreHomeVideos(nextPageToken))
   }
+
+  // if(user){
+  //   dispatch(loginMessage({
+  //     open: true,
+  //     message: `Welcome ${user.displayName}`,
+  //     type: 'success'
+  //   }))
+  // }
   
 
   // if(!homeVideos?.length){

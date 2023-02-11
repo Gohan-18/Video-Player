@@ -30,6 +30,8 @@ import CheckroomIcon from '@mui/icons-material/Checkroom';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { signInWithGoogle, useAuth } from '../firebase/Auth';
+import { loginMessage } from '../features/watchlist-slice';
+import { useDispatch } from 'react-redux';
 // import { categories } from '../utils/constants';
 
 
@@ -130,6 +132,7 @@ export default function Header() {
   const [feedTerm, setFeedTerm] = useState('');
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -188,7 +191,6 @@ export default function Header() {
     minHeight: '80px', 
     justifyContent: 'center',
   }));
-
 
   // console.log(theme.mixins);
 
@@ -265,7 +267,7 @@ export default function Header() {
             />
           </Search>
           <Box sx={{pl: '20px'}} >
-            {!user ? <Button onClick={signInWithGoogle} size='small' sx={{ borderRadius: '5px', color: '#a5a5a5', fontWeight: '500' , '&:hover' : {color: '#fff', backgroundColor: '#595959'}}} >Login</Button> :
+            {!user ? <Button onClick={() => signInWithGoogle(dispatch)} size='small' sx={{ borderRadius: '5px', color: '#a5a5a5', fontWeight: '500' , '&:hover' : {color: '#fff', backgroundColor: '#595959'}}} >Login</Button> :
             
             <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
