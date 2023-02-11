@@ -1,9 +1,9 @@
 import { Typography, Container, Card, CardActionArea, CardContent, CardMedia, Grid, Box, CssBaseline, LinearProgress, Skeleton, IconButton, CircularProgress, styled } from '@mui/material';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { fetchAddWatchlist } from '../features/watchlist-slice';
+import { fetchAddWatchlist, removeFromWatchlist } from '../features/watchlist-slice';
 import { db, useAuth } from '../firebase/Auth';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
@@ -30,13 +30,24 @@ export default function Watchlist() {
     navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
   }
 
-//   const fetchAddWatchlist = async () => {
-//     console.log('fetchAddWatchlist called...')
-//     const watchlistRef = doc(db, 'watchlist', user?.uid);
-//     const docSnap = await getDoc(watchlistRef);
-//     const videos = docSnap.data().videos;
-//     console.log(videos)
-// }
+  const fetchRemoveFromWatchlist = async ({id}) => {
+    console.log('fetchremoveWatchlist called...')
+    const watchlistRef = doc(db, 'watchlist', user?.uid);
+    const docSnap = await getDoc(watchlistRef);
+    const videos = docSnap.data().videos;
+    const rmvVideo = videos.filter(({ id : fireId }) => (fireId.videoId !== id.videoId));
+
+    try {
+      console.log('removeFirestore called on click')
+      await setDoc(watchlistRef, {
+        videos: rmvVideo
+      }, { merge: true })
+    } catch (error) {
+      console.log(error)
+    } 
+
+    dispatch(removeFromWatchlist({id}))
+}
 
   useEffect(() => {
     if(user){
@@ -53,7 +64,7 @@ export default function Watchlist() {
       </Container>
         : 
       <Container maxWidth='lg' sx={{pt: '110px', px: '20px', pb: '60px', display: 'flex', justifyContent: 'center'}} >
-          {/* <Typography>Watchlist page</Typography> */}
+          {watchlist.length ? 
           <Grid container spacing={3}>
 
           {watchlist?.map(({snippet,id}) => {
@@ -78,6 +89,7 @@ export default function Watchlist() {
                     <IconButton
                       onClick={(e) => {
                         console.log('Please log in...');
+                        fetchRemoveFromWatchlist({id})
                       }}
                       sx={{
                         position:'absolute', 
@@ -180,7 +192,24 @@ export default function Watchlist() {
             )
           })}
 
-        </Grid>
+        </Grid>: 
+        <Box sx={{height: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}} >
+          <Typography
+          variant='h5' 
+          component='h2' 
+          gutterBottom 
+          sx={{
+              fontSize: {
+                  xs: '14px',
+                  sm: '18px',
+                  md: '20px'
+              }, 
+              fontWeight: '500', 
+              color: '#c1121f'
+          }}
+          >No Item in the Watchlist!!</Typography>
+        </Box>
+        }
       </Container>}
     </>
   )

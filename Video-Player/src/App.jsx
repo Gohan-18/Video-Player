@@ -1,5 +1,5 @@
 import './App.css';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store  from './store';
 import Layout from './Components/Layout';
@@ -8,9 +8,18 @@ import VideoDetail from './Components/VideoDetail';
 import SearchedItem from './Components/SearchedItem';
 import ChannelDetail from './Components/ChannelDetail';
 import Feed from './Components/Feed';
-import AuthProvider from './firebase/Auth';
+import AuthProvider, { useAuth } from './firebase/Auth';
 import Watchlist from './Components/Watchlist';
 import Profile from './Components/Profile';
+
+function ProtectedRoute ({ children }) {
+  const { user } = useAuth();
+
+  if(!user) {
+    return <Navigate to={'/'}/>
+  }
+  return children;
+}
 
 function App() {
 
@@ -22,7 +31,13 @@ function App() {
       <Route path='/search/:keyword' element={<SearchedItem/>} />
       <Route path='/channeldetail/:channelid' element={<ChannelDetail/>} />
       <Route path='/feed/:keyword' element={<Feed/>} />
-      <Route path='/watchlist' element={<Watchlist/>} />
+      <Route 
+        path='/watchlist' 
+        element={
+          <ProtectedRoute>
+            <Watchlist/>
+          </ProtectedRoute>
+        } />
       <Route path='/profile' element={<Profile/>} />
     </Route>
     </>

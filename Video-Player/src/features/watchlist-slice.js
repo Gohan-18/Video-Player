@@ -19,7 +19,10 @@ const watchlistSLice = createSlice({
         loading: false
     },
     reducers: {
-        addWatchlist(state, action) {
+        removeFromWatchlist(state, action) {
+            const { id } = action.payload;
+            console.log(id)
+            state.watchlist = state.watchlist.filter(({ id : fireId }) => (fireId.videoId !== id.videoId));
             // const { videoInfo } = action.payload;
             // // console.log(videos);
             // // state.watchlist.push(videoInfo);
@@ -68,7 +71,7 @@ const watchlistSLice = createSlice({
             state.loading = true;
         })
         builder.addCase(fetchAddWatchlist.fulfilled, (state, action) => {
-            state.watchlist = action.payload;
+            state.watchlist = action.payload.reverse();
             state.loading = false;
         })
         // builder.addCase(fetchVideoSuggestion.pending, (state) => {
@@ -81,5 +84,5 @@ const watchlistSLice = createSlice({
     }
 })
 
-export const { addWatchlist, addWatchlistFromFirestore } = watchlistSLice.actions;
+export const { addWatchlist, addWatchlistFromFirestore, removeFromWatchlist } = watchlistSLice.actions;
 export default watchlistSLice.reducer;
