@@ -10,6 +10,7 @@ export async function addToWatchlist(e, videoInfo, user, dispatch ) {
     const docSnap = await getDoc(watchlistRef);
     const videos = docSnap.data().videos;
 
+    
     if(videos.length) {
       const existingItem = videos.find(({id}) => id.videoId === videoInfo.id.videoId);
 

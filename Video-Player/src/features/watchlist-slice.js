@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/Auth";
 
 export const fetchAddWatchlist = createAsyncThunk('fetch/watchlistFirestore', async ({user}) => {
@@ -9,6 +9,26 @@ export const fetchAddWatchlist = createAsyncThunk('fetch/watchlistFirestore', as
     const videos = docSnap.data().videos;
     console.log(videos)
     return videos;
+})
+
+export const addDataFirestoreFirstTime = createAsyncThunk('fetch/firestoreCreate', async ({res}) => {
+    console.log(res.user.uid)
+    // try {
+    //     const docRef = await addDoc(collection(db, "watchlist"), {
+    //       videos: []
+    //     });
+    //     // console.log("Document written with ID: ", docRef.id);
+    //   } catch (e) {
+    //     console.error("Error adding document: ", e);
+    //   }
+    try {
+        const watchlistRef = doc(db, 'watchlist', res.user.uid);
+        const docRef = await setDoc(watchlistRef, {
+          videos: []
+        });
+      } catch (e) {
+        console.error("Error adding document: ", e);
+    }
 })
 
 const watchlistSLice = createSlice({
@@ -91,7 +111,7 @@ const watchlistSLice = createSlice({
         // builder.addCase(fetchVideoSuggestion.pending, (state) => {
         //     state.loading = true;
         // })
-        // builder.addCase(fetchVideoSuggestion.fulfilled, (state, action) => {
+        // builder.addCase(setDirestoreFirstTimeVideo.fulfilled, (state, action) => {
         //     state.videoSuggestion = action.payload;
         //     state.loading = false;
         // })

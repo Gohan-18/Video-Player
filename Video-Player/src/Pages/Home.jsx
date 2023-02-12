@@ -138,7 +138,7 @@ const Home = () => {
 
   function fetchData () {
     console.log('hello world')
-    dispatch(fetchMoreHomeVideos(nextPageToken))
+    // dispatch(fetchMoreHomeVideos(nextPageToken))
   }
 
   // if(user){

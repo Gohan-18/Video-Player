@@ -3,7 +3,7 @@ import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from '@firebase/auth'
-import { addWatchlistFromFirestore, loginMessage } from "../features/watchlist-slice";
+import { addDataFirestoreFirstTime, addWatchlistFromFirestore, loginMessage } from "../features/watchlist-slice";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -48,6 +48,8 @@ export const signInWithGoogle = (dispatch) => {
         message: `Welcome ${res.user.displayName}`,
         type: 'success'
       }))
+      // dispatch(addDataFirestoreFirstTime({res}))
+      // const watchlistRef = doc(db, 'watchlist', res.user.uid);
     })
   }
   catch(e){
