@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styled from '@emotion/styled';
-import { addToWatchlist } from "../utils/WishlistUpdateFunction";
+import { addToWatchlist } from "../utils/WatchlistUpdateFunction";
 import { useAuth } from "../firebase/Auth";
 import { loginMessage } from "../features/watchlist-slice";
 import { useDispatch } from "react-redux";

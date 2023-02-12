@@ -10,7 +10,7 @@ import VideoCard from './VideoCard';
 import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
-import { addToWatchlist, channelDetailWatchlist } from '../utils/WishlistUpdateFunction';
+import { addToWatchlist, channelDetailWatchlist } from '../utils/WatchlistUpdateFunction';
 import { useAuth } from '../firebase/Auth';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import { loginMessage } from '../features/watchlist-slice';
@@ -55,8 +55,7 @@ export default function ChannelDetail() {
   }, [channelid])
 
   function fetchMoreData() {
-    console.log('hello world')
-    // dispatch(fetchMoreSearchedChannel({channelid, nextPageToken}))
+    dispatch(fetchMoreSearchedChannel({channelid, nextPageToken}))
   }
 
   function referAddToWatchlist (e, item, user, dispatch) {

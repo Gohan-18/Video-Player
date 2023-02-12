@@ -75,6 +75,9 @@ const watchlistSLice = createSlice({
         },
         loginMessage(state, action) {
             state.alert = action.payload;
+        },
+        clearWatchlist(state) {
+            state.watchlist = [];
         }
     },
     extraReducers:(builder) => {
@@ -95,5 +98,5 @@ const watchlistSLice = createSlice({
     }
 })
 
-export const { addWatchlist, addWatchlistFromFirestore, removeFromWatchlist, removeAlert, loginMessage } = watchlistSLice.actions;
+export const { addWatchlist, addWatchlistFromFirestore, removeFromWatchlist, removeAlert, loginMessage, clearWatchlist } = watchlistSLice.actions;
 export default watchlistSLice.reducer;

@@ -30,7 +30,7 @@ import CheckroomIcon from '@mui/icons-material/Checkroom';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { signInWithGoogle, useAuth } from '../firebase/Auth';
-import { loginMessage } from '../features/watchlist-slice';
+import { clearWatchlist, loginMessage } from '../features/watchlist-slice';
 import { useDispatch } from 'react-redux';
 // import { categories } from '../utils/constants';
 
@@ -166,6 +166,7 @@ export default function Header() {
     if(inrText === 'Logout') {
       handleCloseUserMenu()
       logOut();
+      clearWatchlist();
       navigateHome();
     }
 

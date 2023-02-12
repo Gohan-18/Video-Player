@@ -15,7 +15,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db, useAuth } from '../firebase/Auth';
 import { useState } from 'react';
 import { addWatchlist, addWatchlistFromFirestore, loginMessage } from '../features/watchlist-slice';
-import { addToWatchlist } from '../utils/WishlistUpdateFunction';
+import { addToWatchlist } from '../utils/WatchlistUpdateFunction';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -125,7 +125,7 @@ const Home = () => {
   // }
 
     useEffect(() => {
-      // dispatch(fetchHomeVideos());
+      dispatch(fetchHomeVideos());
     }, [])
 
     // if(user) {
@@ -138,7 +138,7 @@ const Home = () => {
 
   function fetchData () {
     console.log('hello world')
-    // dispatch(fetchMoreHomeVideos(nextPageToken))
+    dispatch(fetchMoreHomeVideos(nextPageToken))
   }
 
   // if(user){

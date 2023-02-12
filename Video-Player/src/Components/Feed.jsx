@@ -11,7 +11,7 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styled from '@emotion/styled';
 import { db, useAuth } from '../firebase/Auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { addToWatchlist } from '../utils/WishlistUpdateFunction';
+import { addToWatchlist } from '../utils/WatchlistUpdateFunction';
 import { loginMessage } from '../features/watchlist-slice';
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -107,7 +107,7 @@ export default function Feed() {
 
         {searchedVideos?.map(({snippet,id}) => {
           return (
-            <Grid item key={id.videoId} xs={12} sm={6} md={3} >
+            <Grid item key={`${id.videoId}/dd${Math.floor((Math.random() * 100) + 1)}`} xs={12} sm={6} md={3} >
               <Card 
                 sx={{
                   borderRadius: '10px', 
