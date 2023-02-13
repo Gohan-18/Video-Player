@@ -1,9 +1,6 @@
 import { Card, CardActionArea, CardContent, CardMedia, Container, Grid, Box, Typography, CssBaseline, LinearProgress, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import Footer from '../Components/Footer';
 import { fetchHomeVideos, fetchMoreHomeVideos } from '../features/fetchFromAPI-slice';
-import { useTheme } from '@emotion/react';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -11,10 +8,9 @@ import SkeletonComponent from '../Components/Skeleton';
 import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styled from '@emotion/styled';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db, useAuth } from '../firebase/Auth';
+import { useAuth } from '../firebase/Auth';
 import { useState } from 'react';
-import { addWatchlist, addWatchlistFromFirestore, loginMessage } from '../features/watchlist-slice';
+import { loginMessage } from '../features/watchlist-slice';
 import { addToWatchlist } from '../utils/WatchlistUpdateFunction';
 // import { fetchVideoDetails } from '../features/fetchFromAPI-slice';
 

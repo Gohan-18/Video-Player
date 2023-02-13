@@ -1,20 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { doc, getFirestore, onSnapshot } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from '@firebase/auth'
-import { addDataFirestoreFirstTime, addWatchlistFromFirestore, loginMessage } from "../features/watchlist-slice";
-import { useDispatch, useSelector } from "react-redux";
-
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCOEGGnZEyUmQOK6MCTmKS3RqoUYTcZpVs",
-//   authDomain: "clone-c029e.firebaseapp.com",
-//   projectId: "clone-c029e",
-//   storageBucket: "clone-c029e.appspot.com",
-//   messagingSenderId: "758773996535",
-//   appId: "1:758773996535:web:949429175327a6e9ab2cf2"
-// };
+import { loginMessage } from "../features/watchlist-slice";
+import { useDispatch } from "react-redux";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCxmovnfmjVwrsJh8RSItG95L5My60XCkQ",

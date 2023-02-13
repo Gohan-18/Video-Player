@@ -64,33 +64,6 @@ const watchlistSLice = createSlice({
             // }
             // state.watcher = !state.watcher;
         },
-        addWatchlistFromFirestore(state, action) {
-            // const  videos  = action.payload;
-            // console.log(action.payload);
-            // state.watchlist = [...state.watchlist, ...videos] ;
-
-            // if(videos){
-            //     for(let video of videos) {
-            //         // console.log(video);
-            //         const existingItem = state.watchlist?.find(({id}) => id.videoId === video.id.videoId);
-            //         if(existingItem) {
-            //             return;
-            //         }
-            //         else{
-            //             state.watchlist.push(video);
-            //         }
-
-            //     }
-            //     // const existingItem = state.watchlist?.find(({id}) => id.videoId === videos.id.videoId);
-            //     // if(existingItem) {
-            //     //     return;
-            //     // }
-            //     // else{
-            //     //     state.watchlist = [...state.watchlist, ...videos] ;
-            //     //     // state.watchlist.push(...videos);
-            //     // }
-            // }
-        },
         removeAlert(state) {
             state.alert.open = false
         },
@@ -109,15 +82,8 @@ const watchlistSLice = createSlice({
             state.watchlist = action.payload.reverse();
             state.loading = false;
         })
-        // builder.addCase(fetchVideoSuggestion.pending, (state) => {
-        //     state.loading = true;
-        // })
-        // builder.addCase(setDirestoreFirstTimeVideo.fulfilled, (state, action) => {
-        //     state.videoSuggestion = action.payload;
-        //     state.loading = false;
-        // })
     }
 })
 
-export const { addWatchlist, addWatchlistFromFirestore, removeFromWatchlist, removeAlert, loginMessage, clearWatchlist } = watchlistSLice.actions;
+export const { addWatchlist, removeFromWatchlist, removeAlert, loginMessage, clearWatchlist } = watchlistSLice.actions;
 export default watchlistSLice.reducer;
