@@ -7,13 +7,22 @@ import { loginMessage } from "../features/watchlist-slice";
 import { useDispatch } from "react-redux";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCxmovnfmjVwrsJh8RSItG95L5My60XCkQ",
-  authDomain: "video-player-c5df7.firebaseapp.com",
-  projectId: "video-player-c5df7",
-  storageBucket: "video-player-c5df7.appspot.com",
-  messagingSenderId: "1086194225908",
-  appId: "1:1086194225908:web:00440e50117f41602804a1"
+  apiKey: import.meta.env.VITE_FIRESTORE_API_KEY,
+  authDomain: import.meta.env.VITE_FIRESTORE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIRESTORE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIRESTORE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIRESTORE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIRESTORE_APP_ID
 };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCxmovnfmjVwrsJh8RSItG95L5My60XCkQ",
+//   authDomain: "video-player-c5df7.firebaseapp.com",
+//   projectId: "video-player-c5df7",
+//   storageBucket: "video-player-c5df7.appspot.com",
+//   messagingSenderId: "1086194225908",
+//   appId: "1:1086194225908:web:00440e50117f41602804a1"
+// };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
