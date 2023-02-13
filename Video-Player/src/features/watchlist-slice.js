@@ -13,22 +13,23 @@ export const fetchAddWatchlist = createAsyncThunk('fetch/watchlistFirestore', as
 
 export const addDataFirestoreFirstTime = createAsyncThunk('fetch/firestoreCreate', async ({res}) => {
     console.log(res.user.uid)
-    // try {
-    //     const docRef = await addDoc(collection(db, "watchlist"), {
-    //       videos: []
-    //     });
-    //     // console.log("Document written with ID: ", docRef.id);
-    //   } catch (e) {
-    //     console.error("Error adding document: ", e);
-    //   }
     try {
-        const watchlistRef = doc(db, 'watchlist', res.user.uid);
-        const docRef = await setDoc(watchlistRef, {
+        const collectionRef = collection(db, "watchlist");
+        await addDoc(collectionRef, {
           videos: []
         });
+        // console.log("Document written with ID: ", docRef.id);
       } catch (e) {
         console.error("Error adding document: ", e);
-    }
+      }
+    // try {
+    //     const watchlistRef = doc(db, 'watchlist', res.user.uid);
+    //     const docRef = await setDoc(watchlistRef, {
+    //       videos: []
+    //     });
+    //   } catch (e) {
+    //     console.error("Error adding document: ", e);
+    // }
 })
 
 const watchlistSLice = createSlice({

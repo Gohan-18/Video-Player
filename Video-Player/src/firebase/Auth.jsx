@@ -48,7 +48,7 @@ export const signInWithGoogle = (dispatch) => {
         message: `Welcome ${res.user.displayName}`,
         type: 'success'
       }))
-      // dispatch(addDataFirestoreFirstTime({res}))
+      dispatch(addDataFirestoreFirstTime({res}))
       // const watchlistRef = doc(db, 'watchlist', res.user.uid);
     })
   }

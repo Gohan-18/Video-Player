@@ -12,6 +12,7 @@ import AuthProvider, { useAuth } from './firebase/Auth';
 import Watchlist from './Components/Watchlist';
 import Profile from './Components/Profile';
 import ErrorPage from './Components/ErrorPage';
+import SomethingWentWrong from './Components/SomethingWentWrong';
 
 function ProtectedRoute ({ children }) {
   const { user } = useAuth();
@@ -27,11 +28,11 @@ function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <>
     <Route path='/' element={<Layout/>} >
-      <Route index element={<Home/>} errorElement={<ErrorPage />} />
-      <Route path='/videodetail/:id' element={<VideoDetail/>} errorElement={<ErrorPage />} />
-      <Route path='/search/:keyword' element={<SearchedItem/>} errorElement={<ErrorPage />} />
-      <Route path='/channeldetail/:channelid' element={<ChannelDetail/>} errorElement={<ErrorPage />} />
-      <Route path='/feed/:keyword' element={<Feed/>} errorElement={<ErrorPage />} />
+      <Route index element={<Home/>} errorElement={<SomethingWentWrong />} />
+      <Route path='/videodetail/:id' element={<VideoDetail/>} errorElement={<SomethingWentWrong />} />
+      <Route path='/search/:keyword' element={<SearchedItem/>} errorElement={<SomethingWentWrong />} />
+      <Route path='/channeldetail/:channelid' element={<ChannelDetail/>} errorElement={<SomethingWentWrong />} />
+      <Route path='/feed/:keyword' element={<Feed/>} errorElement={<SomethingWentWrong />} />
       <Route path='*' element={<ErrorPage/>} />
       <Route 
         path='/watchlist' 
