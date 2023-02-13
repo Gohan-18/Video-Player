@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Noto+Serif+Ahom&display=swap');
+
+.banner-name {
+  font-family: 'Monoton', cursive;
+  font-size: 100px;
+}
+
 * {
   padding: none;
   margin: none;

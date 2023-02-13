@@ -336,7 +336,7 @@ export default function Header() {
       >
         <DrawerHeader sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }} >
           <YouTubeIcon/>
-          <Typography>YouTube</Typography>
+          <Typography className='banner-name' sx={{fontWeight: '600', fontSize: '20px'}} >Aurórá</Typography>
         </DrawerHeader>
         <Divider />
 
