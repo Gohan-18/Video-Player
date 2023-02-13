@@ -8,10 +8,11 @@ export async function addToWatchlist(e, videoInfo, user, dispatch ) {
     console.log(videoInfo)
     const watchlistRef = doc(db, 'watchlist', user.uid);
     const docSnap = await getDoc(watchlistRef);
-    const videos = docSnap.data().videos;
+    const videos = docSnap.data()?.videos;
 
+    console.log(videos);
     
-    if(videos.length) {
+    if(videos) {
       const existingItem = videos.find(({id}) => id.videoId === videoInfo.id.videoId);
 
       if(existingItem) {
@@ -74,9 +75,9 @@ export async function channelDetailWatchlist({snippet}, user, dispatch ) {
   // console.log('i am clicked!!!');
   const watchlistRef = doc(db, 'watchlist', user.uid);
   const docSnap = await getDoc(watchlistRef);
-  const videos = docSnap.data().videos;
+  const videos = docSnap.data()?.videos;
 
-  if(videos.length) {
+  if(videos) {
     const existingItem = videos.find(({id}) => id.videoId === snippet.resourceId.videoId);
 
     if(existingItem) {
