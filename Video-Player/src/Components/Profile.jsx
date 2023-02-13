@@ -19,7 +19,7 @@ export default function Profile() {
     navigate('/account');
   };
 
-  console.log(user)
+  // console.log(user)
 
   return (
     <>

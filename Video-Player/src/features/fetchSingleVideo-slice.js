@@ -15,7 +15,7 @@ export const fetchVideoDetails = createAsyncThunk('fetch/videoDetail', async ({v
 
     const data = await fetch(`${YOUTUBE_BASE_URL}/videos?key=${API_KEY}&part=snippet,statistics&type=video&id=${videoId}`);
     const result = await data.json();
-    console.log(result);
+    // console.log(result);
     return result.items[0];
 
 })
@@ -32,7 +32,7 @@ export const fetchVideoSuggestion = createAsyncThunk('fetch/videoSuggestion', as
 
     const data = await fetch(`${YOUTUBE_BASE_URL}/activities?key=${API_KEY}&channelId=${channelId}&part=snippet,contentDetails&maxResults=40&type=video&videoId=${videoId}`);
     const result = await data.json();
-    console.log(result);
+    // console.log(result);
     return result.items;
 
 })

@@ -28,7 +28,7 @@ export default function Feed() {
     const { user } = useAuth();
     const params = useParams();
     const { keyword } = params;
-    console.log(keyword)
+    // console.log(keyword)
     const dispatch = useDispatch();
     const navigate= useNavigate();
     const searchedVideoList = useSelector((state) => state?.homeVideos);
@@ -82,7 +82,7 @@ export default function Feed() {
     function fetchData () {
       dispatch(fetchMoreSearchedVideos({keyword,nextPageToken}));
       // fetchMoreSearchedVideos
-      console.log('helloworld')
+      // console.log('helloworld')
     }
 
     const navigateVideo = ({id,snippet}) => {

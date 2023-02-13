@@ -34,7 +34,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const homeVideoList = useSelector((state) => state.homeVideos);
   const { watchlist, watcher } = useSelector((state) => state?.watchlistSl);
-  console.log(watchlist)
+  // console.log(watchlist)
   const { homeVideos, loading, nextPageToken } = homeVideoList;
   // const { id } = homeVideos;
   const navigate = useNavigate();
@@ -125,7 +125,7 @@ const Home = () => {
   // }
 
     useEffect(() => {
-      // dispatch(fetchHomeVideos());
+      dispatch(fetchHomeVideos());
     }, [])
 
     // if(user) {
@@ -137,8 +137,8 @@ const Home = () => {
     // }
 
   function fetchData () {
-    console.log('hello world')
-    // dispatch(fetchMoreHomeVideos(nextPageToken))
+    // console.log('hello world')
+    dispatch(fetchMoreHomeVideos(nextPageToken))
   }
 
   // if(user){

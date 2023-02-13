@@ -33,7 +33,7 @@ export default function ChannelDetail() {
   const { channelid } = params;
   const {searchedChannel, loading, playlistId} = useSelector((state) => state?.homeVideos);
   const {searchedChannelPlaylist, searchedChannelPlaylistLoader, nextPageToken} = useSelector((state) => state?.homeVideos);
-  console.log(searchedChannelPlaylist);
+  // console.log(searchedChannelPlaylist);
     // console.log(searchedChannel);
   const { contentDetails, id, snippet, statistics } = searchedChannel;
   // const playlistId = contentDetails?.relatedPlaylists?.uploads;
@@ -60,7 +60,7 @@ export default function ChannelDetail() {
 
   function referAddToWatchlist (e, item, user, dispatch) {
     const { id, snippet } = item;
-    console.log({snippet})
+    // console.log({snippet})
     channelDetailWatchlist({snippet}, user, dispatch)
   }
 

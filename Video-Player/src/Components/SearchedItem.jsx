@@ -18,7 +18,7 @@ export default function SearchedItem() {
     const navigate= useNavigate();
     const searchedVideoList = useSelector((state) => state?.homeVideos);
     const { searchedVideos, loading, nextPageToken } = searchedVideoList;
-    console.log(nextPageToken);
+    // console.log(nextPageToken);
 
     useEffect(() => {
         dispatch(fetchSearchedVideos({keyword}));
@@ -27,7 +27,7 @@ export default function SearchedItem() {
     function fetchData () {
       dispatch(fetchMoreSearchedVideos({keyword,nextPageToken}));
       // fetchMoreSearchedVideos
-      console.log('helloworld')
+      // console.log('helloworld')
     }
 
     // console.log(searchedVideos)

@@ -42,14 +42,12 @@ export const signInWithGoogle = (dispatch) => {
 
   try{
     signInWithPopup(auth, googleProvider).then(res => {
-      console.log(res.user.email)
+      // console.log(res.user.email)
       dispatch(loginMessage({
         open: true,
         message: `Welcome ${res.user.displayName}`,
         type: 'success'
       }))
-      dispatch(addDataFirestoreFirstTime({res}))
-      // const watchlistRef = doc(db, 'watchlist', res.user.uid);
     })
   }
   catch(e){

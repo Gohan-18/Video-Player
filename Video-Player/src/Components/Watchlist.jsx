@@ -24,21 +24,21 @@ export default function Watchlist() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { watchlist, loading } = useSelector((state) => state?.watchlistSl);
-  console.log(watchlist)
+  // console.log(watchlist)
 
   const navigateVideo = ({id,snippet}) => {
     navigate(`/videodetail/${id.videoId}&${snippet.channelId}`)
   }
 
   const fetchRemoveFromWatchlist = async ({id}) => {
-    console.log('fetchremoveWatchlist called...')
+    // console.log('fetchremoveWatchlist called...')
     const watchlistRef = doc(db, 'watchlist', user?.uid);
     const docSnap = await getDoc(watchlistRef);
     const videos = docSnap.data().videos;
     const rmvVideo = videos.filter(({ id : fireId }) => (fireId.videoId !== id.videoId));
 
     try {
-      console.log('removeFirestore called on click')
+      // console.log('removeFirestore called on click')
       await setDoc(watchlistRef, {
         videos: rmvVideo
       }, { merge: true })
@@ -98,7 +98,7 @@ export default function Watchlist() {
                   <LightTooltip title="Remove from Watchlist" placement="bottom-end" arrow>
                     <IconButton
                       onClick={(e) => {
-                        console.log('Please log in...');
+                        // console.log('Please log in...');
                         fetchRemoveFromWatchlist({id})
                       }}
                       sx={{

@@ -171,13 +171,13 @@ export default function Header() {
     }
 
     if(inrText === 'Profile') {
-      console.log('Profilleeee')
+      // console.log('Profilleeee')
       handleCloseUserMenu()
       navigate('/profile')
     }
 
     if(inrText === 'Watchlist') {
-      console.log('Watchlisteee')
+      // console.log('Watchlisteee')
       handleCloseUserMenu()
       navigate('/watchlist')
     }

@@ -3,34 +3,34 @@ import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/Auth";
 
 export const fetchAddWatchlist = createAsyncThunk('fetch/watchlistFirestore', async ({user}) => {
-    console.log(user?.uid)
+    // console.log(user?.uid)
     const watchlistRef = doc(db, 'watchlist', user?.uid);
     const docSnap = await getDoc(watchlistRef);
     const videos = docSnap.data().videos;
-    console.log(videos)
+    // console.log(videos)
     return videos;
 })
 
-export const addDataFirestoreFirstTime = createAsyncThunk('fetch/firestoreCreate', async ({res}) => {
-    console.log(res.user.uid)
-    try {
-        const collectionRef = collection(db, "watchlist");
-        await addDoc(collectionRef, {
-          videos: []
-        });
-        // console.log("Document written with ID: ", docRef.id);
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    // try {
-    //     const watchlistRef = doc(db, 'watchlist', res.user.uid);
-    //     const docRef = await setDoc(watchlistRef, {
-    //       videos: []
-    //     });
-    //   } catch (e) {
-    //     console.error("Error adding document: ", e);
-    // }
-})
+// export const addDataFirestoreFirstTime = createAsyncThunk('fetch/firestoreCreate', async ({res}) => {
+//     console.log(res.user.uid)
+//     try {
+//         const collectionRef = collection(db, "watchlist");
+//         await addDoc(collectionRef, {
+//           videos: []
+//         });
+//         // console.log("Document written with ID: ", docRef.id);
+//       } catch (e) {
+//         console.error("Error adding document: ", e);
+//       }
+//     // try {
+//     //     const watchlistRef = doc(db, 'watchlist', res.user.uid);
+//     //     const docRef = await setDoc(watchlistRef, {
+//     //       videos: []
+//     //     });
+//     //   } catch (e) {
+//     //     console.error("Error adding document: ", e);
+//     // }
+// })
 
 const watchlistSLice = createSlice({
     name: 'watchlistSl',
@@ -47,7 +47,7 @@ const watchlistSLice = createSlice({
     reducers: {
         removeFromWatchlist(state, action) {
             const { id } = action.payload;
-            console.log(id)
+            // console.log(id)
             state.watchlist = state.watchlist.filter(({ id : fireId }) => (fireId.videoId !== id.videoId));
             // const { videoInfo } = action.payload;
             // // console.log(videos);
