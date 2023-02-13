@@ -15,15 +15,6 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIRESTORE_APP_ID
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCxmovnfmjVwrsJh8RSItG95L5My60XCkQ",
-//   authDomain: "video-player-c5df7.firebaseapp.com",
-//   projectId: "video-player-c5df7",
-//   storageBucket: "video-player-c5df7.appspot.com",
-//   messagingSenderId: "1086194225908",
-//   appId: "1:1086194225908:web:00440e50117f41602804a1"
-// };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize Authorization
