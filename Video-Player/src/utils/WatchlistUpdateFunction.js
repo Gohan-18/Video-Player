@@ -23,7 +23,6 @@ export async function addToWatchlist(e, videoInfo, user, dispatch ) {
         }))
       }
       else{
-        // state.watchlist = [...state.watchlist, videoInfo]
         try {
           // console.log('addtoFirestore called on click')
           await setDoc(watchlistRef, {

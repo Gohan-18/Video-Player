@@ -212,12 +212,13 @@ export default function Watchlist() {
               fontSize: {
                   xs: '14px',
                   sm: '18px',
-                  md: '20px'
+                  md: '25px'
               }, 
               fontWeight: '500', 
-              color: '#c1121f'
+              color: '#c1121f',
+              textAlign: 'center'
           }}
-          >No Item in the Watchlist!!</Typography>
+          >No Video in the Watchlist!!</Typography>
         </Box>
         }
       </Container>}
